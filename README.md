@@ -13,7 +13,7 @@ Epoch runs on your own computer and opens in the browser. There is no account, n
 - **Keep a promise.** Set a daily floor and a weekly contract (hours plus shipped outputs). Epoch tracks kept weeks, skips, repairs and comebacks, and never shames you for a bad day.
 - **Focus.** A full-screen Pomodoro timer (50/10, 25/5, 90/15) that can run on a second screen, such as a tablet next to your laptop.
 - **Build a city.** Each day becomes a tower on a real lot in Morningside Heights, in a 3D Manhattan built from NYC Open Data. Fly around it, with live weather and seasonal decorations.
-- **Live the game.** Study earns XP (levels walk you down the island) and in-game money for rent, furniture, NYC experiences and a bigger home. The money has no real-world value.
+- **Live the game.** Study earns XP and in-game money for rent, furniture and NYC experiences. Levels are a walk down Manhattan, from Morningside Heights toward Billionaires' Row. The money has no real-world value.
 - **Optional extras.** Telegram nudges and phone logging, a free OpenRouter model for messy log lines, and ActivityWatch to label the gaps in your day. Skip any of them and nothing breaks.
 
 ![A 90-minute focus run in Butler Library with the timer panel and a mini map of today's tower](docs/screenshots/focus.jpg)
@@ -21,10 +21,14 @@ Epoch runs on your own computer and opens in the browser. There is no account, n
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/city.jpg" alt="The 3D Manhattan city with 13 towers, district buttons and your stats"><br><sub><b>World › City.</b> Thirteen days, thirteen towers on real Morningside lots. Fly to Columbia, Central Park, Midtown, Times Square or downtown.</sub></td>
+<td width="50%"><img src="docs/screenshots/city.jpg" alt="The 3D Manhattan city with 13 towers, district buttons and your stats"><br><sub><b>World › City.</b> Thirteen days, thirteen towers on real Morningside lots, in a map of all of Manhattan you can fly around.</sub></td>
 <td width="50%"><img src="docs/screenshots/money.jpg" alt="The Money tab with savings, job ladder, this week's earnings and rent"><br><sub><b>Money.</b> Deep focus pays by the minute, the job ladder raises your rate, and rent is due every Sunday.</sub></td>
 </tr>
 </table>
+
+## Status
+
+Epoch is a work in progress. The game is built out through **Harlem** (Level 4) so far. The rest of the walk down the island, up to Billionaires' Row, is designed (see [docs/game-design.md](docs/game-design.md) and [docs/ECONOMY.md](docs/ECONOMY.md)) but not finished, so expect later districts, homes and rooms to be rough or missing.
 
 ## Quick start
 
