@@ -2,7 +2,8 @@
 
 **A local study tracker that plays like a city-builder.** Log the hours you study, ship something each week, and watch a 3D model of real Manhattan grow a tower for every day you showed up.
 
-![Your cozy studio, with today's level, money and a Start studying button](docs/screenshots/today.jpg)
+![Your cozy studio in the dark Night Clay theme, with level, money, missions and a Start studying button](docs/screenshots/today.jpg)
+<sub><b>Today.</b> Your studio: level and XP, savings and job, today's missions and stars, and deep minutes so far. Epoch also has a light theme.</sub>
 
 Epoch runs on your own computer and opens in the browser. There is no account, no cloud and no cost. Everything is stored in one SQLite file.
 
@@ -15,13 +16,13 @@ Epoch runs on your own computer and opens in the browser. There is no account, n
 - **Live the game.** Study earns XP (levels walk you down the island) and in-game money for rent, furniture, NYC experiences and a bigger home. The money has no real-world value.
 - **Optional extras.** Telegram nudges and phone logging, a free OpenRouter model for messy log lines, and ActivityWatch to label the gaps in your day. Skip any of them and nothing breaks.
 
+![A 90-minute focus run in Butler Library with the timer panel and a mini map of today's tower](docs/screenshots/focus.jpg)
+<sub><b>Focus run.</b> A timed block at your seat in Butler Library: Deep work, a 90-minute dial, +5/+10/+15 to extend, and a mini map of the tower growing while you work.</sub>
+
 <table>
 <tr>
-<td width="50%"><img src="docs/screenshots/city.jpg" alt="The 3D Manhattan city with your towers"><br><sub><b>World › City.</b> Your year as towers on real lots.</sub></td>
-<td width="50%"><img src="docs/screenshots/week.jpg" alt="The weekly card with floor days and outputs"><br><sub><b>World › Week.</b> This week's card, you against last week.</sub></td>
-</tr>
-<tr>
-<td colspan="2"><img src="docs/screenshots/money.jpg" alt="The Money tab with savings, job and rent"><br><sub><b>Money.</b> What your study pays and what the week costs.</sub></td>
+<td width="50%"><img src="docs/screenshots/city.jpg" alt="The 3D Manhattan city with 13 towers, district buttons and your stats"><br><sub><b>World › City.</b> Thirteen days, thirteen towers on real Morningside lots. Fly to Columbia, Central Park, Midtown, Times Square or downtown.</sub></td>
+<td width="50%"><img src="docs/screenshots/money.jpg" alt="The Money tab with savings, job ladder, this week's earnings and rent"><br><sub><b>Money.</b> Deep focus pays by the minute, the job ladder raises your rate, and rent is due every Sunday.</sub></td>
 </tr>
 </table>
 
