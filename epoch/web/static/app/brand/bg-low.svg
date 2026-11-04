@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380">
+<!-- Morningside theme: Low Library elevation as line art (alpha only, used as a CSS mask in the bottom-right corner).
+     Shallow dome on a drum, a ten-column portico, the wide Low Steps, and a frieze of heroes instead of Butler's
+     classical names: Ramanujan, Euler, Noether, Turing, Shannon, Hinton. -->
+<g fill="none" stroke="#000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M308 26h24v22h-24z"/><path d="M302 48h36"/>
+  <path d="M206 128C220 74 268 50 320 50s100 24 114 78"/>
+  <path d="M196 128h248v34H196z"/>
+  <path d="M214 138v14M246 138v14M278 138v14M310 138v14M342 138v14M374 138v14M406 138v14"/>
+  <path d="M120 162h400v26H120z"/>
+  <path d="M110 188h420"/>
+  <path d="M142 196v100M174 196v100M206 196v100M238 196v100M270 196v100M370 196v100M402 196v100M434 196v100M466 196v100M498 196v100"/>
+  <path d="M290 296v-62a30 30 0 0 1 60 0v62"/>
+  <path d="M110 296h420M96 312h448M80 328h480M62 344h516M44 360h552"/>
+  <path d="M10 374h620"/>
+</g>
+<text x="320" y="180" font-family="Georgia, 'Times New Roman', serif" font-size="11" textLength="384" lengthAdjust="spacingAndGlyphs" text-anchor="middle" fill="#000">HOMER · HERODOTUS · SOPHOCLES · PLATO · ARISTOTLE · DEMOSTHENES · CICERO · VERGIL</text>
+</svg>

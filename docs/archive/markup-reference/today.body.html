@@ -1,0 +1,120 @@
+<div id="today-main" class="bento">
+  <section class="card level b-level" data-js="level-card" data-quiet-hide data-game-only aria-label="Level">
+    <div class="level__badge" data-js="level-badge" aria-hidden="true"><svg class="ic" data-js="dist-icon"><use href="/static/app/icons.svg#i-building-2"/></svg></div>
+    <div class="level__body">
+      <div class="level__row"><b data-js="level-name">Level 7 · Brooklyn</b><span class="level__xp"><span class="num" data-js="xp-num">2,120</span> XP · <span data-js="xp-to">330 to Level 8</span></span></div>
+      <div class="xp__bar" role="progressbar" aria-label="Progress to next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="34" data-js="xp-bar"><div class="xp__fill" data-js="xp-fill" style="--p:.34"></div></div>
+      <div class="level__note">XP is a progress readout. Nothing to spend, nothing ever drops.</div>
+    </div>
+  </section>
+
+  <section class="card card--hero logcard b-log" aria-labelledby="logH">
+    <div class="logcard__q"><h1 id="logH">What did you do this hour?</h1><span class="small" data-js="clock-line"></span></div>
+    <form class="logform" method="post" action="/log" data-js="log-form">
+      <div class="fieldwrap">
+        <svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-pen-line"/></svg>
+        <label class="sr-only" for="logText">Type what you did, for example 45m numpy ex 1-12</label>
+        <input class="field" id="logText" name="text" type="text" data-js="log-text" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="45m numpy ex 1-12" maxlength="300">
+      </div>
+      <div class="preview" data-js="log-preview" aria-live="polite"></div>
+      <div>
+        <span class="row-label" id="repeatLbl">Again, one tap</span>
+        <div class="chips chips--scroll" data-js="repeat-chips" aria-labelledby="repeatLbl">
+          <button class="chipbtn" type="button" data-category="Python" data-minutes="45" data-note="numpy ex 1-12" data-deep="1" data-rest="0"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-rotate-ccw"/></svg><span>45m numpy ex 1-12</span><small>Python</small></button>
+        </div>
+      </div>
+      <div class="chips-split">
+        <fieldset><legend class="row-label">How long</legend>
+          <div class="chips" data-js="dur-chips">
+            <label class="chip chip--time"><input type="radio" name="minutes" value="15"><span>15m</span></label>
+            <label class="chip chip--time"><input type="radio" name="minutes" value="30"><span>30m</span></label>
+            <label class="chip chip--time"><input type="radio" name="minutes" value="45"><span>45m</span></label>
+            <label class="chip chip--time"><input type="radio" name="minutes" value="60"><span>1h</span></label>
+            <label class="chip chip--time"><input type="radio" name="minutes" value="90"><span>1h 30m</span></label>
+          </div></fieldset>
+        <fieldset><legend class="row-label">What was it</legend>
+          <div class="chips" data-js="cat-chips">
+            <label class="chip chip--c-python"><input type="radio" name="category" value="Python" data-deep="1"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-terminal"/></svg>Python</span></label>
+            <label class="chip chip--c-math"><input type="radio" name="category" value="Math" data-deep="1"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-sigma"/></svg>Math</span></label>
+            <label class="chip chip--c-ml"><input type="radio" name="category" value="ML/DL" data-deep="1"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-brain"/></svg>ML/DL</span></label>
+            <label class="chip chip--c-papers"><input type="radio" name="category" value="Papers" data-deep="1"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-book-open"/></svg>Papers</span></label>
+            <label class="chip chip--c-writing"><input type="radio" name="category" value="Writing/X" data-deep="1"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-pen-line"/></svg>Writing/X</span></label>
+            <label class="chip chip--c-rest"><input type="radio" name="category" value="Rest" data-deep="0" data-rest="1"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-tent-tree"/></svg>Rest hour</span></label>
+            <label class="chip chip--c-drift"><input type="radio" name="category" value="Distracted" data-deep="0"><span><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-smartphone"/></svg>Drift</span></label>
+          </div></fieldset>
+      </div>
+      <button class="btn btn--log" type="submit" data-js="log-btn" aria-disabled="true"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-plus"/></svg><span data-js="log-btn-text">Log this hour</span></button>
+      <div class="logfoot"><span class="honest">Rest and drift count as honest hours. They add a lamp to your street, never a penalty.</span></div>
+    </form>
+  </section>
+
+  <section class="card ringcard tilt b-ring" aria-labelledby="ringH">
+    <div class="ringwrap" data-js="ring-wrap">
+      <svg viewBox="-8 -8 176 176" aria-hidden="true">
+        <circle class="track" cx="80" cy="80" r="70"/><circle class="arc arc--out" data-js="arc-target" cx="80" cy="80" r="70" pathLength="100" style="--p:0"/>
+        <circle class="track" cx="80" cy="80" r="50"/><circle class="arc arc--in" data-js="arc-floor" cx="80" cy="80" r="50" pathLength="100" style="--p:0"/>
+        <g data-js="ghost-g"><line class="ghost" x1="80" y1="2" x2="80" y2="16"/></g>
+      </svg>
+      <div class="mid"><b class="num" data-js="deep-num">0m</b><small>deep today</small></div>
+    </div>
+    <div class="ringtext">
+      <h2 id="ringH" class="sr-only">Today's progress</h2>
+      <p class="lead" data-js="ring-lead">Doors in 30m.</p>
+      <ul class="legend">
+        <li><i style="background:var(--violet)"></i><span>Doors (floor) <span class="num" data-js="floor-min">30</span>m</span><span class="ok" data-js="floor-ok" hidden><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-check"/></svg><span class="sr-only">done</span></span></li>
+        <li><i style="background:var(--amber)"></i><span>Crown (target) <span class="num" data-js="target-min">90</span>m</span><span class="ok" data-js="target-ok" hidden><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-check"/></svg><span class="sr-only">done</span></span></li>
+        <li><i class="gh"></i><span class="muted" data-js="ghost-text">Last week, same day: nothing logged</span></li>
+      </ul>
+      <p class="xs muted" data-js="cap-note" hidden></p>
+    </div>
+  </section>
+
+  <section class="card herocard b-hero" aria-labelledby="heroH">
+    <div class="herohead"><h2 id="heroH">Your week in New York</h2>
+      <span class="pill pill--amber" data-js="floors-pill"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-building-2"/></svg><span><span class="num" data-js="floors-num">0</span><span data-js="floors-label"> floors today</span></span></span></div>
+    <div class="stage" data-js="stage" data-stage="week">
+      <div class="fallback" data-js="fallback" role="img" aria-label="Skyline of this week's seven towers"></div>
+      <div class="stage__hint">Drag to look around. Tap a tower for its day.</div>
+      <div class="daycard" data-js="day-card" hidden></div>
+    </div>
+    <div class="days" data-js="day-btns" role="group" aria-label="Days this week"></div>
+  </section>
+
+  <div class="side b-side">
+    <section class="card" data-js="quests-card" data-quiet-hide data-game-only aria-labelledby="questH">
+      <div class="card__head"><h2 id="questH">Today's three</h2><div class="stars" data-js="stars" aria-label="Quest stars"></div></div>
+      <ul class="quests" data-js="quests"></ul>
+    </section>
+    <section class="card" aria-labelledby="winsH">
+      <div class="card__head"><h2 id="winsH">Wins feed</h2><span class="xs muted">facts only</span></div>
+      <ul class="wins" data-js="wins"></ul>
+    </section>
+  </div>
+
+  <div class="b-actions">
+    <div data-js="focus-slot"></div>
+    <div class="actions">
+      <a class="btn btn--violet" href="/outputs" data-open-dialog="#shipDlg"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-trophy"/></svg>I shipped something</a>
+      <a class="btn btn--ghost" href="/focus"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-timer"/></svg>Focus</a>
+      <form method="post" action="/skip" data-enhance="day-mark" data-api="/api/day-mark">
+        <input type="hidden" name="day" value="TODAY_ISO"><input type="hidden" name="kind" value="rest">
+        <button class="btn btn--ghost" type="submit"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-tent-tree"/></svg>Rest day</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<dialog class="sheet" id="shipDlg" aria-labelledby="shipH">
+  <form class="sheet__panel" method="post" action="/outputs" data-enhance="output">
+    <h2 id="shipH">What did you ship?</h2>
+    <p class="small muted">A note, a commit, a notebook or a post all count.</p>
+    <fieldset><legend class="row-label">Which ladder</legend><div class="chips">
+      <label class="chip chip--c-python"><input type="radio" name="stage" value="Python" checked><span>Python</span></label>
+      <label class="chip chip--c-math"><input type="radio" name="stage" value="Math"><span>Math</span></label>
+      <label class="chip chip--c-ml"><input type="radio" name="stage" value="ML/DL"><span>ML/DL</span></label>
+    </div></fieldset>
+    <label class="lbl">One line<input class="field field--plain" name="what" type="text" autocomplete="off" placeholder="numpy broadcasting notebook" maxlength="120"></label>
+    <label class="lbl">Link (optional)<input class="field field--plain" name="url" type="url" inputmode="url" autocomplete="off" placeholder="https://github.com/…"></label>
+    <div class="sheet__actions"><button class="btn btn--ghost" type="button" data-close-dialog>Not now</button><button class="btn btn--violet" type="submit">Ship it</button></div>
+  </form>
+</dialog>

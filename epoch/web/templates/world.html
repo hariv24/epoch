@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+{% from "_catcolor.html" import cc with context %}
+{% block title %}World{% endblock %}
+{% block content %}
+{% set icons = "/static/app/icons.svg" %}
+{% set status_txt = {"target": "Crown lit", "floor": "Doors open", "repaired": "Repaired", "rest": "Rest day", "skip": "Rest day", "missed": "Empty lot, waiting", "started": "Started", "open": "In progress", "future": "Not yet", "before_start": "Not yet"} %}
+<div class="view-head"><div><h1>World</h1><p>Everything you built, only ever going up.</p></div>
+  <div class="seg seg--js" role="radiogroup" aria-label="World view" data-js="world-tabs" data-default="{{ view }}">
+    <label><input type="radio" name="wv" value="city"{% if view == "city" %} checked{% endif %}><span>City</span></label>
+    <label><input type="radio" name="wv" value="week"{% if view == "week" %} checked{% endif %}><span>Week</span></label>
+    <label><input type="radio" name="wv" value="shelf"{% if view == "shelf" %} checked{% endif %}><span>Shelf</span></label>
+    <label><input type="radio" name="wv" value="lines"><span>Lines</span></label>
+  </div></div>
+
+<section class="world-panel" id="city" data-js="world-panel" data-panel="city" aria-label="City">
+  <div class="card card--flush">
+    <div class="stage stage--tall stage--orbit stage--map" data-js="stage" data-stage="city">
+      <div class="fallback fallback--map" aria-hidden="true"><img src="/static/app/city/manhattan/map.svg" alt="" width="2522" height="736" decoding="async"></div>
+      <div class="fallback fallback--inset" data-js="fallback" role="img" aria-label="Your days so far as towers">{{ city_svg }}</div>
+      <div class="stage__badge"><span class="pill"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-calendar-check"/></svg><span data-js="year-badge">Your year · {{ ws.year.built }} tower{{ "s" if ws.year.built != 1 }}</span></span></div>
+      <div class="stage__tools"><button class="icon-btn js-only" type="button" data-js="snapshot" data-stage-target="city" aria-label="Save the city as an image" title="Save as image"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-camera"/></svg></button></div>
+      <div class="stage__places js-only" role="group" aria-label="Fly to a place in Manhattan">
+        {% for id, label in [("home", "My block"), ("columbia", "Columbia"), ("centralpark", "Central Park"), ("midtown", "Midtown"), ("timessquare", "Times Square"), ("downtown", "Downtown"), ("island", "Whole island"), ("dream", "Dream home")] %}<button class="placechip" type="button" data-city-fly="{{ id }}" aria-pressed="{{ 'true' if id == 'home' else 'false' }}">{{ label }}</button>{% endfor %}
+      </div>
+      <div class="stage__views js-only" role="group" aria-label="Camera views">
+        <button class="icon-btn" type="button" data-city-view="top" aria-label="Top view: look straight down on the city" title="Top view"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v7"/><path d="m9 6.5 3 3 3-3"/><path d="M3.5 15.5 12 11.5l8.5 4-8.5 4z"/></svg></button>
+        <button class="icon-btn" type="button" data-city-view="rotate" aria-label="Rotate the city 90 degrees clockwise" title="Rotate 90°"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 12a8.5 8.5 0 1 1-8.5-8.5c2.4 0 4.6 1 6.3 2.6L20.5 8"/><path d="M20.5 3.5V8H16"/></svg></button>
+        <button class="icon-btn" type="button" data-city-view="reset" aria-label="Reset the view to your block" title="Reset view"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-house"/></svg></button>
+      </div>
+      <p class="stage__caption js-only" data-js="city-caption" aria-live="polite" hidden></p>
+      <div class="stage__hint">Drag to look around · <span class="hint-fine">right-drag or shift-drag to move, scroll or </span><span class="hint-touch">two fingers to move, </span>pinch to zoom<span class="hint-wide"> · tap a tower for its day</span></div>
+      <p class="stage__attrib" data-js="city-attrib">Map data: NYC Open Data (OTI, DCP, Parks, LPC)</p>
+      <div class="daycard" data-js="day-card" hidden></div>
+    </div>
+    <details class="small">
+      <summary>Every day so far as text</summary>
+      <ul aria-label="Every day so far, one line per day">
+        {% for d in ws.days if d.status != "future" and d.status != "before_start" %}
+        <li>{{ ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][d.dow] }} {{ d.date[5:] }}: {{ status_txt.get(d.status, d.status|replace("_", " ")) }}, {{ d.deep_minutes|hm }} deep{% if d.outputs %}, {{ d.outputs|length }} output{{ "s" if d.outputs|length != 1 }}{% endif %}</li>
+        {% endfor %}
+      </ul>
+    </details>
+    <div class="totals" data-js="totals">
+      <div class="total"><b class="num">{{ (totals_view.deep_minutes // 60) }}h</b><span>Deep hours</span></div>
+      <div class="total"><b class="num">{{ totals_view.days_shown_up }}</b><span>Days shown up</span></div>
+      <div class="total"><b class="num">{{ totals_view.outputs }}</b><span>Outputs</span></div>
+      <div class="total"><b class="num">{{ totals_view.weeks_kept }}</b><span>Weeks kept</span></div>
+      <div class="total"><b class="num">{{ totals_view.comebacks }}</b><span>Comebacks</span></div>
+      <div class="total"><b class="num">{{ totals_view.best_run }}</b><span>Best run</span></div>
+    </div>
+  </div>
+  {% set dz = ws.districts %}
+  <div class="card" aria-labelledby="distH">
+    <h2 id="distH">Your walk across Manhattan</h2>
+    <p class="small muted">Each level lights the next neighbourhood on the map. Locked ones wait in the fog. {% if dz.all_lit %}All of it is lit, and the penthouse on {{ dz.dream_home.address }} is home.{% else %}{{ dz.dream_home.locked }}{% endif %}</p>
+    <ol class="districts" data-js="district-list">
+      {% for d in dz['list'] %}<li class="district{{ ' is-on' if d.unlocked }}{{ ' is-now' if d.current }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ d.icon }}"/></svg><b>{{ d.name }}</b><small>{% if d.unlocked %}{{ "You are here" if d.current else "Lit" }}{% else %}Level {{ d.first }}{% endif %}</small></li>{% endfor %}
+    </ol>
+  </div>
+  <div class="card">
+    <h2>Landmarks</h2>
+    <div class="ladders">
+      {% for l in ws.landmarks %}
+      <div class="ladder {{ ladder_class.get(l.ladder, '') }}"><span class="ladder__ic"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-landmark"/></svg></span>
+        <div><b>{{ l.ladder }} · {{ l.landmark }}</b><div class="nodes">{% for i in range(5) %}<i{% if i < l.nodes_unlocked %} class="on"{% endif %}></i>{% endfor %}</div><small>{{ l.nodes_unlocked }} of 5 sections · {{ l.next_text }}</small></div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="world-panel" id="week" data-js="world-panel" data-panel="week" data-week-monday="{{ monday.isoformat() }}" aria-label="Week">
+  {% set wk = this_week %}
+  <div class="daynav" role="group" aria-label="Which week">
+    <a class="chip" href="/world?view=week&week={{ prev_week.isoformat() }}#week"><span><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-chevron-left"/></svg>Previous week</span></a>
+    <span class="tab-label">Week of {{ monday|day_label }}
+      {% if week.status == "kept" %}<span class="pill pill--ok">kept</span>
+      {% elif week.status == "not_kept" %}<span class="pill">not this week</span>
+      {% elif week.status == "baseline" %}<span class="pill">baseline</span>
+      {% else %}<span class="pill">in progress</span>{% endif %}</span>
+    {% if not is_current %}<a class="chip" href="/world?view=week#week"><span>This week</span></a>{% endif %}
+    <a class="chip" href="/world?view=week&week={{ next_week.isoformat() }}#week"><span>Next week<svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-chevron-right"/></svg></span></a>
+  </div>
+
+  <section class="card pccard" aria-labelledby="pccH">
+    <div class="pccard__t"><span class="pccard__ic" aria-hidden="true"><svg class="ic"><use href="{{ icons }}#i-mail"/></svg></span>
+      <div><h2 id="pccH">Weekly postcard</h2><p class="small muted">A picture of your week in New York: the city, your numbers, your level. Made on this device, yours to keep or share.</p></div></div>
+    <div class="pccard__actions"><a class="btn btn--violet" href="/postcards" data-js="postcard-open"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-image"/></svg>Make this week's postcard</a>
+      <a class="btn btn--ghost" href="/postcards" data-js="postcard-more" hidden>All postcards</a></div>
+    <div class="pcthumbs" data-js="postcard-gallery" aria-label="Saved postcards"></div>
+  </section>
+
+  <div class="two">
+    <section class="card stamp" aria-labelledby="stampH">
+      <h2 id="stampH">This week's card</h2>
+      {% set o_req = week.outputs_required if week.outputs_required is not none else 2 %}
+      {% set f_req = week.floor_days_required if week.floor_days_required is not none else 5 %}
+      {% set skip_total = week.skips_used + week.skips_left %}
+      <div><span class="row-label">Shipped outputs <span class="num" data-js="out-count">{{ [week.outputs_count, o_req]|min }}</span>{% if week.outputs_required is not none %} of <span data-js="out-req">{{ o_req }}</span>{% endif %}</span>
+        <div class="stamps" data-js="out-slots">{% for i in range(o_req) %}<span class="slot{{ ' on' if i < week.outputs_count }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-trophy"/></svg></span>{% endfor %}</div></div>
+      <div><span class="row-label">Floor days <span class="num" data-js="floor-day-count">{{ [week.floor_days, f_req]|min }}</span>{% if week.floor_days_required is not none %} of <span data-js="floor-req">{{ f_req }}</span>{% endif %}</span>
+        <div class="stamps" data-js="floor-pips">{% for i in range(f_req) %}<span class="slot slot--pip{{ ' on' if i < week.floor_days }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg></span>{% endfor %}</div></div>
+      <div><span class="row-label">Rest tokens <span class="num" data-js="rest-count">{{ week.skips_used }}</span> used of <span data-js="rest-req">{{ skip_total }}</span></span>
+        <div class="stamps" data-js="rest-pips">{% for i in range(skip_total) %}<span class="slot slot--pip slot--rest{{ ' on' if i < week.skips_used }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-tent-tree"/></svg></span>{% endfor %}</div></div>
+      <p class="small muted" data-js="stamp-note">{% if week.status == "kept" %}Card complete. The week is kept and the row is lit.{% else %}Monday starts a fresh card.{% endif %}</p>
+      <div class="daystrip">
+        {% for d in week.days %}
+        <div class="daycell {{ d.status }}" title="{{ d.local_date|day_label }}: {{ status_txt.get(d.status, d.status|replace('_', ' ')) }}, deep {{ d.deep_minutes|hm }}">
+          <span>{{ d.local_date.strftime("%a") }}</span><small>{{ status_txt.get(d.status, d.status|replace("_", " ")) }}</small>{% if d.deep_minutes %}<small>{{ d.deep_minutes|hm }}</small>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="card" aria-labelledby="ghostH">
+      <h2 id="ghostH">You against your past</h2>
+      <p class="small muted">Deep minutes per day. Bright blue is this week, the muted bars are last week. No one else is on this chart.</p>
+      {% set gmax = namespace(v=60) %}
+      {% for v in ghost_last %}{% if v > gmax.v %}{% set gmax.v = v %}{% endif %}{% endfor %}
+      {% for d in week_view_days %}{% if d.deep_minutes > gmax.v %}{% set gmax.v = d.deep_minutes %}{% endif %}{% endfor %}
+      <div class="ghostchart" data-js="ghost-chart" role="img" aria-label="Bar chart of deep minutes per day, this week against last week">
+        {% for k in range(7) %}
+        {% set cur = week_view_days[k] if k < week_view_days|length else none %}
+        <div class="gcol"><i class="g" style="height:{{ (ghost_last[k] / gmax.v * 88)|round|int }}px"></i><i class="n" style="height:{{ ((cur.deep_minutes if cur and cur.state != 'future' else 0) / gmax.v * 88)|round|int }}px"></i></div>
+        {% endfor %}
+      </div>
+      <div class="gdays" data-js="ghost-days">{% for n in ["M","T","W","T","F","S","S"] %}<span>{{ n }}</span>{% endfor %}</div>
+    </section>
+  </div>
+
+  <div class="two">
+    <section class="card">
+      <h2>Outputs this week</h2>
+      {% if week.outputs %}
+      <ul class="plain">
+        {% for o in week.outputs %}
+        <li><i class="sw" style="background: {{ cc(o.stage) }}"></i><strong>{{ o.stage }}</strong>: {{ o.what }}
+          {% if o.url|safe_link %}<a href="{{ o.url }}" target="_blank" rel="noopener noreferrer">link</a>{% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="muted">No outputs this week yet.</p>{% endif %}
+      <div class="stats">
+        <div><span class="num">{{ week.outputs_count }}{% if week.outputs_required is not none %}/{{ week.outputs_required }}{% endif %}</span><span class="label">outputs</span></div>
+        <div><span class="num">{{ week.floor_days }}{% if week.floor_days_required is not none %}/{{ week.floor_days_required }}{% endif %}</span><span class="label">floor days</span></div>
+        <div><span class="num">{{ week.skips_used }}</span><span class="label">skips used</span></div>
+        <div><span class="num">{{ (week.deep_minutes / 60)|round(1) }}h</span><span class="label">deep</span></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Deep hours by category</h2>
+      {% if week.deep_by_category %}
+      <ul class="catlist">
+        {% for cat, mins in week.deep_by_category.items() %}
+        <li><i class="sw" style="background: {{ cc(cat) }}"></i><span>{{ cat }}</span><strong>{{ mins|hm }}</strong></li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="muted">No deep time logged this week.</p>{% endif %}
+      <h3>Plan against what happened</h3>
+      {% if week.planned_minutes %}
+      <p>Planned {{ week.planned_minutes|hm }}, done {{ week.planned_done_minutes|hm }} ({{ completion }}%).</p>
+      {% else %}<p class="muted">No plan blocks this week.</p>{% endif %}
+      {% if week.top_lapse_reasons %}
+      <h3>What got in the way</h3>
+      <p>{% for reason, n in week.top_lapse_reasons %}{{ reason_labels.get(reason, reason) }} ×{{ n }}{{ ", " if not loop.last }}{% endfor %}</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="refH">
+    <h2 id="refH">Referee report</h2>
+    <p class="small muted">Facts only. Copy it, or send it{% if referee_name %} to {{ referee_name }}{% endif %}.</p>
+    <textarea id="report" class="field field--plain" rows="{{ 5 + week.outputs|length }}" readonly aria-label="Referee report">{{ report }}</textarea>
+    <div class="row">
+      <button class="btn btn--sm js-only" type="button" data-js="copy-btn" data-copy-target="#report">Copy</button>
+      {% if can_send %}
+      <form method="post" action="/week/send" class="inline-form">
+        <input type="hidden" name="week" value="{{ monday.isoformat() }}">
+        <button class="btn btn--sm btn--ghost" type="submit">Send to referee</button>
+      </form>
+      {% endif %}
+      {% if llm_ready %}
+      <form method="post" action="/week/narrate" class="inline-form">
+        <input type="hidden" name="week" value="{{ monday.isoformat() }}">
+        <button class="btn btn--sm btn--ghost" type="submit">Short written summary (1 free-model call)</button>
+      </form>
+      {% endif %}
+    </div>
+    {% if narration %}<blockquote class="narration">{{ narration }}</blockquote>{% endif %}
+    {% if narration_note %}<p class="small muted">{{ narration_note }}</p>{% endif %}
+  </section>
+
+  {% if is_current %}
+  <section class="card" aria-labelledby="conH">
+    <h2 id="conH">Next week's contract</h2>
+    {% if contract %}
+    <p>In force now: <strong>{{ contract.outputs_per_week }} outputs + {{ contract.floor_days_per_week }} floor days</strong>.
+      {% if next_contract and (next_contract.outputs_per_week != contract.outputs_per_week or next_contract.floor_days_per_week != contract.floor_days_per_week) %}
+      Starting next Monday: {{ next_contract.outputs_per_week }} outputs + {{ next_contract.floor_days_per_week }} floor days.{% endif %}</p>
+    {% else %}
+    <p>Baseline weeks have no contract yet. The first one starts Monday {{ first_contract|day_label if first_contract else "soon" }}; you can set its numbers here.</p>
+    {% endif %}
+    <form method="post" action="/week" class="stack-3">
+      <div class="row">
+        <label>Outputs a week <input type="number" name="outputs" min="0" max="14" value="{{ contract_outputs }}"></label>
+        <label>Floor days a week <input type="number" name="floor_days" min="0" max="7" value="{{ contract_days }}"></label>
+      </div>
+      <p class="small muted">Raising applies from this Monday, so a week that is already kept can go back to in progress.
+        Lowering applies from next Monday, so a hard day can't shrink the promise.</p>
+      <div class="card__actions">
+        <button class="btn btn--ghost" type="submit" name="action" value="keep">Keep as is</button>
+        <button class="btn" type="submit" name="action" value="change">Raise or lower to these numbers</button>
+      </div>
+    </form>
+  </section>
+  {% endif %}
+
+  <details class="disclosure" id="grid"{% if grid_open %} open{% endif %}>
+    <summary>The week, hour by hour (168 hours)</summary>
+    <div class="grid-wrap">
+      <table class="grid" aria-label="168-hour grid">
+        <thead>
+          <tr><th></th>
+            {% for d in days %}<th {% if d == today %}class="today"{% endif %}>{{ d.strftime("%a") }}<br><span class="small">{{ d.strftime("%d") }}</span></th>{% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in grid %}
+          <tr>
+            <th scope="row" class="hour">{{ row.label }}</th>
+            {% for cell in row.cells %}
+            <td class="cell {{ cell.kind }}" title="{{ cell.title }}"
+                {% if cell.category %}style="--c: {{ cc(cell.category) }}; --a: {{ cell.alpha }}"{% endif %}></td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">Rows are local hours (the day starts at {{ grid[0].label }}:00).
+      {% if aw_ok %}Faded cells are ActivityWatch suggestions. They aren't saved until you label them on the <a href="/close">Close tab</a>.
+      {% endif %}</p>
+    <h3>Totals logged this week</h3>
+    {% if grid_totals %}
+    <ul class="catlist">
+      {% for cat, mins in grid_totals %}
+      <li><i class="sw" style="background: {{ cc(cat) }}"></i><span>{{ cat }}</span><strong>{{ mins|hm }}</strong></li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="muted">Nothing logged this week yet.</p>{% endif %}
+    <div class="legend-row">{% for cat in legend %}<span class="legend-item"><i class="sw" style="background: {{ cc(cat) }}"></i>{{ cat }}</span>{% endfor %}</div>
+  </details>
+</section>
+
+<section class="world-panel" id="shelf" data-js="world-panel" data-panel="shelf" aria-label="Shelf">
+  <div class="two">
+    <section class="card" data-ach aria-labelledby="achH">
+      <div class="card__head"><h2 id="achH">Achievements</h2><span class="xs muted"><span class="num" data-js="ach-count">{{ shelf.counts.unlocked }}</span> of <span data-js="ach-total">{{ shelf.counts.total }}</span></span></div>
+      <div class="ach" data-js="ach-grid">
+        {% for a in shelf.achievements %}
+        <div class="achi{{ ' on' if a.unlocked }}" data-key="{{ a.key }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ ach_icon.get(a.key, 'sparkles') }}"/></svg><span class="tier">{{ a.tier }}</span><b>{{ a.name }}</b><small>{{ a.desc }}</small></div>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="card" aria-labelledby="ladH">
+      <div class="card__head"><h2 id="ladH">Ladders and landmarks</h2></div>
+      <div class="ladders" data-js="ladders">
+        {% for l in shelf.ladders %}
+        <div class="ladder {{ ladder_class.get(l.category, '') }}"><span class="ladder__ic"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ cat_icon.get(l.category, 'landmark') }}"/></svg></span>
+          <div><b>{{ l.category }} · {{ l.landmark }}</b><div class="nodes">{% for n in l.nodes %}<i{% if n.unlocked %} class="on"{% endif %}></i>{% endfor %}</div>
+            <small>{{ l.nodes_unlocked }} of {{ l.nodes|length }} · {{ l.next_text }}</small></div></div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="ledH">
+    <div class="card__head"><h2 id="ledH">Outputs</h2><span class="xs muted">{{ shelf.outputs|length }} so far</span></div>
+    {% if shelf.outputs %}
+    <div class="table-wrap">
+    <table class="ledger">
+      <thead><tr><th>Date</th><th>Stage</th><th>What it shows</th><th>Link</th><th>Check</th><th>Public</th><th></th></tr></thead>
+      <tbody>
+        {% for o in shelf.outputs %}
+        <tr>
+          <td>{{ o.date }}</td>
+          <td><i class="sw" style="background: {{ cc(o.stage) }}"></i>{{ o.stage }}</td>
+          <td>{{ o.what }}</td>
+          <td>{% if o.url|safe_link %}<a href="{{ o.url }}" target="_blank" rel="noopener noreferrer">open</a>{% else %}<span class="muted">none</span>{% endif %}</td>
+          <td>{{ o.verified_by }}</td>
+          <td><form method="post" action="/outputs/{{ o.id }}/public" class="inline-form"><button class="link" type="submit">{{ "Public" if o.is_public else "Private" }}</button></form></td>
+          <td><form method="post" action="/outputs/{{ o.id }}/delete" class="inline-form"><button class="link danger" type="submit">Delete</button></form></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% else %}
+    <p class="muted">Nothing shipped yet. The first one is the hardest.</p>
+    {% endif %}
+    <h3>Add one</h3>
+    <form method="post" action="/outputs" data-enhance="output" class="stack-4">
+      <div class="chips">
+        {% for s in output_stages %}
+        <label class="chip chip--{{ ladder_chip[s] }}"><input type="radio" name="stage" value="{{ s }}" {% if s == default_category %}checked{% endif %}><span>{{ s }}</span></label>
+        {% endfor %}
+      </div>
+      <input class="field field--plain" name="what" type="text" autocomplete="off" placeholder="One line on what it shows" maxlength="120" aria-label="What it shows">
+      <input class="field field--plain" name="url" type="text" inputmode="url" autocomplete="off" placeholder="Link (GitHub, X, notebook...)" maxlength="500" aria-label="Link">
+      <button class="btn" type="submit">Add output</button>
+    </form>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="pcH">
+      <h2 id="pcH">Postcards</h2>
+      {% if unlocked_postcards %}
+      <div class="postcards">
+        {% for p in unlocked_postcards %}
+        <figure class="postcard">{{ postcard_art(p.id) }}<b>{{ p.title }}</b><small>{{ p.caption }}</small></figure>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="small muted">Postcards arrive with kept weeks, new districts and comebacks. Plain illustrations, nothing fake.</p>
+      {% endif %}
+    </section>
+    <section class="card" aria-labelledby="decH">
+      <h2 id="decH">Street decor</h2>
+      <p class="small muted">One piece for each kept week, in a fixed order.</p>
+      <ul class="plain">
+        {% for d in shelf.decor %}<li class="{{ '' if d.unlocked else 'muted' }}">{{ d.name }}{% if d.unlocked %} <span class="pill pill--sm">placed</span>{% endif %}</li>{% endfor %}
+      </ul>
+    </section>
+  </div>
+  {% set sd = shelf.get("seasonal_decor") if shelf is mapping else none %}
+  {% if sd %}
+  <section class="card" aria-labelledby="seasonH">
+    <h2 id="seasonH">Seasonal decorations</h2>
+    <p class="small muted">Cosmetic only. A decoration is earned by showing up during its week, and the city wears it again every year.</p>
+    <ul class="seasonlist">
+      {% for d in sd %}<li class="{{ '' if d.earned else 'muted' }}"><span><b>{{ d.name }}</b> <span class="xs muted">{{ d.start[5:] }} to {{ d.end[5:] }}</span></span>{% if d.active %}<span class="pill pill--sm pill--soft">up now</span>{% elif d.earned %}<span class="pill pill--sm">earned</span>{% endif %}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</section>
+
+<section class="world-panel" id="lines" data-js="world-panel" data-panel="lines" aria-labelledby="linesH">
+  {% set sub = shelf.get("subway") if shelf is mapping else none %}
+  <div class="card linesintro">
+    <div class="linesintro__t"><span class="linesintro__ic" aria-hidden="true"><svg class="ic"><use href="{{ icons }}#i-train-front"/></svg></span>
+      <div><h2 id="linesH">Your lines</h2><p class="small muted">Each ladder is a subway line. Every station is a node you unlocked, and the train sits where your work has taken it. It only moves forward.</p></div></div>
+    <ul class="linekey" aria-label="Key">
+      <li><i class="k k--passed"></i>Reached</li><li><i class="k k--next"></i>Next stop</li><li><i class="k k--ahead"></i>Ahead</li>
+    </ul>
+  </div>
+  <div class="lines" data-js="subway">
+    {% if sub and sub.lines %}
+    {% for l in sub.lines %}
+    <section class="card sline" style="--lc:{{ l.color }}" aria-label="{{ l.name }}">
+      <header class="sline__head"><span class="bullet" aria-hidden="true">{{ l.bullet }}</span><h3>{{ l.name }}</h3><span class="pill pill--sm">{{ l.landmark }}</span></header>
+      <ol class="sline__list">
+        {% for st in l.stations %}<li class="is-{{ st.status }}"><b>{{ st.n }}. {{ st.name }}</b> <span class="muted">{{ "reached" if st.unlocked else ("next stop" if st.status == "next" else "ahead") }}</span></li>{% endfor %}
+      </ol>
+      <p class="small muted">{{ l.next_text }}</p>
+    </section>
+    {% endfor %}
+    {% else %}<p class="muted">The lines appear once the game layer has loaded.</p>{% endif %}
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}<script src="{{ asset_base }}/app/subway.js" defer></script>{% endblock %}

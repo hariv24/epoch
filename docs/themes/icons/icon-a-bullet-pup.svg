@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<title>Underdog icon A - Bullet Pup</title>
+<rect width="512" height="512" fill="#FFFFFF"/><circle cx="256" cy="256" r="192" fill="#0039A6"/>
+    <g transform="translate(131 140) scale(2.5)" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round">
+      <path d="M20 44 L12 10 Q12 4 18 8 L42 24 Z"/>
+      <path d="M78 26 Q98 22 98 52 Q97 70 84 68 Q76 56 78 26 Z"/>
+      <path d="M17 46 C17 28 33 20 50 20 C67 20 83 28 83 46 L83 58 C83 66 78 72 74 76 C70 88 60 92 50 92 C40 92 30 88 26 76 C22 72 17 66 17 58 Z"/>
+    </g>
+    <g transform="translate(131 140) scale(2.5)">
+      <circle cx="65" cy="47" r="12.5" fill="#0039A6"/>
+      <circle cx="35" cy="48" r="5.2" fill="#0039A6"/><circle cx="65" cy="47" r="4.6" fill="#FFFFFF"/>
+      <path d="M41 66 H59 Q59 76 50 79 Q41 76 41 66 Z" fill="#0039A6"/>
+      <path d="M50 79 V84" stroke="#0039A6" stroke-width="3" fill="none"/><path d="M41 85 Q50 90 59 85" stroke="#0039A6" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </g>
+</svg>

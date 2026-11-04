@@ -1,0 +1,10 @@
+{# One calm confirm sheet for buying and moving. money.js fills it in; nothing is bought until "Yes" is pressed. #}
+<dialog class="sheet" data-js="confirm-dlg" aria-labelledby="cfH">
+  <div class="sheet__panel">
+    <div><p class="eyebrow" data-js="cf-eyebrow">Confirm</p><h2 id="cfH" data-js="cf-title">Buy this?</h2></div>
+    <dl class="m-quote" data-js="cf-lines"></dl>
+    <p class="small muted" data-js="cf-note"></p>
+    <p class="field-error" data-js="cf-error" role="alert" hidden></p>
+    <div class="sheet__actions"><button class="btn btn--ghost" type="button" data-close-dialog>Not now</button><button class="btn" type="button" data-js="cf-yes">Yes, buy it</button></div>
+  </div>
+</dialog>

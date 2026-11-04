@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 64">
+<!-- Bodega background: one red + one cream stripe of the awning with its scalloped valance; tiles horizontally.
+     Deliberately dim (translucent, so the same file works on the dark and the light half). -->
+<rect width="40" height="46" fill="#FF2E48" fill-opacity=".2"/><rect x="40" width="40" height="46" fill="#FFF0CF" fill-opacity=".09"/>
+<path d="M0 46 h40 a20 12 0 0 1 -40 0z" fill="#FF2E48" fill-opacity=".2"/><path d="M40 46 h40 a20 12 0 0 1 -40 0z" fill="#FFF0CF" fill-opacity=".09"/>
+<rect width="80" height="5" fill="#000" fill-opacity=".3"/>
+<rect y="5" width="80" height="3" fill="#fff" fill-opacity=".05"/>
+</svg>

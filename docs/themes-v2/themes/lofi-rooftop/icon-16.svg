@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+<!-- Lofi Rooftop 16px: tank on legs + roof, teal headphone cups and band -->
+<rect width="16" height="16" rx="3.5" fill="#3A1A4E"/>
+<path d="M6 12 v3 M10 12 v3" stroke="#170B24" stroke-width="1.2"/>
+<path d="M4.4 6.6 L8 4 L11.6 6.6Z" fill="#B0566A"/>
+<rect x="5" y="6.4" width="6" height="6" rx=".8" fill="#E0785A"/><rect x="5" y="9" width="6" height=".9" fill="#7A3446"/>
+<path d="M3.2 9.5 C3.2 0.6 12.8 0.6 12.8 9.5" fill="none" stroke="#5FD4C9" stroke-width="1.4"/>
+<rect x="2" y="7.5" width="3" height="5" rx="1.5" fill="#6FE0D4"/><rect x="11" y="7.5" width="3" height="5" rx="1.5" fill="#6FE0D4"/>
+</svg>

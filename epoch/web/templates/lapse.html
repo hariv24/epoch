@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "_lapse_form.html" import lapse_form %}
+{% block title %}Yesterday{% endblock %}
+{% block content %}
+{% if not missed %}
+<div class="view-head"><div><h1>Nothing to look back on</h1><p>Today is a fresh page. <a href="/">Back to Today</a></p></div></div>
+{% else %}
+<div class="view-head"><div><h1>{{ missed|day_label }}'s lot is waiting</h1></div></div>
+<section class="card">
+  {{ lapse_form(lapse_data) }}
+</section>
+{% endif %}
+{% endblock %}

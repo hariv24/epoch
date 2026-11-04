@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">
+<!-- Washington Square header mark: pawn + its queen shadow, no tile (the header drop-shadow adds the ledge).
+     Inline in the page: pawn = the ink token (cream at night, aubergine by day), queen = the amber token (NYU violet). -->
+<g fill="#B98AFF" style="fill:var(--amber,#B98AFF)"><path d="M15.5 31c-.3-1.8.9-3 2.7-3.5L19.4 19h-1.2v-1.4h7v1.4H24l1.2 8.5c1.8.5 3 1.7 2.7 3.5z"/>
+<path d="M18.6 17.8L16.9 11.2l1.7 1.6.9-3.4 1.2 3 1.2-3.8 1.2 3.8 1.2-3 .9 3.4 1.7-1.6-1.7 6.6z"/></g>
+<g fill="#FBF3E6" style="fill:var(--ink,#FBF3E6)"><path d="M4 31c-.4-1.7.6-2.9 2.3-3.4-.1-2 .3-3.8 1.2-5H6v-1.6h6.4v1.6h-1.5c.9 1.2 1.3 3 1.2 5 1.7.5 2.7 1.7 2.3 3.4z"/>
+<circle cx="9.2" cy="16.6" r="3.7"/></g>
+</svg>

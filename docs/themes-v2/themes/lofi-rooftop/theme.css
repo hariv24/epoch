@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Lofi Rooftop: lo-fi beats to grind to. Plum dusk outside, rain on the glass, a pothos trailing
+   off the window frame, a desk lamp's peach glow, and the water towers of the block below.
+   Night Clay form language untouched; this file only recolours tokens and adds the background.
+   Dark-first ("after sunset"); light half is "golden hour".
+   ========================================================================== */
+:root{
+  /* surfaces + text: plum night, warm cream ink */
+  --bg:        light-dark(#FFF3EA, #171029);
+  --s1:        light-dark(#FFFFFF, #211936);
+  --s2:        light-dark(#FBE6DA, #2C2247);
+  --line:      light-dark(#EFCFC0, #43356B);
+  --line-strong: light-dark(#94738F, #7F6CB6);
+  --ink:       light-dark(#2A1830, #FFF1E6);
+  --muted:     light-dark(#674C6B, #CBB8D9);
+  --faint:     light-dark(#7C6481, #A898C0);
+
+  /* reward: the desk-lamp peach */
+  --amber:       light-dark(#CC6428, #FFA96B);
+  --amber-edge:  light-dark(#8E3F12, #C46A3A);
+  --on-amber:    light-dark(#1A0A02, #2A1206);
+  --amber-ink:   light-dark(#99441A, #FFBC90);
+  --amber-soft:  light-dark(#FFDCC8, #40243A);
+
+  /* secondary: rainy-window teal */
+  --violet:      light-dark(#0D7068, #5FD4C9);
+  --violet-edge: light-dark(#084C46, #2B8D84);
+  --on-violet:   light-dark(#FFFFFF, #062420);
+  --violet-soft: light-dark(#D3F1EC, #173B44);
+
+  /* done: the pothos green */
+  --mint:        light-dark(#2D7524, #8EDB7B);
+  --mint-edge:   light-dark(#1D5017, #4C9A42);
+  --on-mint:     light-dark(#FFFFFF, #0B1E07);
+  --mint-soft:   light-dark(#E0F3D8, #1F3A26);
+
+  --flame:       light-dark(#C2410C, #FF8A5C);
+  --sky:         light-dark(#0369A1, #7CC8FF);
+  --rest:        light-dark(#6B5FB5, #C3B1FF);
+  --error:       light-dark(#B42318, #FF8F9A);
+  --focus:       light-dark(#0D7068, #FFE0C2);
+
+  --c-python:  light-dark(#2F6FED, #7BB6FF);
+  --c-math:    light-dark(#6D4FE0, #B9A3FF);
+  --c-ml:      light-dark(#2D7524, #8EDB7B);
+  --c-papers:  light-dark(#C2412A, #FF9A73);
+  --c-writing: light-dark(#B8239B, #F59AD8);
+  --c-drift:   light-dark(#7C6481, #A898C0);
+
+  --lift:   light-dark(rgb(110 40 70 / .20), rgb(8 2 20 / .6));
+  --gloss:  light-dark(rgb(255 255 255 / .75), rgb(255 228 250 / .09));
+  --scrim:  light-dark(rgb(42 24 48 / .45), rgb(10 5 24 / .74));
+  --glow-a: light-dark(#FFD9BE, #4A2152);   /* lamp / sunset, top right */
+  --glow-b: light-dark(#D3F1EC, #133B4A);   /* teal rain light, bottom left */
+
+  /* background-only colours (not read by components) */
+  --lr-haze:  light-dark(#FFD2BE, #4A1D48);   /* the last of the sunset on the horizon */
+  --lr-lamp:  light-dark(#FFE6C8, #3D2236);   /* desk lamp pool */
+}
+
+/* ---- background: sky wash + lamp glow + horizon haze (replaces the Night Clay glows) ---- */
+body::before{
+  background:
+    radial-gradient(560px 360px at 22% -4%, var(--lr-lamp), transparent 70%),
+    radial-gradient(900px 520px at 92% -10%, var(--glow-a), transparent 62%),
+    radial-gradient(760px 520px at -8% 108%, var(--glow-b), transparent 58%),
+    linear-gradient(to top, var(--lr-haze), transparent 52%);
+}
+/* ---- pothos at the top corners + a string of warm bulbs across the top ---- */
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    url("vines.svg") right -40px top -40px / 250px auto no-repeat,
+    url("lights.svg") left top / 240px 64px repeat-x,
+    url("vines.svg") left -110px top -50px / 220px auto no-repeat;
+}
+/* ---- rooftops + water towers along the bottom ---- */
+.shell::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("bg.svg") center bottom / 1600px 320px repeat-x;
+}
+/* TWEAK: light (golden hour) half: pale rooftops instead of night ones, quieter drops and vines */
+:root[data-theme="light"] .shell::after{background-image:url("bg-light.svg")}
+/* TWEAK: light (golden hour) half: pale rooftops instead of night ones, quieter drops and vines */
+:root[data-theme="light"] body::after, :root[data-theme="light"] .app::after{opacity:.5}
+@media (prefers-color-scheme: light){
+  /* TWEAK: light (golden hour) half, same as above when the OS is light */
+  :root:not([data-theme="dark"]) .shell::after{background-image:url("bg-light.svg")}
+  /* TWEAK: light (golden hour) half, same as above when the OS is light */
+  :root:not([data-theme="dark"]) body::after, :root:not([data-theme="dark"]) .app::after{opacity:.5}
+}
+/* ---- raindrops resting on the glass: only around the edges, they fade out under the content column ---- */
+.app::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("drops.svg") 0 0 / 300px 300px repeat;opacity:.55;
+  -webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 50%, transparent 35%, #000 100%);
+          mask-image:radial-gradient(ellipse 62% 70% at 50% 50%, transparent 35%, #000 100%);
+}
+
+/* ---- the rain itself: a rotated sheet of streaks, very faint ---- */
+.app::before{
+  content:"";position:fixed;inset:-40% -30%;z-index:-1;pointer-events:none;
+  background:url("rain.svg") 0 0 / 200px 240px repeat;
+  opacity:.2;transform:rotate(14deg);
+  -webkit-mask-image:linear-gradient(to bottom, #000 0%, rgb(0 0 0 / .35) 60%, #000 100%);
+          mask-image:linear-gradient(to bottom, #000 0%, rgb(0 0 0 / .35) 60%, #000 100%);
+}
+@keyframes lr-rain{ from{transform:rotate(14deg) translateY(0)} to{transform:rotate(14deg) translateY(240px)} }
+@media (prefers-reduced-motion: no-preference){
+  .app::before{animation:lr-rain 2.2s linear infinite}
+}
+/* TWEAK: the app's own motion switch also stops the rain (and "on" forces it) */
+:root[data-motion="off"] .app::before{animation:none}
+/* TWEAK: the app's own motion switch also stops the rain (and "on" forces it) */
+:root[data-motion="on"] .app::before{animation:lr-rain 2.2s linear infinite}
+
+/* TWEAK: glass chips over the city take the plum night instead of navy */
+.stage__badge .pill, .stage__tools .icon-btn, .camtag{background:rgb(23 14 40 / .72)}
+/* TWEAK: focus dial glow follows the new lamp-peach reward (and pothos green on breaks) */
+.focus{--arc-glow:rgb(255 169 107 / .26)}
+/* TWEAK: focus dial glow follows the new lamp-peach reward (and pothos green on breaks) */
+.focus[data-phase="break"]{--arc-glow:rgb(142 219 123 / .2)}
+/* TWEAK: +XP float glows lamp-peach */
+.floaty{text-shadow:0 2px 0 var(--amber-edge),0 0 14px rgb(255 169 107 / .55)}
+
+/* phones: one smaller vine on the right, so the header row stays calm */
+@media (max-width:600px){
+  body::after{
+    background:
+      url("vines.svg") right -50px top -60px / 170px auto no-repeat,
+      url("lights.svg") left top / 200px 53px repeat-x;
+  }
+  .shell::after{background-size:1200px 240px}
+}

@@ -1,0 +1,13 @@
+{
+  "_comment": "Shibuya Neon: ultraviolet night over a magenta-hazed horizon, warm windows with cyan accents, pink beacons.",
+  "skyTop": "#07030F",
+  "skyMid": "#1A0830",
+  "skyBottom": "#4A1150",
+  "fog": "#2A0F3A",
+  "windowWarm": "#FFC48A",
+  "windowCool": "#7DF3FF",
+  "accent": "#2BE4FF",
+  "beacon": "#FF3D9A",
+  "stageBg": ["#12061F", "#4A1150"],
+  "previewTint": { "css": "linear-gradient(#3A0A6A, #FF3D9A)", "blend": "color", "opacity": 0.22 }
+}

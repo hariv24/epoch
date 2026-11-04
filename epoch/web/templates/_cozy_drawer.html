@@ -1,0 +1,50 @@
+{# The daily missions drawer and the chest card (docs/COZY.md 4.6). cozy.js fills both from GET /api/missions and POST /api/chest/open.
+   Without JavaScript nothing here is shown: the drawer is a closed <dialog>, the chest card a <template>. Quiet mode never opens them. #}
+{% set icons = "/static/app/icons.svg" %}
+<dialog class="sheet cozy-sheet" id="missionsDlg" data-js="missions-dlg" aria-labelledby="missionsH">
+  <div class="sheet__panel">
+    <div class="cozy-sheet__head">
+      <div><p class="eyebrow" data-js="missions-date">Today</p><h2 id="missionsH">Daily missions</h2></div>
+      <button class="icon-btn" type="button" data-close-dialog aria-label="Close the missions"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-x"/></svg></button>
+    </div>
+    <p class="small muted" data-js="missions-msg" aria-live="polite">Three small missions a day. All three fill a chest.</p>
+    <ol class="mlist" data-js="missions-list" aria-label="Today's missions"></ol>
+    <section class="mchest" data-js="missions-chest" aria-labelledby="mchestH">
+      <span class="mchest__ic" aria-hidden="true" data-js="mchest-art"></span>
+      <div class="mchest__t"><h3 id="mchestH" data-js="mchest-title">The chest</h3><p class="small muted" data-js="mchest-sub">Finish all three missions and a chest appears in your home.</p></div>
+      <button class="btn btn--sm" type="button" data-js="mchest-open" hidden>Open it</button>
+    </section>
+    <p class="xs muted mlist__foot">Separate from the three stars. The amounts follow your own last two weeks, so a light week asks for less. Missions are fixed for the day once it starts. <a href="/settings#game">Switch daily missions off</a></p>
+  </div>
+</dialog>
+
+<template data-js="chest-tpl">
+  <div class="cozy-chest" data-js="chest-layer">
+    <div class="cozy-chest__scene" aria-hidden="true">
+      <div class="cozy-chest__rays"></div>
+      <svg class="cozy-chest__crate" viewBox="0 0 160 140" focusable="false">
+        <ellipse cx="80" cy="128" rx="58" ry="8" fill="rgb(4 12 28 / .35)"/>
+        <g class="cozy-chest__body">
+          <rect x="22" y="58" width="116" height="66" rx="6" fill="#9a6a44"/>
+          <rect x="22" y="58" width="116" height="66" rx="6" fill="none" stroke="#5b4128" stroke-width="3"/>
+          <path d="M24 80h112M24 102h112" stroke="#7b5536" stroke-width="3"/>
+          <rect x="72" y="58" width="16" height="66" fill="#8cc4ee"/><rect x="72" y="58" width="16" height="66" fill="none" stroke="#3d7ab5" stroke-width="1.5"/>
+          <rect x="22" y="58" width="10" height="66" fill="#7b5536"/><rect x="128" y="58" width="10" height="66" fill="#7b5536"/>
+          <rect x="74" y="66" width="12" height="14" rx="2" fill="#c9a14a" stroke="#8a6a20" stroke-width="1.5"/>
+        </g>
+        <g class="cozy-chest__lid">
+          <path d="M18 60 Q18 30 80 28 Q142 30 142 60 Z" fill="#a8774f" stroke="#5b4128" stroke-width="3"/>
+          <path d="M72 29.6 Q76 29.3 80 29.3 Q84 29.3 88 29.6 L88 60 L72 60 Z" fill="#8cc4ee" stroke="#3d7ab5" stroke-width="1.5"/>
+          <path d="M80 30 C66 14 52 18 62 28 M80 30 C94 14 108 18 98 28" fill="none" stroke="#8cc4ee" stroke-width="5" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <div class="cozy-chest__card" role="dialog" aria-modal="false" aria-labelledby="chestH" data-js="chest-card" hidden>
+      <p class="eyebrow" data-js="chest-when">Your chest</p>
+      <h2 id="chestH" data-js="chest-title">Your chest is ready.</h2>
+      <ul class="cozy-chest__items" data-js="chest-items"></ul>
+      <p class="small muted" data-js="chest-sub"></p>
+      <div class="cozy-chest__actions"><button class="btn" type="button" data-js="chest-collect">Collect</button></div>
+    </div>
+  </div>
+</template>

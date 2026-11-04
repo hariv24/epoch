@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Morningside icon: "Dropped pin, 116th St".
+     A long-haul dotted route (the underdog's flight in) lands as a clay map pin on the Morningside Heights grid.
+     The pin head holds a Low-Library-style shallow dome over a colonnade, with ONE warm lit door: you're expected.
+     Architecture line-art only; no university logo, crest, crown or wordmark. Maskable: key shapes inside r=205. -->
+<defs>
+  <linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="#10305D"/><stop offset="1" stop-color="#071833"/></linearGradient>
+  <radialGradient id="glow" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#5E9BD6" stop-opacity=".35"/><stop offset="1" stop-color="#5E9BD6" stop-opacity="0"/></radialGradient>
+  <linearGradient id="pin" x2="0" y2="1"><stop offset="0" stop-color="#9ACDF2"/><stop offset="1" stop-color="#6EA6D8"/></linearGradient>
+</defs>
+<rect width="512" height="512" fill="url(#g)"/>
+<g stroke="#1A3B6C" stroke-width="9"><path d="M0 132H512M0 244H512M0 356H512M0 468H512M100 0V512M212 0V512M324 0V512M436 0V512"/></g>
+<path d="M-30 540L340 -30" stroke="#21497E" stroke-width="34"/>
+<rect width="512" height="512" fill="url(#glow)"/>
+<ellipse cx="256" cy="452" rx="66" ry="17" fill="none" stroke="#B9D9EB" stroke-width="6" opacity=".5"/>
+<ellipse cx="256" cy="452" rx="32" ry="9" fill="#B9D9EB" opacity=".65"/>
+<path d="M66 432C62 352 92 300 140 268" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-dasharray="0.1 27" opacity=".9"/>
+<path d="M256 450C214 396 124 326 124 222a132 132 0 0 1 264 0c0 104-90 174-132 228z" fill="#24578F" transform="translate(0 14)"/>
+<path d="M256 450C214 396 124 326 124 222a132 132 0 0 1 264 0c0 104-90 174-132 228z" fill="url(#pin)"/>
+<path d="M158 188a102 102 0 0 1 64-76" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="13" fill="none" stroke-linecap="round"/>
+<g fill="#FFFFFF">
+  <path d="M194 204c0-31 28-50 62-50s62 19 62 50z"/><rect x="248" y="136" width="16" height="22" rx="5"/>
+  <rect x="180" y="202" width="152" height="15" rx="5"/>
+  <rect x="188" y="223" width="13" height="44" rx="4"/><rect x="210" y="223" width="13" height="44" rx="4"/><rect x="232" y="223" width="13" height="44" rx="4"/>
+  <rect x="267" y="223" width="13" height="44" rx="4"/><rect x="289" y="223" width="13" height="44" rx="4"/><rect x="311" y="223" width="13" height="44" rx="4"/>
+  <rect x="174" y="270" width="164" height="12" rx="4"/><rect x="162" y="287" width="188" height="12" rx="4"/>
+</g>
+<path d="M248 267v-26a8 8 0 0 1 16 0v26z" fill="#FFCE7A"/>
+</svg>

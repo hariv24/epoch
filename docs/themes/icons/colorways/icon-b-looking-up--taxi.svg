@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<title>Underdog icon B - Looking Up</title>
+<rect width="512" height="512" fill="#141416"/><rect x="56" y="428" width="400" height="14" rx="7" fill="#555961"/>
+    <g fill="#F5F2E8">
+      <rect x="338" y="46" width="12" height="62"/>
+      <path d="M318 150 L326 106 H362 L370 150 Z"/>
+      <rect x="302" y="148" width="84" height="64"/>
+      <rect x="282" y="210" width="124" height="96"/>
+      <rect x="254" y="304" width="180" height="124"/>
+    </g>
+    <g fill="#141416">
+      <rect x="341" y="170" width="6" height="30"/><rect x="318" y="170" width="6" height="30"/><rect x="364" y="170" width="6" height="30"/>
+      <rect x="304" y="232" width="8" height="52"/><rect x="332" y="232" width="8" height="52"/><rect x="360" y="232" width="8" height="52"/><rect x="388" y="232" width="8" height="52"/>
+      <rect x="276" y="330" width="10" height="80"/><rect x="308" y="330" width="10" height="80"/><rect x="340" y="330" width="10" height="80"/><rect x="372" y="330" width="10" height="80"/><rect x="404" y="330" width="10" height="80"/>
+    </g>
+    <g fill="#FFC82C"><rect x="339" y="236" width="12" height="20"/><rect x="371" y="334" width="12" height="22"/></g>
+    <g transform="translate(60 248) scale(1.9)" fill="#FFC82C" stroke="#FFC82C" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M8 96 Q4 70 18 54 Q30 42 46 40 L56 40 L64 96 Z"/>
+      <path d="M14 96 Q-4 94 -2 72" fill="none" stroke-width="9"/>
+      <path d="M44 50 L64 36 L72 96 H50 Z"/>
+      <path d="M50 38 Q46 20 60 14 Q76 8 82 20 Q82 34 70 40 Z"/>
+      <path d="M72 14 L96 -6 Q104 -6 102 2 Q100 8 82 24 Z"/>
+      <path d="M56 12 Q44 10 38 22 Q40 36 52 32 Z"/>
+    </g>
+</svg>

@@ -1,0 +1,20 @@
+{# "How your tower grows": a small info button plus a native popover (no JavaScript needed). Included on Today and on the
+   Focus Screen's construction cam. Numbers come from the user's own settings through tower_how(request). #}
+{% set H = tower_how(request) %}
+<button class="infobtn" type="button" popovertarget="towerHow" aria-haspopup="dialog" aria-label="How your tower grows" title="How your tower grows"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-info"/></svg></button>
+<div id="towerHow" class="howpop" popover role="dialog" aria-labelledby="towerHowH">
+  <div class="howpop__head"><h3 id="towerHowH">How your tower grows</h3>
+    <button class="icon-btn" type="button" popovertarget="towerHow" popovertargetaction="hide" aria-label="Close"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-x"/></svg></button></div>
+  <ul class="howpop__list">
+    <li><b>One tower a day.</b> Each day gets its own tower on your Morningside block. Tomorrow starts a new one.</li>
+    <li><b>1 floor = {{ H.mpf }} minutes of deep focus.</b> Deep focus is study you were really concentrating on. Rest and drift never remove floors.</li>
+    <li><b>Doors open at {{ H.door_min }} minutes</b> (floor {{ H.door_floor }}). That is the day's floor: reach it and the day counts.</li>
+    <li><b>The crown lights at your daily target:</b> {{ H.weekday_text }} on job days (floor {{ H.weekday_floor }}), {{ H.weekend_text }} on other days (floor {{ H.weekend_floor }}).</li>
+    <li><b>It tops out at {{ H.max_floors }} floors = {{ H.cap_text }}.</b> Extra time is still shown, it just doesn't add floors or XP.</li>
+    <li><b>Each thing you ship adds a beacon</b> on the roof.</li>
+    <li><b>Stars on the roof:</b> one for your first log, one when the doors open, and one for {{ H.star_text }} of deep focus.</li>
+    <li><b>Late nights:</b> your day runs until {{ H.day_starts }}, so 1:30 AM study counts for the day before.
+      {% if H.cutoff_label %}Deep minutes after {{ H.cutoff_label }} are shown but don't count.{% else %}Every minute counts, no sleep cutoff.{% endif %}</li>
+  </ul>
+  <p class="small muted howpop__foot"><a href="/settings#f-day_start_hour">Change these in Settings</a></p>
+</div>

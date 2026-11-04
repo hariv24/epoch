@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Washington Square · "Village dusk"
+   Night Clay's clay, radii, fonts and layout, repainted for a Greenwich Village dusk:
+   aubergine surfaces, NYU violet as the ONE reward colour (--amber slot), a warm brownstone-peach
+   secondary (--violet slot), cafe-light gold for the flame. Dark-first; the light half is warm stone.
+   ========================================================================== */
+:root{
+  --bg:          light-dark(#F7F1E8, #160A26);
+  --s1:          light-dark(#FFFCF7, #221236);
+  --s2:          light-dark(#F0E6D8, #2E1A47);
+  --line:        light-dark(#E2D3BE, #47296D);
+  --line-strong: light-dark(#86719C, #8C6CBA);
+  --ink:         light-dark(#22093A, #FBF4FF);
+  --muted:       light-dark(#574470, #CDB9E5);
+  --faint:       light-dark(#6D5A84, #B8A2D6);
+
+  /* reward: NYU violet (deep in the light, lit-up in the dark) */
+  --amber:       light-dark(#57068C, #B98AFF);
+  --amber-edge:  light-dark(#33004F, #6B2DB8);
+  --on-amber:    light-dark(#FFFFFF, #19042F);
+  --amber-ink:   light-dark(#57068C, #D2B3FF);
+  --amber-soft:  light-dark(#EDE0F7, #3A1D5E);
+
+  /* secondary: brownstone / dusk peach */
+  --violet:      light-dark(#A84A22, #FFB48C);
+  --violet-edge: light-dark(#6E2A0E, #C4683C);
+  --on-violet:   light-dark(#FFFFFF, #2A0E00);
+  --violet-soft: light-dark(#F8E3D6, #4A1E4C);
+
+  --mint:        light-dark(#08744C, #67E0B0);
+  --mint-edge:   light-dark(#054F34, #2AA677);
+  --on-mint:     light-dark(#FFFFFF, #03140D);
+  --mint-soft:   light-dark(#DCF3E8, #173A3A);
+  --flame:       light-dark(#BF3F0A, #FFA05C);
+  --sky:         light-dark(#0B65A0, #8CCBFF);
+  --rest:        light-dark(#6B54B0, #C7B4FF);
+  --error:       light-dark(#B42318, #FF9B9B);
+  --focus:       light-dark(#57068C, #F1DEFF);
+
+  --c-python:  light-dark(#2565D6, #7FB8FF);
+  --c-math:    light-dark(#7444D8, #C2A2FF);
+  --c-ml:      light-dark(#08744C, #67E0B0);
+  --c-papers:  light-dark(#C8452A, #FF9A78);
+  --c-writing: light-dark(#B0248F, #FF94DD);
+  --c-drift:   light-dark(#6D6585, #ABA0C2);
+
+  --lift:   light-dark(rgb(70 30 90 / .20), rgb(4 0 10 / .60));
+  --gloss:  light-dark(rgb(255 255 255 / .85), rgb(245 225 255 / .10));
+  --scrim:  light-dark(rgb(34 9 58 / .45), rgb(8 2 16 / .74));
+  --glow-a: light-dark(#EADCF6, #3D1468);
+  --glow-b: light-dark(#FBE1CF, #4A1A3E);
+}
+
+/* Glows: violet dusk sky top right, a low peach sunset coming up from the bottom (the end of Fifth Avenue). */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 560px at 90% -12%, var(--glow-a), transparent 62%),
+    radial-gradient(1200px 420px at 50% 112%, var(--glow-b), transparent 70%),
+    radial-gradient(700px 480px at -8% 100%, light-dark(rgb(87 6 140 / .08), rgb(185 138 255 / .10)), transparent 70%)}
+
+/* Decoration: the Village street line (brownstones, water towers, lamps, the Arch) along the bottom edge,
+   and a sagging string of cafe lights along the top. Pure alpha masks; one warm colour from the tokens. */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:light-dark(rgb(87 6 140 / .10), rgb(255 205 170 / .10));
+  -webkit-mask-image:url("bg.svg"), url("bg-lights.svg");
+          mask-image:url("bg.svg"), url("bg-lights.svg");
+  -webkit-mask-size:max(1280px, 100vw) auto, 700px auto;
+          mask-size:max(1280px, 100vw) auto, 700px auto;
+  -webkit-mask-position:center bottom, center top;
+          mask-position:center bottom, center top;
+  -webkit-mask-repeat:no-repeat, repeat-x;
+          mask-repeat:no-repeat, repeat-x}
+
+/* TWEAK: glass chips over the 3D city use the aubergine night instead of Night Clay's midnight */
+.stage__badge .pill, .stage__tools .icon-btn, .camtag{background:rgb(22 10 38 / .72)}
+/* TWEAK: the focus dial glow follows the violet reward colour */
+.focus{--arc-glow:rgb(185 138 255 / .28)}
+/* TWEAK: the +XP float glows violet */
+.floaty{text-shadow:0 2px 0 var(--amber-edge), 0 0 14px rgb(185 138 255 / .55)}

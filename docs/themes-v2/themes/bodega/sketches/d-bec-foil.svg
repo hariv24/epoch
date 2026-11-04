@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch D: a bacon-egg-and-cheese, cut and half-unwrapped from foil -->
+<rect width="512" height="512" fill="#E23B3B"/>
+<path d="M96 300 L256 160 L416 300 L380 400 H132Z" fill="#C9CCD2"/>
+<path d="M130 300 C170 200 342 200 382 300Z" fill="#E8A94A"/>
+<rect x="128" y="292" width="256" height="16" fill="#FFD23F"/>
+<rect x="128" y="276" width="256" height="16" fill="#C2452A"/>
+<rect x="128" y="260" width="256" height="18" rx="6" fill="#FFF3D0"/>
+<path d="M130 300 C170 340 342 340 382 300Z" fill="#E8A94A"/>
+</svg>

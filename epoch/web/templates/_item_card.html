@@ -1,0 +1,47 @@
+{# One shop item. it = an item from /api/shop (aisles[].items[] or events[]). #}
+{% macro item_card(it) %}
+{% set ev = it.event %}
+<article class="item item--{{ it.state }}{% if it.owned %} is-owned{% endif %}{% if it.equipped %} is-on{% endif %}" data-item="{{ it.id }}" data-aisle="{{ it.aisle }}" data-category="{{ it.category or '' }}" data-name="{{ it.name }}">
+  <div class="item__art item__art--{{ 'card' if it.aisle == 'experience' else 'glyph' }}">{% if it.aisle == "experience" %}{{ postcard_svg(it.id, "item__pc") }}{% else %}{{ glyph(it.category) }}{% endif %}
+    {% if it.state == "locked" %}<span class="item__lock" title="Not open yet"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-lock"/></svg></span>{% endif %}</div>
+  <div class="item__body">
+    <h3 class="item__name">{{ it.name }}</h3>
+    <p class="item__blurb small muted">{{ it.blurb }}</p>
+    {% if it.activity_line %}<p class="item__act-line xs"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-sparkles"/></svg><span>{{ it.activity_line }}</span></p>{% endif %}
+    <p class="item__meta xs">
+      {% if ev %}<span class="tag tag--event">Limited time</span>{% endif %}
+      {% if it.aisle == "furniture" %}<span class="tag">{{ {"basic": "Everyday", "nice": "Nice", "penthouse": "Penthouse"}.get(it.tier, it.tier) }}</span>{% endif %}
+      {% if it.district %}<span class="tag">{{ it.district }}</span>{% endif %}
+    </p>
+    {% if ev %}<p class="item__when xs{% if ev.on %} is-on{% endif %}"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-clock"/></svg>{{ event_text(it) }}</p>{% endif %}
+  </div>
+  <div class="item__act">
+    {% if it.owned %}
+      <p class="item__own"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-check"/></svg>
+        {% if it.aisle == "furniture" %}{{ "In your room" if (it.in_room or it.slot is not none) else "In storage" }}
+        {% elif it.aisle == "outfit" %}{{ "Wearing it" if it.equipped else "Yours" }}
+        {% elif it.aisle == "upgrade" %}{{ "Showing on your towers" if it.equipped else "Yours, switched off" }}
+        {% else %}In your Passport{% endif %}</p>
+      {% if it.aisle == "furniture" %}
+        {% set inroom = it.in_room or it.slot is not none %}
+        <button class="btn btn--ghost btn--sm" type="button" data-js="equip" data-kind="furniture" data-item="{{ it.id }}" data-on="{{ 0 if inroom else 1 }}">{{ "Move to storage" if inroom else "Place in room" }}</button>
+      {% elif it.aisle == "outfit" %}
+        {% if it.equipped and it.id != "everyday" %}<button class="btn btn--ghost btn--sm" type="button" data-js="equip" data-kind="outfit" data-item="{{ it.id }}" data-on="0">Take off</button>
+        {% elif not it.equipped %}<button class="btn btn--violet btn--sm" type="button" data-js="equip" data-kind="outfit" data-item="{{ it.id }}" data-on="1">Wear it</button>{% endif %}
+      {% elif it.aisle == "upgrade" %}
+        <button class="btn {{ 'btn--ghost' if it.equipped else 'btn--violet' }} btn--sm" type="button" data-js="equip" data-kind="upgrade" data-item="{{ it.id }}" data-on="{{ 0 if it.equipped else 1 }}">{{ "Switch off" if it.equipped else "Show on towers" }}</button>
+      {% else %}<a class="btn btn--ghost btn--sm" href="/passport#{{ it.id }}">See the postcard</a>{% endif %}
+    {% elif it.state == "locked" %}
+      <p class="item__gate small"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-lock"/></svg>{{ gate_text(it) }}</p>
+      <p class="item__price num">{{ it.price|usd }}</p>
+    {% elif it.state == "off" %}
+      <p class="item__gate small">{{ it.why_not or "Not on right now." }}</p>
+      <p class="item__price num">{{ it.price|usd }}</p>
+    {% else %}
+      <p class="item__price num">{{ it.price|usd }}</p>
+      <button class="btn btn--sm" type="button" data-js="buy" data-item="{{ it.id }}" data-name="{{ it.name }}" data-price="{{ it.price }}"{% if not it.can_buy %} aria-disabled="true" data-why="{{ it.why_not }}"{% endif %}>Buy</button>
+      {% if not it.can_buy and it.why_not %}<p class="xs muted item__why">{{ it.why_not }}</p>{% endif %}
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}

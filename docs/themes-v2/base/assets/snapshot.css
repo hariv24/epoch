@@ -1,0 +1,7 @@
+/* snapshot-only rules (not part of the app). The 3D canvas is replaced by a still of the real city. */
+.stage > .snap-city{position:absolute;inset:0;inline-size:100%;block-size:100%;object-fit:cover;display:block;z-index:0}
+.stage > :not(.snap-city){z-index:1}
+/* city tint layer driven by city.json (build.mjs sets --city-tint / --city-tint-blend / --city-tint-opacity) */
+.stage::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--city-tint,none);
+  mix-blend-mode:var(--city-tint-blend,normal);opacity:var(--city-tint-opacity,0)}
+.view,.o-1,.o-2,.o-3,.o-4,.o-5,.o-6,[class*="o-"]{animation:none !important}

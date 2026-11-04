@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 440">
+<!-- Shibuya Neon: a vertical sign (tate-kanban) that spells NYC top to bottom, with an up arrow. Cyan tubes, UV frame. -->
+<defs><filter id="b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter></defs>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="18" y="16" width="84" height="408" rx="18" fill="#120A20" stroke="none"/>
+<path d="M38 16H82A20 20 0 0 1 102 36V404A20 20 0 0 1 82 424H38A20 20 0 0 1 18 404V36A20 20 0 0 1 38 16Z" stroke="#A66BFF" stroke-width="13" filter="url(#b)" opacity=".75"/><path d="M38 16H82A20 20 0 0 1 102 36V404A20 20 0 0 1 82 424H38A20 20 0 0 1 18 404V36A20 20 0 0 1 38 16Z" stroke="#A66BFF" stroke-width="5"/><path d="M38 16H82A20 20 0 0 1 102 36V404A20 20 0 0 1 82 424H38A20 20 0 0 1 18 404V36A20 20 0 0 1 38 16Z" stroke="#E6D6FF" stroke-width="1.6"/>
+<path d="M40 110V50L80 110V50" stroke="#22E4FF" stroke-width="18.2" filter="url(#b)" opacity=".75"/><path d="M40 110V50L80 110V50" stroke="#22E4FF" stroke-width="7"/><path d="M40 110V50L80 110V50" stroke="#DFFBFF" stroke-width="2.24"/>
+<path d="M40 140L60 170L80 140M60 170V200" stroke="#22E4FF" stroke-width="18.2" filter="url(#b)" opacity=".75"/><path d="M40 140L60 170L80 140M60 170V200" stroke="#22E4FF" stroke-width="7"/><path d="M40 140L60 170L80 140M60 170V200" stroke="#DFFBFF" stroke-width="2.24"/>
+<path d="M82 236Q60 222 44 240Q34 262 44 284Q60 302 82 288" stroke="#22E4FF" stroke-width="18.2" filter="url(#b)" opacity=".75"/><path d="M82 236Q60 222 44 240Q34 262 44 284Q60 302 82 288" stroke="#22E4FF" stroke-width="7"/><path d="M82 236Q60 222 44 240Q34 262 44 284Q60 302 82 288" stroke="#DFFBFF" stroke-width="2.24"/>
+<path d="M60 400V330M42 350L60 330L78 350" stroke="#FF3D9A" stroke-width="18.2" filter="url(#b)" opacity=".75"/><path d="M60 400V330M42 350L60 330L78 350" stroke="#FF3D9A" stroke-width="7"/><path d="M60 400V330M42 350L60 330L78 350" stroke="#FFD1EA" stroke-width="2.24"/>
+</g></svg>

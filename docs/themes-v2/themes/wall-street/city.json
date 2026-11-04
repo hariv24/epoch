@@ -1,0 +1,13 @@
+{
+  "_comment": "Wall Street: green-black sky like a trading floor after hours, gold windows, a few green terminal screens, green uptick beacons.",
+  "skyTop": "#030D08",
+  "skyMid": "#0A2418",
+  "skyBottom": "#1B4632",
+  "fog": "#0F2C20",
+  "windowWarm": "#FFD36B",
+  "windowCool": "#9CF2C6",
+  "accent": "#F5C542",
+  "beacon": "#3BE08E",
+  "stageBg": ["#0B2419", "#1E4A35"],
+  "previewTint": { "css": "linear-gradient(var(--city-sky-top), var(--city-sky-bottom))", "blend": "color", "opacity": 0.42 }
+}

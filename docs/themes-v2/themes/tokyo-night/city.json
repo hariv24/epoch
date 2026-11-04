@@ -1,0 +1,13 @@
+{
+  "_comment": "Tokyo Night: rainy night sky from bg_dark1 (#0c0e14) to a blue light-pollution horizon; gold + cyan windows; orange beacon (the reward colour).",
+  "skyTop": "#0C0E14",
+  "skyMid": "#16161E",
+  "skyBottom": "#283457",
+  "fog": "#1F2335",
+  "windowWarm": "#E0AF68",
+  "windowCool": "#7DCFFF",
+  "accent": "#7AA2F7",
+  "beacon": "#FF9E64",
+  "stageBg": ["#16161E", "#2A2F4F"],
+  "previewTint": { "css": "linear-gradient(#16161E, #3D59A1)", "blend": "color", "opacity": 0.3 }
+}

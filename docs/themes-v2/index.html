@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underdog Theme Board</title>
+<link rel="icon" href="themes/night-clay/icon-32.svg">
+<style>
+@font-face{font-family:"Fredoka";src:url("base/assets/fonts/fredoka-latin-wght-normal.woff2") format("woff2");font-weight:300 700}
+@font-face{font-family:"Nunito";src:url("base/assets/fonts/nunito-latin-wght-normal.woff2") format("woff2");font-weight:200 1000}
+:root{--bg:#090B16;--s1:#121528;--s2:#1A1E38;--line:#2A2F57;--ink:#F3F1FF;--muted:#A6ACD6;--amber:#FFB224;--violet:#9A8CFF;--bad:#FF8F8F;--warn:#FFCB6B;--ok:#46E0A0;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 15px/1.5 "Nunito",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 500px at 85% -10%,#2A2466,transparent 60%),radial-gradient(700px 500px at -10% 110%,#14305E,transparent 55%)}
+a{color:var(--violet)}
+header.top{max-width:1480px;margin:0 auto;padding:40px 24px 8px;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:end;justify-content:space-between}
+h1,h2,h3{font-family:"Fredoka",system-ui,sans-serif;font-weight:600;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,4vw,44px)} h1 span{color:var(--amber)}
+.lede{color:var(--muted);max-width:62ch;margin:6px 0 0}
+.how{font-size:13px;color:var(--muted);background:var(--s1);border:1.5px solid var(--line);border-radius:16px;padding:10px 14px}
+.how code{color:var(--ink)}
+main{max-width:1480px;margin:0 auto;padding:16px 24px 80px}
+.grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(min(100%,430px),1fr))}
+.tcard{background:var(--s1);border:1.5px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:inset 0 2px 0 rgb(255 255 255/.06),0 4px 0 var(--line),0 24px 40px -20px #000;display:flex;flex-direction:column}
+.tcard--ref{border-color:#6870B5}
+.tcard__frame{display:block;position:relative;aspect-ratio:1280/900;overflow:hidden;background:#000;border-bottom:1.5px solid var(--line);outline-offset:-4px}
+.tcard__frame:hover .scaler{filter:brightness(1.06)}
+.scaler{position:absolute;top:0;left:0;width:1280px;height:900px;transform-origin:0 0;pointer-events:none}
+.scaler iframe{width:1280px;height:900px;border:0;display:block}
+.ref{position:absolute;left:12px;bottom:12px;background:var(--amber);color:#1A1000;font:800 12px/1 "Nunito";padding:7px 10px;border-radius:999px}
+.tcard__body{padding:18px 20px 20px;display:grid;gap:14px}
+.tcard__head{display:flex;gap:14px;align-items:center}
+.tcard__head h2{font-size:22px}
+.vibe{margin:2px 0 0;color:var(--muted);font-size:14px}
+.ico64{border-radius:16px;flex:none}
+.sizes{display:flex;gap:16px;align-items:center;background:var(--s2);border-radius:18px;padding:12px}
+.ico180{border-radius:36px;width:180px;height:180px;flex:none}
+.sizes__small{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.sizes__small small{width:100%;color:var(--muted);font-size:12px}
+.pal{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.pal li{display:inline-flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--line);border-radius:999px;padding:3px 9px 3px 4px;font-size:12px}
+.pal i{width:16px;height:16px;border-radius:50%;box-shadow:inset 0 0 0 1px rgb(255 255 255/.25)}
+.pal code{color:var(--muted);font-size:11px}
+.links{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:14px;background:var(--amber);color:#1A1000;font-weight:800;text-decoration:none;box-shadow:inset 0 2px 0 rgb(255 255 255/.45),0 4px 0 #C47F00}
+.btn+.btn{background:var(--s2);color:var(--ink);box-shadow:inset 0 2px 0 rgb(255 255 255/.08),0 4px 0 #6870B5}
+.btn:active{transform:translateY(3px)}
+.lnk{font-size:13px;font-weight:700;padding:8px 4px}
+.status{display:flex;flex-wrap:wrap;gap:6px}
+.st{font-size:12px;font-weight:700;border-radius:8px;padding:3px 8px;background:var(--s2);color:var(--muted)}
+.st.ok{color:var(--ok)} .st.bad{color:var(--bad)} .st.warn{color:var(--warn)}
+.missing{display:inline-grid;place-items:center;border:1.5px dashed var(--line);border-radius:12px;color:var(--muted)}
+section.icons{margin-top:56px}
+section.icons h2{font-size:28px} section.icons p{color:var(--muted);margin:4px 0 16px}
+.tablewrap{overflow-x:auto;background:var(--s1);border:1.5px solid var(--line);border-radius:24px}
+table{border-collapse:collapse;width:100%;min-width:1100px}
+th,td{padding:16px 14px;text-align:center;vertical-align:middle;border-bottom:1px solid var(--line)}
+thead th{font:800 12px/1.2 "Nunito";letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tbody th{text-align:left;font-family:"Fredoka";font-size:18px;font-weight:600} tbody th a{color:var(--ink);text-decoration:none}
+td img{display:block;margin:auto}
+td:nth-child(2) img{border-radius:40px}
+.lightbg{background:#F2EFE8}
+.mask{display:inline-block;position:relative;width:108px;height:108px;overflow:hidden}
+.mask img{width:108px;height:108px}
+.mask--circle{border-radius:50%} .mask--squircle{border-radius:30%}
+.mask--safe{border-radius:0} .mask--safe i{position:absolute;inset:10%;border-radius:50%;box-shadow:0 0 0 2px #FF5BD7,0 0 0 999px rgb(0 0 0/.45)}
+.tab{display:inline-flex;align-items:center;gap:8px;background:#2B2D3A;color:#E8E8EE;border-radius:10px 10px 0 0;padding:8px 14px;font:500 12px system-ui;white-space:nowrap}
+.tab img{margin:0}
+footer{color:var(--muted);font-size:13px;text-align:center;padding:24px}
+@media (max-width:520px){header.top,main{padding-inline:16px}.ico180{width:120px;height:120px;border-radius:26px}}
+</style></head>
+<body>
+<header class="top">
+  <div><h1>Underdog <span>theme board</span></h1>
+  <p class="lede">Every theme on a real snapshot of Today and the Focus Screen. Night Clay is the reference (the app as it ships). Click a card to open the full preview; the bar in the corner of a preview flips light and dark.</p></div>
+  <div class="how">Rebuild: <code>node docs/themes-v2/build.mjs [slug ...]</code> · contract: <a href="CONTRACT.md">CONTRACT.md</a></div>
+</header>
+<main>
+  <div class="grid">
+  <article class="tcard tcard--ref" id="t-night-clay">
+    <a class="tcard__frame" href="previews/night-clay-today.html" aria-label="Open the Night Clay Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/night-clay-today.html" loading="lazy" tabindex="-1" title="Night Clay Today preview" scrolling="no"></iframe></div>
+      <span class="ref">Reference · current app</span>
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/night-clay/icon.svg" width="64" height="64" alt="">
+        <div><h2>Night Clay</h2><p class="vibe">The app as it ships. Midnight surfaces, one amber reward colour, chunky clay buttons.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/night-clay/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/night-clay/icon.svg" width="64" height="64" alt=""><img class="" src="themes/night-clay/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/night-clay/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #0D1020 · page"><i style="background:#0D1020"></i><span>bg</span><code>#0D1020</code></li><li title="s1 #161A33 · cards"><i style="background:#161A33"></i><span>s1</span><code>#161A33</code></li><li title="s2 #1F2447 · wells, inputs, ghost buttons"><i style="background:#1F2447"></i><span>s2</span><code>#1F2447</code></li><li title="ink #F4F2FF · body text"><i style="background:#F4F2FF"></i><span>ink</span><code>#F4F2FF</code></li><li title="muted #A8AEDC · secondary text"><i style="background:#A8AEDC"></i><span>muted</span><code>#A8AEDC</code></li><li title="amber #FFB224 · the ONE reward colour (XP, primary button, lit windows)"><i style="background:#FFB224"></i><span>amber</span><code>#FFB224</code></li><li title="violet #9A8CFF · secondary action, links"><i style="background:#9A8CFF"></i><span>violet</span><code>#9A8CFF</code></li><li title="mint #46E0A0 · done / floor reached"><i style="background:#46E0A0"></i><span>mint</span><code>#46E0A0</code></li><li title="focus #C9C2FF · focus ring"><i style="background:#C9C2FF"></i><span>focus</span><code>#C9C2FF</code></li></ul>
+      <div class="links"><a class="btn" href="previews/night-clay-today.html">Today</a><a class="btn" href="previews/night-clay-focus.html">Focus</a><a class="lnk" href="shots/night-clay-today-390.png">390 shot</a><a class="lnk" href="shots/night-clay-focus-1280.png">focus shot</a><a class="lnk" href="themes/night-clay/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-bodega">
+    <a class="tcard__frame" href="previews/bodega-today.html" aria-label="Open the Bodega Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/bodega-today.html" loading="lazy" tabindex="-1" title="Bodega Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/bodega/icon.svg" width="64" height="64" alt="">
+        <div><h2>Bodega</h2><p class="vibe">2am, gate half up, still open. the city closes, you don't.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/bodega/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/bodega/icon.svg" width="64" height="64" alt=""><img class="" src="themes/bodega/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/bodega/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #15100D"><i style="background:#15100D"></i><span>bg</span><code>#15100D</code></li><li title="s1 #221A15"><i style="background:#221A15"></i><span>s1</span><code>#221A15</code></li><li title="ink #FFF6E2"><i style="background:#FFF6E2"></i><span>ink</span><code>#FFF6E2</code></li><li title="amber #FFC531"><i style="background:#FFC531"></i><span>amber</span><code>#FFC531</code></li><li title="violet #FF6070"><i style="background:#FF6070"></i><span>violet</span><code>#FF6070</code></li><li title="mint #45E68E"><i style="background:#45E68E"></i><span>mint</span><code>#45E68E</code></li></ul>
+      <div class="links"><a class="btn" href="previews/bodega-today.html">Today</a><a class="btn" href="previews/bodega-focus.html">Focus</a><a class="lnk" href="shots/bodega-today-390.png">390 shot</a><a class="lnk" href="shots/bodega-focus-1280.png">focus shot</a><a class="lnk" href="themes/bodega/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">6 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-five-boroughs">
+    <a class="tcard__frame" href="previews/five-boroughs-today.html" aria-label="Open the Five Boroughs Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/five-boroughs-today.html" loading="lazy" tabindex="-1" title="Five Boroughs Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/five-boroughs/icon.svg" width="64" height="64" alt="">
+        <div><h2>Five Boroughs</h2><p class="vibe">one city, every colour. A summer-night block party where every borough brings a colour.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/five-boroughs/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/five-boroughs/icon.svg" width="64" height="64" alt=""><img class="" src="themes/five-boroughs/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/five-boroughs/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #160C1E · plum night"><i style="background:#160C1E"></i><span>bg</span><code>#160C1E</code></li><li title="s1 #22142C · cards"><i style="background:#22142C"></i><span>s1</span><code>#22142C</code></li><li title="s2 #2D1B3A · wells, inputs, XP track"><i style="background:#2D1B3A"></i><span>s2</span><code>#2D1B3A</code></li><li title="ink #FFF4E6 · warm white"><i style="background:#FFF4E6"></i><span>ink</span><code>#FFF4E6</code></li><li title="muted #C9B9D8"><i style="background:#C9B9D8"></i><span>muted</span><code>#C9B9D8</code></li><li title="amber #FFC93C · Manhattan taxi yellow: THE reward"><i style="background:#FFC93C"></i><span>amber</span><code>#FFC93C</code></li><li title="violet #FF6FB1 · Bronx pink: secondary buttons, links"><i style="background:#FF6FB1"></i><span>violet</span><code>#FF6FB1</code></li><li title="mint #2FE0BE · Queens teal: done"><i style="background:#2FE0BE"></i><span>mint</span><code>#2FE0BE</code></li><li title="flame #FF8A2A · Staten Island ferry orange"><i style="background:#FF8A2A"></i><span>flame</span><code>#FF8A2A</code></li><li title="sky #6FA0FF · Brooklyn blue"><i style="background:#6FA0FF"></i><span>sky</span><code>#6FA0FF</code></li></ul>
+      <div class="links"><a class="btn" href="previews/five-boroughs-today.html">Today</a><a class="btn" href="previews/five-boroughs-focus.html">Focus</a><a class="lnk" href="shots/five-boroughs-today-390.png">390 shot</a><a class="lnk" href="shots/five-boroughs-focus-1280.png">focus shot</a><a class="lnk" href="themes/five-boroughs/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">4 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-lofi-rooftop">
+    <a class="tcard__frame" href="previews/lofi-rooftop-today.html" aria-label="Open the Lofi Rooftop Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/lofi-rooftop-today.html" loading="lazy" tabindex="-1" title="Lofi Rooftop Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/lofi-rooftop/icon.svg" width="64" height="64" alt="">
+        <div><h2>Lofi Rooftop</h2><p class="vibe">lo-fi beats to grind to. rain on the window, lamp on, water tower vibing.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/lofi-rooftop/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/lofi-rooftop/icon.svg" width="64" height="64" alt=""><img class="" src="themes/lofi-rooftop/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/lofi-rooftop/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #171029"><i style="background:#171029"></i><span>bg</span><code>#171029</code></li><li title="s1 #211936"><i style="background:#211936"></i><span>s1</span><code>#211936</code></li><li title="ink #FFF1E6"><i style="background:#FFF1E6"></i><span>ink</span><code>#FFF1E6</code></li><li title="amber #FFA96B"><i style="background:#FFA96B"></i><span>amber</span><code>#FFA96B</code></li><li title="violet #5FD4C9"><i style="background:#5FD4C9"></i><span>violet</span><code>#5FD4C9</code></li><li title="mint #8EDB7B"><i style="background:#8EDB7B"></i><span>mint</span><code>#8EDB7B</code></li></ul>
+      <div class="links"><a class="btn" href="previews/lofi-rooftop-today.html">Today</a><a class="btn" href="previews/lofi-rooftop-focus.html">Focus</a><a class="lnk" href="shots/lofi-rooftop-today-390.png">390 shot</a><a class="lnk" href="shots/lofi-rooftop-focus-1280.png">focus shot</a><a class="lnk" href="themes/lofi-rooftop/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">10 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-morningside">
+    <a class="tcard__frame" href="previews/morningside-today.html" aria-label="Open the Morningside Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/morningside-today.html" loading="lazy" tabindex="-1" title="Morningside Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/morningside/icon.svg" width="64" height="64" alt="">
+        <div><h2>Morningside</h2><p class="vibe">Low Library after dark. Columbia blue is the reward, the pin is where you land.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/morningside/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/morningside/icon.svg" width="64" height="64" alt=""><img class="" src="themes/morningside/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/morningside/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #081A33"><i style="background:#081A33"></i><span>bg</span><code>#081A33</code></li><li title="s1 #0F2547"><i style="background:#0F2547"></i><span>s1</span><code>#0F2547</code></li><li title="ink #F2F8FF"><i style="background:#F2F8FF"></i><span>ink</span><code>#F2F8FF</code></li><li title="amber #8CC4EE"><i style="background:#8CC4EE"></i><span>amber</span><code>#8CC4EE</code></li><li title="violet #F3EFE6"><i style="background:#F3EFE6"></i><span>violet</span><code>#F3EFE6</code></li></ul>
+      <div class="links"><a class="btn" href="previews/morningside-today.html">Today</a><a class="btn" href="previews/morningside-focus.html">Focus</a><a class="lnk" href="shots/morningside-today-390.png">390 shot</a><a class="lnk" href="shots/morningside-focus-1280.png">focus shot</a><a class="lnk" href="themes/morningside/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">3 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-shibuya-neon">
+    <a class="tcard__frame" href="previews/shibuya-neon-today.html" aria-label="Open the Shibuya Neon Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/shibuya-neon-today.html" loading="lazy" tabindex="-1" title="Shibuya Neon Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/shibuya-neon/icon.svg" width="64" height="64" alt="">
+        <div><h2>Shibuya Neon</h2><p class="vibe">draft</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/shibuya-neon/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/shibuya-neon/icon.svg" width="64" height="64" alt=""><img class="" src="themes/shibuya-neon/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/shibuya-neon/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #0B0712"><i style="background:#0B0712"></i><span>bg</span><code>#0B0712</code></li><li title="s1 #170F25"><i style="background:#170F25"></i><span>s1</span><code>#170F25</code></li><li title="amber #FF3D9A"><i style="background:#FF3D9A"></i><span>amber</span><code>#FF3D9A</code></li><li title="violet #2BE4FF"><i style="background:#2BE4FF"></i><span>violet</span><code>#2BE4FF</code></li></ul>
+      <div class="links"><a class="btn" href="previews/shibuya-neon-today.html">Today</a><a class="btn" href="previews/shibuya-neon-focus.html">Focus</a><a class="lnk" href="shots/shibuya-neon-today-390.png">390 shot</a><a class="lnk" href="shots/shibuya-neon-focus-1280.png">focus shot</a><a class="lnk" href="themes/shibuya-neon/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">5 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-tokyo-night">
+    <a class="tcard__frame" href="previews/tokyo-night-today.html" aria-label="Open the Tokyo Night Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/tokyo-night-today.html" loading="lazy" tabindex="-1" title="Tokyo Night Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/tokyo-night/icon.svg" width="64" height="64" alt="">
+        <div><h2>Tokyo Night</h2><p class="vibe">rainy 2am in Tokyo, editor open, one lantern still lit. calm grind.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/tokyo-night/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/tokyo-night/icon.svg" width="64" height="64" alt=""><img class="" src="themes/tokyo-night/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/tokyo-night/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #1A1B26 · page (TN night bg)"><i style="background:#1A1B26"></i><span>bg</span><code>#1A1B26</code></li><li title="s1 #24283B · cards (TN storm bg)"><i style="background:#24283B"></i><span>s1</span><code>#24283B</code></li><li title="s2 #2D3250 · wells"><i style="background:#2D3250"></i><span>s2</span><code>#2D3250</code></li><li title="ink #C0CAF5 · fg"><i style="background:#C0CAF5"></i><span>ink</span><code>#C0CAF5</code></li><li title="muted #A9B1D6 · fg_dark"><i style="background:#A9B1D6"></i><span>muted</span><code>#A9B1D6</code></li><li title="amber #FF9E64 · reward: TN orange"><i style="background:#FF9E64"></i><span>amber</span><code>#FF9E64</code></li><li title="violet #BB9AF7 · TN magenta"><i style="background:#BB9AF7"></i><span>violet</span><code>#BB9AF7</code></li><li title="mint #9ECE6A · TN green"><i style="background:#9ECE6A"></i><span>mint</span><code>#9ECE6A</code></li><li title="focus #7DCFFF · TN cyan"><i style="background:#7DCFFF"></i><span>focus</span><code>#7DCFFF</code></li></ul>
+      <div class="links"><a class="btn" href="previews/tokyo-night-today.html">Today</a><a class="btn" href="previews/tokyo-night-focus.html">Focus</a><a class="lnk" href="shots/tokyo-night-today-390.png">390 shot</a><a class="lnk" href="shots/tokyo-night-focus-1280.png">focus shot</a><a class="lnk" href="themes/tokyo-night/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">4 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-wall-street">
+    <a class="tcard__frame" href="previews/wall-street-today.html" aria-label="Open the Wall Street Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/wall-street-today.html" loading="lazy" tabindex="-1" title="Wall Street Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/wall-street/icon.svg" width="64" height="64" alt="">
+        <div><h2>Wall Street</h2><p class="vibe">green marble, gold money, up only. The Financial District after the closing bell.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/wall-street/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/wall-street/icon.svg" width="64" height="64" alt=""><img class="" src="themes/wall-street/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/wall-street/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #07120D · page: verde-antico marble at night"><i style="background:#07120D"></i><span>bg</span><code>#07120D</code></li><li title="s1 #0F1E17 · cards"><i style="background:#0F1E17"></i><span>s1</span><code>#0F1E17</code></li><li title="s2 #16291F · wells, inputs, XP track"><i style="background:#16291F"></i><span>s2</span><code>#16291F</code></li><li title="line #34361F · brass trim (card borders + clay ledges)"><i style="background:#34361F"></i><span>line</span><code>#34361F</code></li><li title="ink #F4EFDF · ivory marble text"><i style="background:#F4EFDF"></i><span>ink</span><code>#F4EFDF</code></li><li title="muted #AEBDAC"><i style="background:#AEBDAC"></i><span>muted</span><code>#AEBDAC</code></li><li title="amber #F5C542 · gold: THE reward"><i style="background:#F5C542"></i><span>amber</span><code>#F5C542</code></li><li title="violet #E9DFC7 · ivory marble clay: secondary buttons, links"><i style="background:#E9DFC7"></i><span>violet</span><code>#E9DFC7</code></li><li title="mint #3BE08E · uptick green: done"><i style="background:#3BE08E"></i><span>mint</span><code>#3BE08E</code></li><li title="focus #FFE59A"><i style="background:#FFE59A"></i><span>focus</span><code>#FFE59A</code></li></ul>
+      <div class="links"><a class="btn" href="previews/wall-street-today.html">Today</a><a class="btn" href="previews/wall-street-focus.html">Focus</a><a class="lnk" href="shots/wall-street-today-390.png">390 shot</a><a class="lnk" href="shots/wall-street-focus-1280.png">focus shot</a><a class="lnk" href="themes/wall-street/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">5 component tweaks</span></div>
+    </div>
+  </article>
+  <article class="tcard" id="t-washington-square">
+    <a class="tcard__frame" href="previews/washington-square-today.html" aria-label="Open the Washington Square Today preview">
+      <div class="scaler" data-w="1280" data-h="900"><iframe src="previews/washington-square-today.html" loading="lazy" tabindex="-1" title="Washington Square Today preview" scrolling="no"></iframe></div>
+      
+    </a>
+    <div class="tcard__body">
+      <div class="tcard__head">
+        <img class="ico64" src="themes/washington-square/icon.svg" width="64" height="64" alt="">
+        <div><h2>Washington Square</h2><p class="vibe">Village dusk. Violet is the reward, the chess hustlers are watching.</p></div>
+      </div>
+      <div class="sizes"><img class="ico180" src="themes/washington-square/icon.svg" width="180" height="180" alt=""><div class="sizes__small"><img class="" src="themes/washington-square/icon.svg" width="64" height="64" alt=""><img class="" src="themes/washington-square/icon-32.svg" width="32" height="32" alt=""><img class="" src="themes/washington-square/icon-16.svg" width="16" height="16" alt=""><small>180 · 64 · 32 · 16</small></div></div>
+      <ul class="pal"><li title="bg #160A26"><i style="background:#160A26"></i><span>bg</span><code>#160A26</code></li><li title="s1 #221236"><i style="background:#221236"></i><span>s1</span><code>#221236</code></li><li title="ink #FBF4FF"><i style="background:#FBF4FF"></i><span>ink</span><code>#FBF4FF</code></li><li title="amber #B98AFF"><i style="background:#B98AFF"></i><span>amber</span><code>#B98AFF</code></li><li title="violet #FFB48C"><i style="background:#FFB48C"></i><span>violet</span><code>#FFB48C</code></li></ul>
+      <div class="links"><a class="btn" href="previews/washington-square-today.html">Today</a><a class="btn" href="previews/washington-square-focus.html">Focus</a><a class="lnk" href="shots/washington-square-today-390.png">390 shot</a><a class="lnk" href="shots/washington-square-focus-1280.png">focus shot</a><a class="lnk" href="themes/washington-square/notes.md">notes</a></div>
+      <div class="status"><span class="st ok">contrast 29/29</span><span class="st">3 component tweaks</span></div>
+    </div>
+  </article></div>
+  <section class="icons" aria-labelledby="icH">
+    <h2 id="icH">All icons, side by side</h2>
+    <p>Full tile, Android circle and squircle masks, the maskable safe zone (pink ring: everything important must sit inside it), a light home screen, and the favicon cuts in a browser tab.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Theme</th><th scope="col">180</th><th scope="col">Circle mask</th><th scope="col">Squircle</th><th scope="col">Safe zone</th><th scope="col">On light</th><th scope="col">32</th><th scope="col">16</th><th scope="col">Tab</th></tr></thead>
+      <tbody>
+    <tr><th scope="row"><a href="#t-night-clay">Night Clay</a></th>
+      <td><img class="" src="themes/night-clay/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/night-clay/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/night-clay/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/night-clay/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/night-clay/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/night-clay/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/night-clay/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/night-clay/icon-16.svg" width="16" height="16" alt="">Night Clay · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-bodega">Bodega</a></th>
+      <td><img class="" src="themes/bodega/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/bodega/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/bodega/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/bodega/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/bodega/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/bodega/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/bodega/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/bodega/icon-16.svg" width="16" height="16" alt="">Bodega · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-five-boroughs">Five Boroughs</a></th>
+      <td><img class="" src="themes/five-boroughs/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/five-boroughs/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/five-boroughs/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/five-boroughs/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/five-boroughs/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/five-boroughs/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/five-boroughs/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/five-boroughs/icon-16.svg" width="16" height="16" alt="">Five Boroughs · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-lofi-rooftop">Lofi Rooftop</a></th>
+      <td><img class="" src="themes/lofi-rooftop/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/lofi-rooftop/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/lofi-rooftop/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/lofi-rooftop/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/lofi-rooftop/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/lofi-rooftop/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/lofi-rooftop/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/lofi-rooftop/icon-16.svg" width="16" height="16" alt="">Lofi Rooftop · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-morningside">Morningside</a></th>
+      <td><img class="" src="themes/morningside/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/morningside/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/morningside/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/morningside/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/morningside/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/morningside/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/morningside/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/morningside/icon-16.svg" width="16" height="16" alt="">Morningside · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-shibuya-neon">Shibuya Neon</a></th>
+      <td><img class="" src="themes/shibuya-neon/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/shibuya-neon/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/shibuya-neon/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/shibuya-neon/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/shibuya-neon/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/shibuya-neon/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/shibuya-neon/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/shibuya-neon/icon-16.svg" width="16" height="16" alt="">Shibuya Neon · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-tokyo-night">Tokyo Night</a></th>
+      <td><img class="" src="themes/tokyo-night/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/tokyo-night/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/tokyo-night/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/tokyo-night/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/tokyo-night/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/tokyo-night/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/tokyo-night/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/tokyo-night/icon-16.svg" width="16" height="16" alt="">Tokyo Night · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-wall-street">Wall Street</a></th>
+      <td><img class="" src="themes/wall-street/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/wall-street/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/wall-street/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/wall-street/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/wall-street/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/wall-street/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/wall-street/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/wall-street/icon-16.svg" width="16" height="16" alt="">Wall Street · Today</span></td></tr>
+    <tr><th scope="row"><a href="#t-washington-square">Washington Square</a></th>
+      <td><img class="" src="themes/washington-square/icon.svg" width="180" height="180" alt=""></td>
+      <td><span class="mask mask--circle"><img class="" src="themes/washington-square/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--squircle"><img class="" src="themes/washington-square/icon.svg" width="108" height="108" alt=""></span></td>
+      <td><span class="mask mask--safe"><img class="" src="themes/washington-square/icon.svg" width="108" height="108" alt=""><i></i></span></td>
+      <td class="lightbg"><img class="" src="themes/washington-square/icon.svg" width="64" height="64" alt=""></td>
+      <td><img class="" src="themes/washington-square/icon-32.svg" width="32" height="32" alt=""></td>
+      <td><img class="" src="themes/washington-square/icon-16.svg" width="16" height="16" alt=""></td>
+      <td><span class="tab"><img src="themes/washington-square/icon-16.svg" width="16" height="16" alt="">Washington Square · Today</span></td></tr></tbody>
+    </table></div>
+  </section>
+</main>
+<footer>Generated 2026-10-18 15:06 UTC by build.mjs · no network requests: everything is local.</footer>
+<script>
+  function fit(){document.querySelectorAll('.scaler').forEach(function(s){var w=s.parentElement.clientWidth;s.style.transform='scale('+(w/1280)+')'})}
+  addEventListener('resize',fit);fit();
+</script>
+</body></html>

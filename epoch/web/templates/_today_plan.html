@@ -1,0 +1,28 @@
+{% from "_catcolor.html" import cc with context %}
+<section class="card" aria-labelledby="planH">
+  <div class="card__head"><h2 id="planH">Today's plan</h2><a class="xs" href="/plan" data-open-dialog="#planDlg">Plan blocks</a></div>
+  {% if blocks %}
+  <ul class="blocks plain">
+    {% for b in blocks %}
+    <li>
+      <div class="block-title"><i class="sw" style="background: {{ cc(b.category) }}"></i>
+        <strong>{{ b.category }}</strong> {{ b.minutes }} min{% if b.cue_time %} at {{ b.cue_time }}{% endif %}
+        {% if b.status != "planned" %}<span class="pill pill--sm">{{ b.status }}</span>{% endif %}</div>
+      <div class="ifthen">{{ b.if_then }}</div>
+      {% if b.status == "planned" %}
+      <div class="row small">
+        {% for status, label in [("done", "Done"), ("partial", "Partly"), ("skipped", "Not today")] %}
+        <form method="post" action="/plan/{{ b.id }}/status" class="inline-form">
+          <input type="hidden" name="status" value="{{ status }}">
+          <button class="link" type="submit">{{ label }}</button>
+        </form>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="small muted">No blocks yet. <a href="/plan" data-open-dialog="#planDlg">Pick tonight's blocks</a>, it takes about 30 seconds.</p>
+  {% endif %}
+</section>

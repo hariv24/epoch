@@ -1,0 +1,13 @@
+{
+  "_comment": "Washington Square: Village dusk. Violet-to-rose sky, cafe-gold windows, NYU-violet cranes, a peach beacon.",
+  "skyTop": "#16052E",
+  "skyMid": "#41106A",
+  "skyBottom": "#A8487A",
+  "fog": "#3A1650",
+  "windowWarm": "#FFC983",
+  "windowCool": "#E2CCFF",
+  "accent": "#B98AFF",
+  "beacon": "#FFB48C",
+  "stageBg": ["#2A0B4A", "#7A2A6E"],
+  "previewTint": { "css": "linear-gradient(#16052E, #A8487A)", "blend": "color", "opacity": 0.34 }
+}

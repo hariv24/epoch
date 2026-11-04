@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Tablet mode{% endblock %}
+{% block content %}
+<div class="view-head"><div><h1>Tablet mode</h1><p><a href="/settings">Back to Settings</a></p></div></div>
+{% include "_lan_panel.html" %}
+{% endblock %}
+{% block scripts %}<script src="{{ asset_base }}/app/lan.js" defer></script>{% endblock %}

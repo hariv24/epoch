@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Wall Street icon: "Candle City". A candlestick chart whose candles are towers.
+     A short red dip (where you started), a green climb, then a gold Art Deco tower with a lit beacon:
+     the chart IS the skyline you are building. Key shapes sit inside the 205 px maskable circle. -->
+<defs>
+<radialGradient id="bg" cx=".5" cy=".38" r=".75"><stop offset="0" stop-color="#124A31"/><stop offset=".7" stop-color="#082417"/><stop offset="1" stop-color="#04120B"/></radialGradient>
+<radialGradient id="halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE59A" stop-opacity=".8"/><stop offset="1" stop-color="#FFC93D" stop-opacity="0"/></radialGradient>
+<linearGradient id="gold" x1="0" x2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset=".55" stop-color="#FFC93D"/><stop offset="1" stop-color="#EBAA12"/></linearGradient>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<g stroke="#2A7A52" stroke-width="3" opacity=".4"><path d="M0 196H512M0 288H512M0 380H512"/></g>
+<!-- trend line through the closes -->
+<path d="M104 318L256 222L380 150" stroke="#FFE59A" stroke-width="6" stroke-dasharray="3 16" stroke-linecap="round" fill="none" opacity=".6"/>
+<!-- wicks -->
+<g stroke-width="16" stroke-linecap="round">
+<path d="M139 272V398" stroke="#B8393D"/><path d="M256 188V370" stroke="#18A862"/><path d="M373 320V352" stroke="#B88A12"/>
+</g>
+<!-- clay ledges -->
+<rect x="96" y="314" width="86" height="68" rx="18" fill="#8C2429"/>
+<rect x="213" y="228" width="86" height="126" rx="18" fill="#0B7744"/>
+<rect x="330" y="174" width="86" height="170" rx="18" fill="#9C6C00"/>
+<!-- bodies -->
+<rect x="96" y="300" width="86" height="68" rx="18" fill="#FF6461"/>
+<rect x="213" y="214" width="86" height="126" rx="18" fill="#3BE08E"/>
+<!-- gold tower: body, two deco setbacks, spire, beacon -->
+<rect x="350" y="114" width="46" height="34" rx="9" fill="#FFD966"/>
+<rect x="338" y="138" width="70" height="34" rx="10" fill="#FFC93D"/>
+<rect x="330" y="160" width="86" height="170" rx="18" fill="url(#gold)"/>
+<path d="M366 116L373 80L380 116z" fill="#FFE59A"/>
+<circle cx="373" cy="78" r="36" fill="url(#halo)"/>
+<circle cx="373" cy="78" r="11" fill="#FFF8E0"/>
+<!-- clay gloss -->
+<g fill="#FFFFFF" opacity=".4"><rect x="106" y="310" width="10" height="44" rx="5"/><rect x="223" y="224" width="10" height="100" rx="5"/><rect x="340" y="170" width="10" height="140" rx="5"/></g>
+<!-- windows: dark glass on green, lit cream and amber on gold -->
+<g fill="#0A5A33" opacity=".85"><rect x="243" y="234" width="18" height="20" rx="5"/><rect x="269" y="234" width="18" height="20" rx="5"/><rect x="243" y="264" width="18" height="20" rx="5"/><rect x="269" y="264" width="18" height="20" rx="5"/><rect x="243" y="294" width="18" height="20" rx="5"/><rect x="269" y="294" width="18" height="20" rx="5"/></g>
+<g fill="#A06E00" opacity=".9"><rect x="386" y="210" width="18" height="20" rx="5"/><rect x="386" y="270" width="18" height="20" rx="5"/></g>
+<g fill="#FFF8E0"><rect x="360" y="180" width="18" height="20" rx="5"/><rect x="386" y="180" width="18" height="20" rx="5"/><rect x="360" y="210" width="18" height="20" rx="5"/><rect x="386" y="240" width="18" height="20" rx="5"/><rect x="360" y="240" width="18" height="20" rx="5"/><rect x="360" y="270" width="18" height="20" rx="5"/><rect x="386" y="300" width="18" height="20" rx="5"/><rect x="360" y="300" width="18" height="20" rx="5"/></g>
+</svg>

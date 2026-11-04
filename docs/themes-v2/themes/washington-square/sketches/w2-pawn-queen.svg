@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- W2: Washington Square chess: a pawn whose shadow is a queen -->
+<rect width="512" height="512" fill="#2A0B4A"/>
+<g fill="#3B1366"><path d="M0 380H512V512H0z"/></g>
+<g fill="#4B1C80"><path d="M0 380h64v44H0zM128 380h64v44h-64zM256 380h64v44h-64zM384 380h64v44h-64zM64 424h64v44H64zM192 424h64v44h-64zM320 424h64v44h-64zM448 424h64v44h-64z"/></g>
+<path d="M330 372l-12-70c-2-12 12-22 22-28l-24-36 26 10 10-46 16 40 22-40 6 46 26-10-22 36c10 6 22 16 20 28l-12 70z" fill="#5A2496" />
+<g fill="#F5ECDD"><path d="M168 380c-6-20 6-34 24-40-4-24 2-50 14-66h-20v-18h20c-10-8-16-20-16-34a40 40 0 0 1 80 0c0 14-6 26-16 34h20v18h-20c12 16 18 42 14 66 18 6 30 20 24 40z"/></g>
+</svg>

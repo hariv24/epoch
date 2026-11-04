@@ -1,0 +1,13 @@
+{
+  "_comment": "Lofi Rooftop: plum night sky fading into a sunset haze on the horizon, peach lamp windows, teal rain-light accents.",
+  "skyTop": "#120A24",
+  "skyMid": "#3A1A4E",
+  "skyBottom": "#A8476A",
+  "fog": "#3A1C48",
+  "windowWarm": "#FFC58A",
+  "windowCool": "#A6F0E8",
+  "accent": "#FFA96B",
+  "beacon": "#5FD4C9",
+  "stageBg": ["#1F1236", "#6B2C5E"],
+  "previewTint": { "css": "linear-gradient(#3A1A4E, #B0506A)", "blend": "color", "opacity": 0.32 }
+}

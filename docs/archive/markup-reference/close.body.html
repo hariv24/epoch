@@ -1,0 +1,38 @@
+<div class="view-head"><div><h1>Close the day</h1><p>Fill the gaps, or say you don't remember. Both are fine.</p></div>
+  <span class="pill pill--rest">
+    <svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-cloud-fog"/></svg><span><span class="num" data-js="fog-count">3</span><span data-js="fog-label"> foggy hours</span></span></span></div>
+<div class="stack-4">
+<section class="card herocard"><div class="stage" data-js="stage" data-stage="week"><div class="fallback" data-js="fallback" role="img" aria-label="This week's towers"></div><div class="daycard" data-js="day-card" hidden></div></div></section>
+<div class="stepper" data-js="gaps">
+  <div class="gap">
+    <div class="gap__t"><b>1:00 to 2:00 PM</b><span class="small muted">60m not logged</span></div>
+    <form method="post" action="/close/label" data-enhance="close-label">
+      <input type="hidden" name="day" value="TODAY_ISO"><input type="hidden" name="start" value="a"><input type="hidden" name="end" value="b">
+      <div class="chips">
+        <button class="chipbtn is-guess" type="submit" name="category" value="Python"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-sparkles"/></svg><span>Looks like Python</span><small>VS Code</small></button>
+        <button class="chipbtn" type="submit" name="category" value="Math"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-sigma"/></svg><span>Math</span></button>
+        <button class="chipbtn" type="submit" name="category" value="Rest"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-tent-tree"/></svg><span>Rest</span></button>
+        <button class="chipbtn" type="submit" name="category" value="Don't remember"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-cloud-fog"/></svg><span>Don't remember</span></button>
+      </div>
+      <label class="check small" style="margin-top:8px"><input type="checkbox" name="deep" value="1" checked> Counts as focused (deep) when it's study work</label>
+    </form>
+  </div>
+  <div class="gap">
+    <div class="gap__t"><b>4:15 to 5:00 PM</b><span class="small muted">45m not logged</span></div>
+    <form method="post" action="/close/label" data-enhance="close-label"><input type="hidden" name="day" value="TODAY_ISO"><input type="hidden" name="start" value="c"><input type="hidden" name="end" value="d">
+      <div class="chips"><button class="chipbtn" type="submit" name="category" value="Distracted"><span>Drift</span></button><button class="chipbtn" type="submit" name="category" value="Don't remember"><span>Don't remember</span></button></div></form>
+  </div>
+  <div class="gap">
+    <div class="gap__t"><b>6:30 to 7:00 PM</b><span class="small muted">30m not logged</span></div>
+    <form method="post" action="/close/label" data-enhance="close-label"><input type="hidden" name="day" value="TODAY_ISO"><input type="hidden" name="start" value="e"><input type="hidden" name="end" value="f">
+      <div class="chips"><button class="chipbtn" type="submit" name="category" value="Math"><span>Math</span></button><button class="chipbtn" type="submit" name="category" value="Don't remember"><span>Don't remember</span></button></div></form>
+  </div>
+</div>
+<form class="card card--well stack-3" data-js="seal-card" method="post" action="/close" data-enhance="close-seal">
+  <input type="hidden" name="day" value="TODAY_ISO">
+  <h2>Seal the day</h2>
+  <p class="small muted" data-js="seal-hint">3 hours left to settle. "Don't remember" is a fine answer.</p>
+  <button class="btn btn--mint" type="submit" data-js="seal-btn" aria-disabled="true"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-moon"/></svg>Seal the day</button>
+</form>
+<section class="card" data-js="recap" hidden></section>
+</div>

@@ -1,0 +1,50 @@
+<div class="view-head"><div><h1>World</h1><p>Everything you built, only ever going up.</p></div>
+  <div class="seg seg--js" role="radiogroup" aria-label="World view" data-js="world-tabs" data-default="city">
+    <label><input type="radio" name="wv" value="city" checked><span>City</span></label>
+    <label><input type="radio" name="wv" value="week"><span>Week</span></label>
+    <label><input type="radio" name="wv" value="shelf"><span>Shelf</span></label>
+  </div></div>
+
+<section class="world-panel" data-js="world-panel" data-panel="city" aria-label="City">
+  <div class="card card--flush">
+    <div class="stage stage--tall" data-js="stage" data-stage="city">
+      <div class="fallback" data-js="fallback" role="img" aria-label="Your last 28 days as towers"></div>
+      <div class="stage__badge"><span class="pill"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-calendar-check"/></svg>Last 28 days</span></div>
+      <div class="stage__tools"><button class="icon-btn" type="button" data-js="snapshot" data-stage-target="city" aria-label="Save the skyline as an image" title="Save as image"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-camera"/></svg></button></div>
+      <div class="stage__hint">Drag to orbit. Tap a tower for its day.</div>
+      <div class="daycard" data-js="day-card" hidden></div>
+    </div>
+    <div class="totals" data-js="totals"></div>
+  </div>
+</section>
+
+<section class="world-panel" data-js="world-panel" data-panel="week" aria-label="Week">
+  <div class="two">
+    <section class="card stamp" aria-labelledby="stampH">
+      <h2 id="stampH">This week's card</h2>
+      <div><span class="row-label">Shipped outputs <span class="num" data-js="out-count">0</span></span><div class="stamps" data-js="out-slots"></div></div>
+      <div><span class="row-label">Floor days <span class="num" data-js="floor-day-count">0</span></span><div class="stamps" data-js="floor-pips"></div></div>
+      <div><span class="row-label">Rest tokens <span class="num" data-js="rest-count">0</span> used</span><div class="stamps" data-js="rest-pips"></div></div>
+      <p class="small muted" data-js="stamp-note">Monday starts a fresh card.</p>
+    </section>
+    <section class="card" aria-labelledby="ghostH">
+      <h2 id="ghostH">You against your past</h2>
+      <p class="small muted" style="margin:6px 0 14px">Deep minutes per day. Amber is this week, grey is last week. No one else is on this chart.</p>
+      <div class="ghostchart" data-js="ghost-chart" role="img" aria-label="Bar chart of deep minutes per day, this week against last week"></div>
+      <div class="gdays" data-js="ghost-days"></div>
+    </section>
+  </div>
+</section>
+
+<section class="world-panel" data-js="world-panel" data-panel="shelf" aria-label="Shelf">
+  <div class="two">
+    <section class="card" data-ach aria-labelledby="achH">
+      <div class="card__head"><h2 id="achH">Achievements</h2><span class="xs muted"><span class="num" data-js="ach-count">0</span> of <span data-js="ach-total">0</span></span></div>
+      <div class="ach" data-js="ach-grid"></div>
+    </section>
+    <section class="card" aria-labelledby="ladH">
+      <div class="card__head"><h2 id="ladH">Ladders and landmarks</h2></div>
+      <div class="ladders" data-js="ladders"></div>
+    </section>
+  </div>
+</section>

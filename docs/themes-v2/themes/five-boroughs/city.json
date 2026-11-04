@@ -1,0 +1,13 @@
+{
+  "_comment": "Five Boroughs: a magenta-to-violet dusk over the boroughs, taxi-yellow windows, a few teal TV-glow windows, pink cranes, teal beacons.",
+  "skyTop": "#12061F",
+  "skyMid": "#33103F",
+  "skyBottom": "#7A2A58",
+  "fog": "#3A1A48",
+  "windowWarm": "#FFC93C",
+  "windowCool": "#7FF0FF",
+  "accent": "#FF6FB1",
+  "beacon": "#2FE0BE",
+  "stageBg": ["#1E0F38", "#6A2156"],
+  "previewTint": { "css": "linear-gradient(var(--city-sky-top), var(--city-sky-bottom))", "blend": "color", "opacity": 0.38 }
+}

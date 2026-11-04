@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Postcards{% endblock %}
+{% block content %}
+{# Context: postcards (list, newest first), week_monday, week_done. Pictures are made on the client canvas (postcard.js). #}
+{% set icons = "/static/app/icons.svg" %}
+<div class="view-head"><div><h1>Postcards</h1><p>Pictures of your weeks, made on this device. <a href="/world?view=shelf#shelf">Back to the Shelf</a></p></div>
+  <a class="btn btn--violet" href="/world?postcard=1#week"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-image"/></svg>Make this week's postcard</a></div>
+{% if not week_done %}<div class="nudge" data-js="postcard-nudge"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-mail"/></svg><span>Your week's postcard is ready to make (week of {{ week_monday|iso_day }}).</span><a class="btn btn--violet" href="/world?postcard=1#week">Make it</a></div>{% endif %}
+<section class="pcgrid" data-js="postcard-list" aria-label="Saved postcards">
+  {% for c in postcards %}
+  <article class="card pccell">
+    <a class="pccell__img" href="/postcards/{{ c.id }}.png?inline=1"><img src="/postcards/{{ c.id }}.png?inline=1" alt="{{ c.kind }} postcard, {{ c.period }}" width="{{ c.width }}" height="{{ c.height }}" loading="lazy"></a>
+    <div class="pccell__t"><div><b>{{ "Week of " ~ (c.period|iso_day) if c.kind == "weekly" else c.period }}</b><span class="xs muted">{{ c.kind|capitalize }} postcard</span></div>
+      <a class="btn btn--ghost" href="/postcards/{{ c.id }}.png" download><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-download"/></svg>Download</a></div>
+  </article>
+  {% else %}<p class="muted card">No postcards yet. The first one is a good Sunday habit.</p>{% endfor %}
+</section>
+{% endblock %}

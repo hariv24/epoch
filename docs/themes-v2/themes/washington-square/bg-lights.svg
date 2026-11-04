@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 90">
+<!-- Washington Square theme: a sagging string of cafe lights across the top of the page (alpha mask, repeat-x). -->
+<path d="M0 8Q350 78 700 8" fill="none" stroke="#000" stroke-width="2" stroke-opacity=".7"/>
+<circle cx="58.3" cy="25.7" r="5" fill="#000"/><circle cx="58.3" cy="25.7" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="116.7" cy="34.4" r="5" fill="#000"/><circle cx="116.7" cy="34.4" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="175.0" cy="41.2" r="5" fill="#000"/><circle cx="175.0" cy="41.2" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="233.3" cy="46.1" r="5" fill="#000"/><circle cx="233.3" cy="46.1" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="291.7" cy="49.0" r="5" fill="#000"/><circle cx="291.7" cy="49.0" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="350.0" cy="50.0" r="5" fill="#000"/><circle cx="350.0" cy="50.0" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="408.3" cy="49.0" r="5" fill="#000"/><circle cx="408.3" cy="49.0" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="466.7" cy="46.1" r="5" fill="#000"/><circle cx="466.7" cy="46.1" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="525.0" cy="41.2" r="5" fill="#000"/><circle cx="525.0" cy="41.2" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="583.3" cy="34.4" r="5" fill="#000"/><circle cx="583.3" cy="34.4" r="13" fill="#000" fill-opacity=".25"/>
+<circle cx="641.7" cy="25.7" r="5" fill="#000"/><circle cx="641.7" cy="25.7" r="13" fill="#000" fill-opacity=".25"/>
+</svg>

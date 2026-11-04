@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}NYC Store{% endblock %}
+{% block content %}
+{% from "_item_card.html" import item_card %}
+{% set icons = "/static/app/icons.svg" %}
+<div class="view-head"><div><h1>NYC Store</h1><p>Spend what your study earned on a home to live in, a look to wear and a city to remember.</p></div></div>
+{% include "_money_tabs.html" %}
+{% if quiet %}{% include "_money_quiet.html" %}{% else %}
+{% set on_now = shop.events|selectattr("event.on")|list %}
+{% set upcoming = namespace(item=none) %}
+{% for e in shop.events if not e.event.on and e.event.starts_in is not none %}{% if upcoming.item is none or e.event.starts_in < upcoming.item.event.starts_in %}{% set upcoming.item = e %}{% endif %}{% endfor %}
+<div class="stack-4" data-js="money-root">
+  <section class="card card--stack onnow" aria-labelledby="nowH">
+    <div class="card__head"><h2 id="nowH">On now</h2><span class="small muted">Limited-time experiences, on New York dates</span></div>
+    {% if on_now %}
+    <div class="shopgrid shopgrid--now">{% for it in on_now %}{{ item_card(it) }}{% endfor %}</div>
+    {% else %}
+    <p class="small muted">Nothing limited-time is on right now.</p>
+    {% endif %}
+    {% if upcoming.item %}<p class="small muted onnow__next"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-calendar-check"/></svg><span>Next up: <b>{{ upcoming.item.name }}</b>. {{ event_text(upcoming.item) }}.</span></p>{% endif %}
+  </section>
+
+  <div class="aisle-bar">
+    <div class="seg seg--js" role="radiogroup" aria-label="Aisle" data-js="aisle-tabs" data-default="furniture">
+      {% for a in shop.aisles %}<label><input type="radio" name="aisle" value="{{ a.id }}"{% if loop.first %} checked{% endif %}><span>{{ {"furniture": "Furniture & decor", "outfit": "Outfits", "experience": "NYC experiences", "upgrade": "Tower upgrades"}[a.id] }}</span></label>{% endfor %}
+    </div>
+  </div>
+
+  {% for a in shop.aisles %}
+  <section class="aisle" id="{{ a.id }}" data-js="aisle-panel" data-panel="{{ a.id }}" aria-label="{{ a.name }}">
+    <h2 class="aisle__h">{{ a.name }}</h2>
+    {% if a.id == "furniture" %}<p class="small muted aisle__p">Your {{ {"studio": "studio", "1-bed": "one-bedroom", "loft": "loft", "penthouse": "penthouse"}.get(eco.home.size, "home") }} fits {{ eco.home.budget or eco.home.slots }} things, and you place each one where you like. Anything that doesn't fit waits in storage, and a bigger home brings it back. Hover a piece to turn it.</p>
+    {% elif a.id == "outfit" %}<p class="small muted aisle__p">One outfit at a time. Your character wears it in the room, at your study spot and around the city. Hover an outfit to turn the figure.</p>
+    {% elif a.id == "experience" %}<p class="small muted aisle__p">Each one is a postcard in your <a href="/passport">Passport</a>. A district's experiences open when you reach that district.</p>
+    {% else %}<p class="small muted aisle__p">Upgrades show on every one of your study towers. You can switch each on or off any time.</p>{% endif %}
+    <div class="shopgrid">{% for it in a["items"] %}{{ item_card(it) }}{% endfor %}</div>
+    {% if a.id == "experience" %}
+    <h3 class="aisle__sub">Limited-time through the year</h3>
+    <div class="shopgrid">{% for it in shop.events if not it.event.on %}{{ item_card(it) }}{% endfor %}</div>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>
+{% include "_confirm_dialog.html" %}
+{% endif %}
+{% endblock %}

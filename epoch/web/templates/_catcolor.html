@@ -1,0 +1,6 @@
+{# Category colour for swatches and the hour map: the ladder + honest-hour categories use the Morningside tokens
+   (tuned for navy and for the light half); everything else falls back to the stored hex. Import "with context". #}
+{% macro cc(name) -%}
+{%- set v = {"Python": "--c-python", "Math": "--c-math", "ML/DL": "--c-ml", "Papers": "--c-papers", "Writing/X": "--c-writing", "Rest": "--rest", "Distracted": "--c-drift"}.get(name) -%}
+{%- if v %}var({{ v }}){% else %}{{ colors[name] }}{% endif -%}
+{%- endmacro %}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch E: striped awning over a roll-down gate tagged with a glowing 24 -->
+<rect width="512" height="512" fill="#1A120E"/>
+<g><path d="M76 96 H436 V176 H76Z" fill="#F2E6CC"/><g fill="#D6383A"><rect x="76" y="96" width="45" height="80"/><rect x="166" y="96" width="45" height="80"/><rect x="256" y="96" width="45" height="80"/><rect x="346" y="96" width="45" height="80"/></g>
+<path d="M76 176 q22 26 45 0 q22 26 45 0 q22 26 45 0 q22 26 45 0 q22 26 45 0 q22 26 45 0 q22 26 45 0 q22 26 45 0" fill="#D6383A"/></g>
+<rect x="104" y="206" width="304" height="210" fill="#2F2B29"/>
+<g stroke="#4A4542" stroke-width="6"><path d="M104 226H408M104 250H408M104 274H408M104 298H408M104 322H408M104 346H408M104 370H408M104 394H408"/></g>
+<path d="M190 270 h36 a18 18 0 0 1 0 36 l-36 40 h56 M300 270 l-34 50 h52 M300 270 v76" fill="none" stroke="#FFD23F" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

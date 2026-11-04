@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% from "_plan_form.html" import plan_form %}
+{% block title %}Plan{% endblock %}
+{% block content %}
+<div class="view-head"><div><h1>Plan {{ "tomorrow" if which == "tomorrow" else "today" }}</h1><p><a href="/">Back to Today</a></p></div></div>
+<section class="card stack-4">
+  {{ plan_form(plan_data) }}
+</section>
+{% endblock %}

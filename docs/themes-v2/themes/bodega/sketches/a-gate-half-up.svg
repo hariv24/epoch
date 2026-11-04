@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch A: 2am storefront; the roll-down gate is half up and warm fluorescent light spills out -->
+<rect width="512" height="512" fill="#120E0C"/>
+<rect x="86" y="150" width="340" height="270" fill="#2A211A"/>
+<rect x="110" y="250" width="292" height="170" fill="#FFF1C2"/>
+<g fill="#E8C770"><rect x="130" y="290" width="40" height="8"/><rect x="190" y="290" width="60" height="8"/><rect x="270" y="290" width="50" height="8"/><rect x="130" y="340" width="60" height="8"/><rect x="220" y="340" width="40" height="8"/></g>
+<rect x="110" y="182" width="292" height="80" fill="#8C8A86"/>
+<g stroke="#5E5C59" stroke-width="5"><path d="M110 196 H402 M110 212 H402 M110 228 H402 M110 244 H402"/></g>
+<rect x="104" y="256" width="304" height="10" rx="4" fill="#5E5C59"/>
+<path d="M70 110 H442 L426 160 H86Z" fill="#E23B3B"/>
+<g fill="#FFF1C2"><path d="M118 110 h40 l-6 50 h-34z"/><path d="M198 110 h40 l-4 50 h-36z"/><path d="M278 110 h40 v50 h-36z"/><path d="M358 110 h40 l4 50 h-38z"/></g>
+<path d="M60 420 H452 L512 512 H0Z" fill="#FFF1C2" fill-opacity=".18"/>
+</svg>

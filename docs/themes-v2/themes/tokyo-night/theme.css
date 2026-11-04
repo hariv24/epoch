@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Underdog theme · "Tokyo Night"
+   The real Tokyo Night palette (folke/tokyonight.nvim, "night" + "storm" variants; light half = "day"),
+   poured into the Night Clay form language. Calm rainy night city: slow rain, a distant skyline at the
+   bottom of the window, one warm lantern-orange reward colour.
+   Sources (checked 2026-10-18):
+     https://github.com/folke/tokyonight.nvim/blob/main/lua/tokyonight/colors/storm.lua
+     https://github.com/folke/tokyonight.nvim/blob/main/lua/tokyonight/colors/night.lua   (bg #1a1b26)
+     https://github.com/folke/tokyonight.nvim/blob/main/extras/kitty/tokyonight_day.conf  (light half)
+   ========================================================================== */
+:root{
+  /* surfaces: night bg #1a1b26, storm bg #24283b for cards, a lifted bg_highlight for wells */
+  --bg:          light-dark(#E1E2E7, #1A1B26);
+  --s1:          light-dark(#F5F6FA, #24283B);
+  --s2:          light-dark(#D5D9E6, #2D3250);
+  --line:        light-dark(#C4C8DA, #3B4261);   /* fg_gutter: card border + clay ledge */
+  --line-strong: light-dark(#5D6CA8, #7F88B8);
+  --ink:         light-dark(#26357A, #C0CAF5);   /* fg */
+  --muted:       light-dark(#44508A, #A9B1D6);   /* fg_dark */
+  --faint:       light-dark(#5D6CA8, #8890BC);
+
+  /* reward = TN orange #ff9e64, a paper lantern in the rain */
+  --amber:       light-dark(#B15C00, #FF9E64);
+  --amber-edge:  light-dark(#7A3F00, #B5612F);
+  --on-amber:    light-dark(#FFFFFF, #1A1B26);
+  --amber-ink:   light-dark(#8A4700, #FF9E64);
+  --amber-soft:  light-dark(#F5DDC8, #3E2D2A);
+
+  /* secondary = TN magenta #bb9af7 */
+  --violet:      light-dark(#7A3FD4, #BB9AF7);
+  --violet-edge: light-dark(#52269C, #7A5CC4);
+  --on-violet:   light-dark(#FFFFFF, #1A1B26);
+  --violet-soft: light-dark(#E6DCFA, #33305A);
+
+  /* done = TN green #9ece6a */
+  --mint:        light-dark(#4E6B30, #9ECE6A);
+  --mint-edge:   light-dark(#344A1E, #5E8A36);
+  --on-mint:     light-dark(#FFFFFF, #1A1B26);
+  --mint-soft:   light-dark(#DCE8CF, #283A2C);
+
+  --flame:       light-dark(#B15C00, #FF9E64);
+  --sky:         light-dark(#007197, #7DCFFF);   /* cyan */
+  --rest:        light-dark(#6172B0, #9D7CD8);   /* purple */
+  --error:       light-dark(#C64343, #F7768E);
+  --focus:       light-dark(#2E7DE9, #7DCFFF);
+
+  /* the ladder, straight from the syntax colours */
+  --c-python:  light-dark(#2E6FD6, #7AA2F7);   /* blue */
+  --c-math:    light-dark(#8A47E6, #BB9AF7);   /* magenta */
+  --c-ml:      light-dark(#4E6B30, #9ECE6A);   /* green */
+  --c-papers:  light-dark(#9A5A12, #E0AF68);   /* yellow */
+  --c-writing: light-dark(#C42A63, #F7768E);   /* red (reads pink) */
+  --c-drift:   light-dark(#6172B0, #8890BC);
+
+  --lift:   light-dark(rgb(40 55 120 / .20), rgb(5 6 12 / .55));
+  --gloss:  light-dark(rgb(255 255 255 / .75), rgb(192 202 245 / .09));
+  --scrim:  light-dark(rgb(30 38 80 / .45), rgb(12 14 20 / .76));
+  --glow-a: light-dark(#C9D3F4, #26305A);
+  --glow-b: light-dark(#DCD3F6, #2B2548);
+}
+
+/* ---------- background: city haze + distant skyline (bg.svg) ---------- */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 560px at 86% -10%, var(--glow-a), transparent 62%),
+    radial-gradient(760px 520px at -8% 104%, var(--glow-b), transparent 58%),
+    linear-gradient(to bottom, transparent 55%, light-dark(rgb(61 89 161 / .10), rgb(61 89 161 / .16)));
+}
+
+/* the skyline sits on its own layer so light mode can fade it out with a token
+   (a url() inside a custom property would resolve against the page, not this file) */
+.app::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("bg.svg") center bottom / max(1600px, 100vw) auto no-repeat;
+  opacity:var(--tn-skyline-op, 1)}
+
+/* ---------- rain: thin slanted streaks, slower than real rain, stronger at the edges ---------- */
+body::after{content:"";position:fixed;inset:-440px -110px 0 0;z-index:-1;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='440'%3E%3Cg stroke='%237aa2f7' stroke-linecap='round' fill='none'%3E%3Cpath d='M30 20 15 80M55 200 37.5 270M20 340 5 400' stroke-opacity='.30' stroke-width='1.6'/%3E%3Cpath d='M90 110 77.5 160M100 300 88.75 345M70 380 60 420' stroke-opacity='.18' stroke-width='1.2'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 110px 440px repeat;
+  -webkit-mask-image:linear-gradient(to right, #000 0, rgb(0 0 0 / .45) 22%, rgb(0 0 0 / .45) 78%, #000 100%);
+          mask-image:linear-gradient(to right, #000 0, rgb(0 0 0 / .45) 22%, rgb(0 0 0 / .45) 78%, #000 100%);
+  opacity:.9;
+}
+@keyframes tn-rain{ to{ transform:translate3d(-110px, 440px, 0) } }
+@media (prefers-reduced-motion: no-preference){
+  body::after{ animation:tn-rain 2.4s linear infinite }   /* Motion = Off in Settings is already stopped by style.css */
+}
+
+/* light half (Tokyo Night Day): no dark skyline, just the soft day haze.
+   --tn-skyline-op is a theme-private token so the switch can live on :root selectors only. */
+:root[data-theme="light"]{ --tn-skyline-op:0 }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --tn-skyline-op:0 } }
+
+/* ---------- Focus Screen: lantern glow instead of amber ---------- */
+/* TWEAK: the dial glow follows the orange reward colour (style.css hard-codes amber) */
+.focus{--arc-glow:rgb(255 158 100 / .24)}
+
+/* TWEAK: +XP float glows lantern orange, not amber */
+.floaty{text-shadow:0 2px 0 var(--amber-edge),0 0 14px rgb(255 158 100 / .55)}
+
+/* TWEAK: glass chips over the 3D city use the Tokyo Night bg_dark instead of Night Clay navy */
+.stage__badge .pill,.stage__tools .icon-btn,.camtag{background:rgb(22 22 30 / .74)}
+
+/* TWEAK: the umbrella mark sits on a navy ledge, not an amber one */
+.brand svg{filter:drop-shadow(0 3px 0 light-dark(#B7BDD6, #0C0E14))}

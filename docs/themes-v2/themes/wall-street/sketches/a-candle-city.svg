@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs><radialGradient id="bg" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="#11402B"/><stop offset="1" stop-color="#06150E"/></radialGradient></defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<g stroke="#1E5A3E" stroke-width="3" opacity=".6"><path d="M0 160H512M0 256H512M0 352H512"/></g>
+<!-- wicks -->
+<g stroke-width="10" stroke-linecap="round">
+<path d="M148 270V392" stroke="#B83A3A"/><path d="M220 214V370" stroke="#17A35E"/><path d="M292 160V342" stroke="#17A35E"/><path d="M364 92V330" stroke="#B88A12"/>
+</g>
+<!-- ledges -->
+<rect x="120" y="296" width="56" height="70" rx="12" fill="#8E2A2E"/>
+<rect x="192" y="246" width="56" height="106" rx="12" fill="#0E7A45"/>
+<rect x="264" y="192" width="56" height="128" rx="12" fill="#0E7A45"/>
+<rect x="336" y="126" width="56" height="190" rx="12" fill="#A07405"/>
+<!-- bodies -->
+<rect x="120" y="286" width="56" height="70" rx="12" fill="#F2615B"/>
+<rect x="192" y="236" width="56" height="106" rx="12" fill="#35D98A"/>
+<rect x="264" y="182" width="56" height="128" rx="12" fill="#35D98A"/>
+<rect x="336" y="116" width="56" height="190" rx="12" fill="#FFC93D"/>
+<!-- windows -->
+<g fill="#0B2A1C" opacity=".55">
+<rect x="134" y="302" width="10" height="12" rx="3"/><rect x="152" y="302" width="10" height="12" rx="3"/>
+<rect x="206" y="254" width="10" height="12" rx="3"/><rect x="224" y="254" width="10" height="12" rx="3"/><rect x="206" y="278" width="10" height="12" rx="3"/><rect x="224" y="278" width="10" height="12" rx="3"/>
+<rect x="278" y="200" width="10" height="12" rx="3"/><rect x="296" y="200" width="10" height="12" rx="3"/><rect x="278" y="224" width="10" height="12" rx="3"/><rect x="296" y="224" width="10" height="12" rx="3"/><rect x="278" y="248" width="10" height="12" rx="3"/>
+</g>
+<g fill="#FFF6D6"><rect x="350" y="136" width="10" height="12" rx="3"/><rect x="368" y="136" width="10" height="12" rx="3"/><rect x="350" y="160" width="10" height="12" rx="3"/><rect x="368" y="160" width="10" height="12" rx="3"/><rect x="350" y="184" width="10" height="12" rx="3"/><rect x="368" y="184" width="10" height="12" rx="3"/><rect x="350" y="208" width="10" height="12" rx="3"/></g>
+<circle cx="364" cy="88" r="14" fill="#FFF3C4"/><circle cx="364" cy="88" r="26" fill="#FFC93D" opacity=".25"/>
+</svg>

@@ -1,0 +1,22 @@
+{# The rent-day recap of one closed week. r = a recap object from /api/economy (recap.latest or recap.weeks[]). #}
+{% macro recap_card(r, heading="Rent-day recap") %}
+{% set rent = r.rent %}
+<div class="recap2">
+  <div class="card__head"><div><p class="eyebrow">{{ heading }}</p><h2>Week of {{ r.monday|short_date }} to {{ r.sunday|short_date }}</h2></div>
+    <span class="pill pill--sm {{ 'pill--ok' if r.kept else 'pill--soft' }}">{{ "Week kept" if r.kept else ("Baseline week" if r.status == "baseline" else "A quiet week") }}</span></div>
+  <p class="recap2__msg">{{ r.message }}</p>
+  <table class="m-table" aria-label="Where the week's money came from and went">
+    <tbody>
+      {% for label, amount in source_rows(r.earned) %}<tr><th scope="row">{{ label }}</th><td class="num">{{ amount|usd }}</td></tr>{% endfor %}
+      <tr class="is-total"><th scope="row">Earned</th><td class="num">{{ r.earned.total|usd }}</td></tr>
+      {% if r.interest %}<tr><th scope="row">Savings interest</th><td class="num">+{{ r.interest|usd }}</td></tr>{% endif %}
+      <tr><th scope="row">Rent{% if rent.home_name %} <span class="muted xs">({{ rent.home_name }})</span>{% endif %}</th>
+        <td class="num">{% if rent.status == "paid" %}&minus;{{ rent.due|usd }}{% elif rent.status == "free" %}Free week{% else %}{{ rent.due|usd }} not covered, nothing taken{% endif %}</td></tr>
+      {% for p in r.purchases %}<tr><th scope="row">Bought: {{ p.name }}</th><td class="num">&minus;{{ p.dollars|usd }}</td></tr>{% endfor %}
+      <tr class="is-total"><th scope="row">Savings at close</th><td class="num">{{ r.savings_end|usd }}</td></tr>
+      <tr><th scope="row">Net worth</th><td class="num">{{ r.net_worth|usd }}</td></tr>
+    </tbody>
+  </table>
+  {% if r.moved %}<p class="note"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-house"/></svg><span>{{ r.moved.message }}</span></p>{% endif %}
+</div>
+{% endmacro %}

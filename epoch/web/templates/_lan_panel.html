@@ -1,0 +1,77 @@
+{# "Use on your tablet": tablet mode toggle, addresses, pairing (QR + 6-digit code) and paired devices.
+   Context: lan (docs/FEATURES-V2.md section 2), pairing (optional, set by the no-JS form). Every control is a real form; lan.js upgrades them. #}
+{% if lan %}
+{% set icons = "/static/app/icons.svg" %}
+<section class="card lan" id="lan" aria-labelledby="lanH" data-js="lan-panel" data-enabled="{{ 1 if lan.enabled else 0 }}" data-active="{{ 1 if lan.active else 0 }}">
+  <header class="lan__head">
+    <span class="lan__ic" aria-hidden="true"><svg class="ic"><use href="{{ icons }}#i-tablet"/></svg></span>
+    <div>
+      <h2 id="lanH">Use on your tablet</h2>
+      <p class="muted small">Open Epoch on a tablet at home as a second screen. The Focus Screen follows the same timer as this computer. Off by default, and nothing outside your home network can reach it.</p>
+    </div>
+  </header>
+
+  <form class="setrow lan__toggle" method="post" action="/settings/lan" data-js="lan-form">
+    <div><b>Tablet mode</b><small>Let paired devices on your Wi-Fi open Epoch.</small></div>
+    <label class="switch"><input type="checkbox" name="enabled" value="1" data-js="lan-toggle"{% if lan.enabled %} checked{% endif %}><span></span><span class="sr-only">Tablet mode</span></label>
+    <button class="btn btn--sm no-js-only" type="submit">Save</button>
+  </form>
+
+  <div class="callout callout--amber lan__restart" data-js="lan-restart" role="status"{% if not lan.restart_needed %} hidden{% endif %}>
+    <div><strong>Restart to apply.</strong> <span data-js="lan-restart-text">{% if lan.enabled %}Quit Epoch and start it again so it can listen on your network. The tablet cannot connect until then.{% else %}Quit Epoch and start it again to stop listening on your network.{% endif %}</span></div>
+  </div>
+  {% if lan.forced_by_env %}<p class="small muted">EPOCH_LAN=1 is set in .env, so tablet mode is on whatever this switch says.</p>{% endif %}
+
+  <p class="small muted lan__mac" data-js="lan-mac-url">On this computer, <code>{{ lan.mac_url }}</code> also works once you run <code>echo "127.0.0.1 epoch" | sudo tee -a /etc/hosts</code> in Terminal. The tablet cannot use that name.</p>
+
+  <div class="lan__section" data-js="lan-urls-box"{% if not lan.enabled %} hidden{% endif %}>
+    <h3>Open this on the tablet</h3>
+    <ul class="urls" data-js="lan-urls">
+      {% for u in lan.urls %}
+      <li><code>{{ u.url }}</code><button class="btn btn--ghost js-only" type="button" data-js="copy-url" data-url="{{ u.url }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-copy"/></svg>Copy</button><span class="xs muted">{{ "number address, best for Android" if u.kind == "ip" else "name, works on most phones and Macs" }}</span></li>
+      {% else %}<li class="muted small">No network address found. Connect this computer to your Wi-Fi.</li>{% endfor %}
+    </ul>
+  </div>
+
+  <div class="lan__section">
+    <h3>Pair a device</h3>
+    <p class="small muted" data-js="pair-help">{% if lan.enabled %}Make a one-time code, then scan the QR code or type the six digits on the tablet. It works once and lasts 10 minutes.{% else %}Turn tablet mode on first.{% endif %}</p>
+    <form method="post" action="/settings/lan/pair" data-js="pair-form">
+      <button class="btn" type="submit" data-js="pair-btn"{% if not lan.enabled %} aria-disabled="true"{% endif %}><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-qr-code"/></svg>Pair a device</button>
+    </form>
+    <div class="pairbox" data-js="pairing-qr"{% if not pairing %} hidden{% endif %}{% if pairing %} data-expires="{{ pairing.expires_at }}"{% endif %}>
+      <div class="pairbox__qr" data-js="pair-qr-svg" role="img" aria-label="QR code to pair the tablet">{% if pairing %}{{ pairing.qr.svg|safe }}{% endif %}</div>
+      <div class="pairbox__info">
+        <p class="small">Scan with the tablet camera, or open <code data-js="pair-page">{{ pairing.pair_page if pairing else "" }}</code> and type:</p>
+        <div class="paircode num" data-js="pair-code"{% if pairing %} data-code="{{ pairing.code }}"{% endif %} aria-label="Pairing code">{% if pairing %}{{ pairing.code[:3] }} {{ pairing.code[3:] }}{% endif %}</div>
+        <p class="pairtime small"><span data-js="pair-count">{% if pairing %}{{ pairing.ttl_seconds // 60 }}:00{% endif %}</span> left, one use</p>
+        <div class="pairbar" aria-hidden="true"><i data-js="pair-bar"></i></div>
+        <p class="small pairdone" data-js="pair-result" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <details class="lan__tips">
+    <summary>Tips for the tablet</summary>
+    <ul class="plain small">
+      <li>On Android Chrome open the menu and choose <b>Add to Home screen</b>. Then open Epoch from that icon: it opens straight on the Focus Screen.</li>
+      <li>Tap the full-screen button on the Focus Screen to hide the browser bars.</li>
+      <li>To keep the screen on beside your laptop, set the tablet's screen timeout to the longest value (Settings, Display). While a run is going the page also asks the tablet to stay awake where Chrome allows it.</li>
+      <li>Sound needs one tap on the tablet after the page opens. Chimes follow the Sound switch above; soundscapes have their own picker.</li>
+    </ul>
+  </details>
+
+  <div class="lan__section">
+    <h3>Paired devices</h3>
+    <ul class="devices" data-js="device-list">
+      {% for d in lan.devices %}
+      <li class="device" data-id="{{ d.id }}" data-ua="{{ d.user_agent or '' }}">
+        <span class="device__ic" aria-hidden="true"><svg class="ic"><use href="{{ icons }}#i-tablet"/></svg></span>
+        <div class="device__t"><b>{{ d.name }}</b><span class="xs muted"><span data-js="device-ua">{{ d.user_agent|truncate(40, true, "") if d.user_agent else "" }}</span> last seen <time datetime="{{ d.last_seen_utc }}" data-js="reltime">{{ d.last_seen_utc or "never" }}</time></span></div>
+        <form method="post" action="/settings/lan/devices/{{ d.id }}/revoke" data-js="revoke-form"><button class="btn btn--ghost" type="submit" aria-label="Remove {{ d.name }}">Remove</button></form>
+      </li>
+      {% else %}<li class="muted small device--none" data-js="no-devices">No devices paired yet.</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}

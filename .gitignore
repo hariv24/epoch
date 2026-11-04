@@ -1,0 +1,28 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/
+# personal planning notes (salary, visa plans) — never publish
+docs/plan.md
+dist/
+build/
+
+# Mixamo raw downloads + converted clips (licence: use in the app, never redistribute)
+maxiamo/
+epoch/web/static/app/people/mixamo/
+# personal reference photo
+hariv photo.png
+
+.DS_Store
+.tmp/
+.claude/
+
+# private / not for the public repo
+CLAUDE.md
+docs/HANDOFF.md
+docs/IDEAS-LATER.md
+Butler-2.jpg.webp
+butler image*.*
+butller image*.*

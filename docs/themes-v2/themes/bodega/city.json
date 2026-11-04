@@ -1,0 +1,13 @@
+{
+  "_comment": "Bodega: a warm 2am sky with sodium haze, fluorescent-cream windows, neon green for the odd cool window, deli-mustard accent, neon-red beacon.",
+  "skyTop": "#0E0A09",
+  "skyMid": "#1E1412",
+  "skyBottom": "#4A2A22",
+  "fog": "#2A1C18",
+  "windowWarm": "#FFF1C2",
+  "windowCool": "#7CF5B4",
+  "accent": "#FFC531",
+  "beacon": "#FF4D5E",
+  "stageBg": ["#1A110F", "#3A221C"],
+  "previewTint": { "css": "linear-gradient(#2A1A14, #6A3A22)", "blend": "color", "opacity": 0.3 }
+}

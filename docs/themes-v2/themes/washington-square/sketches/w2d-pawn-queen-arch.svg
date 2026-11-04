@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs><radialGradient id="lg" cx=".18" cy=".3" r=".6"><stop offset="0" stop-color="#FFB46B" stop-opacity=".6"/><stop offset=".5" stop-color="#E06A9A" stop-opacity=".18"/><stop offset="1" stop-color="#E06A9A" stop-opacity="0"/></radialGradient>
+<linearGradient id="sky" x2="0" y2="1"><stop offset="0" stop-color="#25064A"/><stop offset="1" stop-color="#4C157F"/></linearGradient>
+<linearGradient id="sh" x2="0" y2="1"><stop offset="0" stop-color="#9A5CF0"/><stop offset="1" stop-color="#6A2DB8"/></linearGradient></defs>
+<rect width="512" height="512" fill="url(#sky)"/>
+<path fill-rule="evenodd" d="M96 56H416V380H336V236a80 80 0 0 0-160 0V380H96z" fill="#3A0F68"/><rect x="84" y="96" width="344" height="16" fill="#43137A"/>
+<rect width="512" height="512" fill="url(#lg)"/>
+<path d="M0 380H512V512H0z" fill="#2A0A4A"/>
+<g fill="#3E146C"><path d="M0 380h64v40H0zM128 380h64v40h-64zM256 380h64v40h-64zM384 380h64v40h-64zM64 420h64v44H64zM192 420h64v44h-64zM320 420h64v44h-64zM448 420h64v44h-64zM0 464h64v48H0zM128 464h64v48h-64zM256 464h64v48h-64zM384 464h64v48h-64z"/></g>
+<g fill="url(#sh)" opacity=".9"><path d="M250 380c-4-24 12-40 36-46L306 222h-16v-18h90v18h-16L384 334c24 6 40 22 36 46z"/>
+<path d="M298 206L276 132L296 152L306 112L322 148L335 100L348 148L364 112L374 152L394 132L372 206z"/>
+<circle cx="276" cy="128" r="11"/><circle cx="306" cy="106" r="10"/><circle cx="335" cy="92" r="11"/><circle cx="364" cy="106" r="10"/><circle cx="394" cy="128" r="11"/></g>
+<g fill="#16052C"><rect x="88" y="196" width="12" height="184" rx="3"/><rect x="76" y="370" width="36" height="12" rx="4"/><rect x="82" y="186" width="24" height="12" rx="3"/></g>
+<circle cx="94" cy="160" r="26" fill="#FFC27A" opacity=".35"/><ellipse cx="94" cy="162" rx="17" ry="22" fill="#FFE0A8"/><path d="M76 142c4-12 32-12 36 0z" fill="#16052C"/>
+<path d="M146 380c-6-22 8-38 30-44c-2-26 4-50 16-66h-22v-20h84v20h-22c12 16 18 40 16 66c22 6 36 22 30 44z" fill="#C9B596" transform="translate(0 9)"/>
+<path d="M146 380c-6-22 8-38 30-44c-2-26 4-50 16-66h-22v-20h84v20h-22c12 16 18 40 16 66c22 6 36 22 30 44z" fill="#F8F0E3"/>
+<circle cx="212" cy="206" r="46" fill="#F8F0E3"/>
+<path d="M184 196a30 30 0 0 1 22-26" stroke="#FFFFFF" stroke-width="9" fill="none" stroke-linecap="round"/>
+<path d="M180 300c-2-12 0-22 4-30" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="7" fill="none" stroke-linecap="round"/>
+</svg>

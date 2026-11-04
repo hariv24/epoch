@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" class="{{ 'quiet ' if gm.quiet_mode }}{{ 'nogame ' if not gm.game_enabled }}{{ 'hide-ach' if gm.hide_achievements }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="/static/app/manifest.webmanifest" crossorigin="use-credentials">
+  <title>{% block title %}Today{% endblock %} · Epoch</title>
+  {% include "_head_icons.html" %}
+  <link rel="preload" href="{{ asset_base }}/vendor/fonts/fredoka-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ asset_base }}/vendor/fonts/nunito-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ asset_base }}/app/style.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var t = localStorage.getItem('witness.app.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <script src="/static/htmx.min.js" defer></script>
+  <script src="{{ asset_base }}/app/app.js" defer></script>
+  <script src="{{ asset_base }}/app/audio.js" defer></script>
+  <script src="{{ asset_base }}/app/focus.js" defer></script>
+  <script src="{{ asset_base }}/app/postcard.js" defer></script>
+  <script src="{{ asset_base }}/app/money.js" defer></script>
+</head>
+<body data-page="{{ page|default('today') }}" data-today="{{ gm.today }}" data-game="{{ 1 if gm.game_enabled else 0 }}"
+      data-quiet="{{ 1 if gm.quiet_mode else 0 }}" data-sound="{{ 1 if gm.sound else 0 }}" data-motion="{{ gm.motion }}"
+      data-three-d="{{ gm.three_d }}" data-sky-tz="{{ gm.sky_tz }}" data-hide-achievements="{{ 1 if gm.hide_achievements else 0 }}"
+      data-confetti-cap="{{ gm.confetti_daily_cap }}" data-soundscape="{{ gm.soundscape or 'off' }}" data-soundscape-volume="{{ gm.soundscape_volume if gm.soundscape_volume is not none else 40 }}">
+<a class="skip" href="#main">Skip to content</a>
+<div class="app{% if kiosk %} app--kiosk{% endif %}">
+  {% if not kiosk %}
+  <nav class="nav" aria-label="Main">
+    <div class="nav__in">
+    {% set tabs = [("today", "/", "pen-line", "Today"), ("focus", "/pomodoro", "timer", "Focus"), ("close", "/close", "moon", "Close"), ("world", "/world", "building-2", "World"), ("money", "/money", "wallet", "Money"), ("settings", "/settings", "settings", "Settings")] %}
+    {% for key, href, icon, label in tabs %}
+    <a href="{{ href }}" data-nav="{{ key }}"{% if active == key %} aria-current="page"{% endif %}{% if key == "money" %} data-quiet-hide data-game-only{% endif %}><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-{{ icon }}"/></svg>{{ label }}{% if key == "close" %}<i class="dot" data-js="close-dot"{% if not close_dot %} hidden{% endif %}></i>{% endif %}{% if key == "focus" %}<i class="dot" data-js="focus-dot"{% if not (pomodoro and pomodoro.active) %} hidden{% endif %}></i>{% endif %}</a>
+    {% endfor %}
+    </div>
+  </nav>
+  {% endif %}
+  <div class="shell">
+    {% if not kiosk %}
+    <header class="top">
+      <a class="brand" href="/" aria-label="Epoch, Today">
+        {% include "_brand_mark.html" %}
+        Epoch
+      </a>
+      <div class="top__right">
+        <span class="pill hide-sm" title="Current time in New York"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-plane"/></svg><span data-js="nyc-time">NYC --:--</span></span>
+        <span class="pill hide-sm weather-chip" data-js="weather-chip" hidden><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-cloud"/></svg><span data-js="weather-text"></span></span>
+        <span class="pill pill--flame" data-js="run-pill" data-quiet-hide data-game-only title="Consecutive days with the floor, a rest day or a repair"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-flame"/></svg><span><span class="num" data-js="run-num">{{ run_days|default(0) }}</span><span data-js="run-label"> day run</span></span></span>
+        <a class="pill pill--wallet hide-xs" href="/money" data-js="wallet-pill" data-quiet-hide data-game-only data-cents="{{ wallet.cents }}" title="Your savings. Tap for the wallet and the rent-day recap." aria-label="Savings {{ wallet.text }}. Open the wallet"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-wallet"/></svg><span class="num" data-js="wallet-num">{{ wallet.text }}</span></a>
+        <button class="icon-btn js-only" type="button" data-js="sound-toggle" aria-pressed="{{ 'true' if gm.sound else 'false' }}" aria-label="Sound is {{ 'on. Turn off' if gm.sound else 'off. Turn on' }}"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-{{ 'volume-2' if gm.sound else 'volume-x' }}"/></svg></button>
+        <button class="icon-btn js-only" type="button" data-js="theme-toggle" aria-label="Switch between light and dark"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-moon"/></svg></button>
+      </div>
+    </header>
+    {% endif %}
+    <main id="main" class="main{% if kiosk %} main--kiosk{% endif %}" tabindex="-1">
+      <div id="flash-slot" aria-live="polite">{% block flash %}{% include "_flash.html" %}{% endblock %}</div>
+      {% block content %}{% endblock %}
+    </main>
+    {% if not kiosk %}<footer class="foot">Everything stays on this computer.</footer>{% endif %}
+  </div>
+</div>
+<div class="toasts" id="toasts" data-js="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
+<div class="lightsout" data-js="lights-out" aria-hidden="true"></div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

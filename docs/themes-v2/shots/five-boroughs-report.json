@@ -1,0 +1,596 @@
+{
+  "slug": "five-boroughs",
+  "builtAt": "2026-10-18T15:05:39.613Z",
+  "contrast": [
+    {
+      "fg": "--ink",
+      "bg": "--bg",
+      "fgHex": "#FFF4E6",
+      "bgHex": "#160C1E",
+      "ratio": 17.49,
+      "min": 4.5,
+      "pass": true,
+      "label": "body text on page"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--s1",
+      "fgHex": "#FFF4E6",
+      "bgHex": "#22142C",
+      "ratio": 16.05,
+      "min": 4.5,
+      "pass": true,
+      "label": "body text on card"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--s2",
+      "fgHex": "#FFF4E6",
+      "bgHex": "#2D1B3A",
+      "ratio": 14.54,
+      "min": 4.5,
+      "pass": true,
+      "label": "text on well / ghost button"
+    },
+    {
+      "fg": "--muted",
+      "bg": "--s1",
+      "fgHex": "#C9B9D8",
+      "bgHex": "#22142C",
+      "ratio": 9.48,
+      "min": 4.5,
+      "pass": true,
+      "label": "muted text on card"
+    },
+    {
+      "fg": "--muted",
+      "bg": "--bg",
+      "fgHex": "#C9B9D8",
+      "bgHex": "#160C1E",
+      "ratio": 10.33,
+      "min": 4.5,
+      "pass": true,
+      "label": "muted text on page"
+    },
+    {
+      "fg": "--muted",
+      "bg": "--s2",
+      "fgHex": "#C9B9D8",
+      "bgHex": "#2D1B3A",
+      "ratio": 8.59,
+      "min": 4.5,
+      "pass": true,
+      "label": "placeholder in input"
+    },
+    {
+      "fg": "--faint",
+      "bg": "--s1",
+      "fgHex": "#AC9AC2",
+      "bgHex": "#22142C",
+      "ratio": 6.77,
+      "min": 3,
+      "pass": true,
+      "label": "faint icons on card"
+    },
+    {
+      "fg": "--on-amber",
+      "bg": "--amber",
+      "fgHex": "#1F1300",
+      "bgHex": "#FFC93C",
+      "ratio": 11.87,
+      "min": 4.5,
+      "pass": true,
+      "label": "amber button label"
+    },
+    {
+      "fg": "--on-violet",
+      "bg": "--violet",
+      "fgHex": "#2A0618",
+      "bgHex": "#FF6FB1",
+      "ratio": 7.17,
+      "min": 4.5,
+      "pass": true,
+      "label": "violet button label"
+    },
+    {
+      "fg": "--on-mint",
+      "bg": "--mint",
+      "fgHex": "#03201A",
+      "bgHex": "#2FE0BE",
+      "ratio": 10.22,
+      "min": 4.5,
+      "pass": true,
+      "label": "mint button label"
+    },
+    {
+      "fg": "--amber-ink",
+      "bg": "--amber-soft",
+      "fgHex": "#FFC93C",
+      "bgHex": "#3A2614",
+      "ratio": 9.32,
+      "min": 4.5,
+      "pass": true,
+      "label": "active nav tab"
+    },
+    {
+      "fg": "--violet",
+      "bg": "--s1",
+      "fgHex": "#FF6FB1",
+      "bgHex": "#22142C",
+      "ratio": 6.78,
+      "min": 4.5,
+      "pass": true,
+      "label": "links on card"
+    },
+    {
+      "fg": "--violet",
+      "bg": "--violet-soft",
+      "fgHex": "#FF6FB1",
+      "bgHex": "#3D1840",
+      "ratio": 5.82,
+      "min": 4.5,
+      "pass": true,
+      "label": "soft pill / callout"
+    },
+    {
+      "fg": "--mint",
+      "bg": "--mint-soft",
+      "fgHex": "#2FE0BE",
+      "bgHex": "#0E3833",
+      "ratio": 7.67,
+      "min": 4.5,
+      "pass": true,
+      "label": "ok pill"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--amber-soft",
+      "fgHex": "#FFF4E6",
+      "bgHex": "#3A2614",
+      "ratio": 13.18,
+      "min": 4.5,
+      "pass": true,
+      "label": "amber callout text"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--violet-soft",
+      "fgHex": "#FFF4E6",
+      "bgHex": "#3D1840",
+      "ratio": 13.78,
+      "min": 4.5,
+      "pass": true,
+      "label": "violet callout text"
+    },
+    {
+      "fg": "--bg",
+      "bg": "--ink",
+      "fgHex": "#160C1E",
+      "bgHex": "#FFF4E6",
+      "ratio": 17.49,
+      "min": 4.5,
+      "pass": true,
+      "label": "toast (inverted)"
+    },
+    {
+      "fg": "--focus",
+      "bg": "--bg",
+      "fgHex": "#8CF0DC",
+      "bgHex": "#160C1E",
+      "ratio": 14.12,
+      "min": 3,
+      "pass": true,
+      "label": "focus ring on page"
+    },
+    {
+      "fg": "--focus",
+      "bg": "--s1",
+      "fgHex": "#8CF0DC",
+      "bgHex": "#22142C",
+      "ratio": 12.96,
+      "min": 3,
+      "pass": true,
+      "label": "focus ring on card"
+    },
+    {
+      "fg": "--line-strong",
+      "bg": "--s2",
+      "fgHex": "#8068B0",
+      "bgHex": "#2D1B3A",
+      "ratio": 3.4,
+      "min": 3,
+      "pass": true,
+      "label": "input border"
+    },
+    {
+      "fg": "--c-python",
+      "bg": "--s1",
+      "fgHex": "#6FA8FF",
+      "bgHex": "#22142C",
+      "ratio": 7.24,
+      "min": 3,
+      "pass": true,
+      "label": "Python glyph"
+    },
+    {
+      "fg": "--c-math",
+      "bg": "--s1",
+      "fgHex": "#B49CFF",
+      "bgHex": "#22142C",
+      "ratio": 7.59,
+      "min": 3,
+      "pass": true,
+      "label": "Math glyph"
+    },
+    {
+      "fg": "--c-ml",
+      "bg": "--s1",
+      "fgHex": "#3EE6A0",
+      "bgHex": "#22142C",
+      "ratio": 10.82,
+      "min": 3,
+      "pass": true,
+      "label": "ML/DL glyph"
+    },
+    {
+      "fg": "--c-papers",
+      "bg": "--s1",
+      "fgHex": "#FF9A5C",
+      "bgHex": "#22142C",
+      "ratio": 8.33,
+      "min": 3,
+      "pass": true,
+      "label": "Papers glyph"
+    },
+    {
+      "fg": "--c-writing",
+      "bg": "--s1",
+      "fgHex": "#FF8AD8",
+      "bgHex": "#22142C",
+      "ratio": 8.2,
+      "min": 3,
+      "pass": true,
+      "label": "Writing glyph"
+    },
+    {
+      "fg": "--rest",
+      "bg": "--s1",
+      "fgHex": "#B9A8FF",
+      "bgHex": "#22142C",
+      "ratio": 8.39,
+      "min": 3,
+      "pass": true,
+      "label": "Rest glyph"
+    },
+    {
+      "fg": "--c-drift",
+      "bg": "--s1",
+      "fgHex": "#AC9AC2",
+      "bgHex": "#22142C",
+      "ratio": 6.77,
+      "min": 3,
+      "pass": true,
+      "label": "Drift glyph"
+    },
+    {
+      "fg": "--flame",
+      "bg": "--s1",
+      "fgHex": "#FF8A2A",
+      "bgHex": "#22142C",
+      "ratio": 7.41,
+      "min": 3,
+      "pass": true,
+      "label": "run flame"
+    },
+    {
+      "fg": "--amber",
+      "bg": "--s2",
+      "fgHex": "#FFC93C",
+      "bgHex": "#2D1B3A",
+      "ratio": 10.28,
+      "min": 3,
+      "pass": true,
+      "label": "XP bar fill vs track"
+    }
+  ],
+  "contrastLight": [
+    {
+      "fg": "--ink",
+      "bg": "--bg",
+      "fgHex": "#24132F",
+      "bgHex": "#FFF6EA",
+      "ratio": 16.23,
+      "min": 4.5,
+      "pass": true,
+      "label": "body text on page"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--s1",
+      "fgHex": "#24132F",
+      "bgHex": "#FFFFFF",
+      "ratio": 17.37,
+      "min": 4.5,
+      "pass": true,
+      "label": "body text on card"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--s2",
+      "fgHex": "#24132F",
+      "bgHex": "#FFEEDB",
+      "ratio": 15.3,
+      "min": 4.5,
+      "pass": true,
+      "label": "text on well / ghost button"
+    },
+    {
+      "fg": "--muted",
+      "bg": "--s1",
+      "fgHex": "#5C4A6A",
+      "bgHex": "#FFFFFF",
+      "ratio": 7.95,
+      "min": 4.5,
+      "pass": true,
+      "label": "muted text on card"
+    },
+    {
+      "fg": "--muted",
+      "bg": "--bg",
+      "fgHex": "#5C4A6A",
+      "bgHex": "#FFF6EA",
+      "ratio": 7.43,
+      "min": 4.5,
+      "pass": true,
+      "label": "muted text on page"
+    },
+    {
+      "fg": "--muted",
+      "bg": "--s2",
+      "fgHex": "#5C4A6A",
+      "bgHex": "#FFEEDB",
+      "ratio": 7,
+      "min": 4.5,
+      "pass": true,
+      "label": "placeholder in input"
+    },
+    {
+      "fg": "--faint",
+      "bg": "--s1",
+      "fgHex": "#6F5D80",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.91,
+      "min": 3,
+      "pass": true,
+      "label": "faint icons on card"
+    },
+    {
+      "fg": "--on-amber",
+      "bg": "--amber",
+      "fgHex": "#1F1300",
+      "bgHex": "#B87A00",
+      "ratio": 5.06,
+      "min": 4.5,
+      "pass": true,
+      "label": "amber button label"
+    },
+    {
+      "fg": "--on-violet",
+      "bg": "--violet",
+      "fgHex": "#FFFFFF",
+      "bgHex": "#C2186B",
+      "ratio": 5.77,
+      "min": 4.5,
+      "pass": true,
+      "label": "violet button label"
+    },
+    {
+      "fg": "--on-mint",
+      "bg": "--mint",
+      "fgHex": "#FFFFFF",
+      "bgHex": "#067A66",
+      "ratio": 5.27,
+      "min": 4.5,
+      "pass": true,
+      "label": "mint button label"
+    },
+    {
+      "fg": "--amber-ink",
+      "bg": "--amber-soft",
+      "fgHex": "#8A5A00",
+      "bgHex": "#FFE6B0",
+      "ratio": 4.85,
+      "min": 4.5,
+      "pass": true,
+      "label": "active nav tab"
+    },
+    {
+      "fg": "--violet",
+      "bg": "--s1",
+      "fgHex": "#C2186B",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.77,
+      "min": 4.5,
+      "pass": true,
+      "label": "links on card"
+    },
+    {
+      "fg": "--violet",
+      "bg": "--violet-soft",
+      "fgHex": "#C2186B",
+      "bgHex": "#FFE0EE",
+      "ratio": 4.72,
+      "min": 4.5,
+      "pass": true,
+      "label": "soft pill / callout"
+    },
+    {
+      "fg": "--mint",
+      "bg": "--mint-soft",
+      "fgHex": "#067A66",
+      "bgHex": "#D6F5EE",
+      "ratio": 4.56,
+      "min": 4.5,
+      "pass": true,
+      "label": "ok pill"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--amber-soft",
+      "fgHex": "#24132F",
+      "bgHex": "#FFE6B0",
+      "ratio": 14.22,
+      "min": 4.5,
+      "pass": true,
+      "label": "amber callout text"
+    },
+    {
+      "fg": "--ink",
+      "bg": "--violet-soft",
+      "fgHex": "#24132F",
+      "bgHex": "#FFE0EE",
+      "ratio": 14.18,
+      "min": 4.5,
+      "pass": true,
+      "label": "violet callout text"
+    },
+    {
+      "fg": "--bg",
+      "bg": "--ink",
+      "fgHex": "#FFF6EA",
+      "bgHex": "#24132F",
+      "ratio": 16.23,
+      "min": 4.5,
+      "pass": true,
+      "label": "toast (inverted)"
+    },
+    {
+      "fg": "--focus",
+      "bg": "--bg",
+      "fgHex": "#C2186B",
+      "bgHex": "#FFF6EA",
+      "ratio": 5.4,
+      "min": 3,
+      "pass": true,
+      "label": "focus ring on page"
+    },
+    {
+      "fg": "--focus",
+      "bg": "--s1",
+      "fgHex": "#C2186B",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.77,
+      "min": 3,
+      "pass": true,
+      "label": "focus ring on card"
+    },
+    {
+      "fg": "--line-strong",
+      "bg": "--s2",
+      "fgHex": "#8A6FA8",
+      "bgHex": "#FFEEDB",
+      "ratio": 3.76,
+      "min": 3,
+      "pass": true,
+      "label": "input border"
+    },
+    {
+      "fg": "--c-python",
+      "bg": "--s1",
+      "fgHex": "#2F5FD0",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.72,
+      "min": 3,
+      "pass": true,
+      "label": "Python glyph"
+    },
+    {
+      "fg": "--c-math",
+      "bg": "--s1",
+      "fgHex": "#6D4FE0",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.46,
+      "min": 3,
+      "pass": true,
+      "label": "Math glyph"
+    },
+    {
+      "fg": "--c-ml",
+      "bg": "--s1",
+      "fgHex": "#067A50",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.37,
+      "min": 3,
+      "pass": true,
+      "label": "ML/DL glyph"
+    },
+    {
+      "fg": "--c-papers",
+      "bg": "--s1",
+      "fgHex": "#C2410C",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.18,
+      "min": 3,
+      "pass": true,
+      "label": "Papers glyph"
+    },
+    {
+      "fg": "--c-writing",
+      "bg": "--s1",
+      "fgHex": "#B8239B",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.6,
+      "min": 3,
+      "pass": true,
+      "label": "Writing glyph"
+    },
+    {
+      "fg": "--rest",
+      "bg": "--s1",
+      "fgHex": "#6B5FB5",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.34,
+      "min": 3,
+      "pass": true,
+      "label": "Rest glyph"
+    },
+    {
+      "fg": "--c-drift",
+      "bg": "--s1",
+      "fgHex": "#6F5D80",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.91,
+      "min": 3,
+      "pass": true,
+      "label": "Drift glyph"
+    },
+    {
+      "fg": "--flame",
+      "bg": "--s1",
+      "fgHex": "#C2410C",
+      "bgHex": "#FFFFFF",
+      "ratio": 5.18,
+      "min": 3,
+      "pass": true,
+      "label": "run flame"
+    },
+    {
+      "fg": "--amber",
+      "bg": "--s2",
+      "fgHex": "#B87A00",
+      "bgHex": "#FFEEDB",
+      "ratio": 3.18,
+      "min": 3,
+      "pass": true,
+      "label": "XP bar fill vs track"
+    }
+  ],
+  "fonts": [
+    "Fredoka",
+    "Nunito"
+  ],
+  "brokenIconRefs": 0,
+  "externalRequests": [],
+  "consoleErrors": [],
+  "failedRequests": []
+}

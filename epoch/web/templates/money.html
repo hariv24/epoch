@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Money{% endblock %}
+{% block content %}
+{% from "_recap_card.html" import recap_card %}
+{% set icons = "/static/app/icons.svg" %}
+<div class="view-head"><div><h1>Money</h1><p>What your study pays, what the week costs, and how it all adds up.</p></div></div>
+{% include "_money_tabs.html" %}
+{% if quiet %}{% include "_money_quiet.html" %}{% else %}
+{% set rate = eco.rate %}{% set wk = eco.week %}{% set rent = eco.rent %}
+<div class="stack-4" data-js="money-root">
+  <div class="m-two">
+    <section class="card card--hero m-hero" aria-labelledby="savH">
+      <p class="eyebrow" id="savH">Savings</p>
+      <p class="m-big num" data-js="m-balance">{{ eco.balance|usd }}</p>
+      <dl class="m-facts">
+        <div><dt>Net worth</dt><dd class="num">{{ eco.net_worth|usd }}</dd></div>
+        <div><dt>Earned in all</dt><dd class="num">{{ eco.earned_total|usd }}</dd></div>
+        {% if eco.deposit_held %}<div><dt>Deposit held</dt><dd class="num">{{ eco.deposit_held|usd }}</dd></div>{% endif %}
+      </dl>
+      <p class="small muted">Deep focus pays by the minute with no daily limit. Savings only ever go up from work; you choose what to spend them on. This money exists only in the game.</p>
+    </section>
+
+    <section class="card m-job" aria-labelledby="jobH">
+      <p class="eyebrow">Your job</p>
+      <h2 id="jobH">{{ rate.title }} <span class="m-rate num">{{ rate.per_hour|usd }}/h</span></h2>
+      <p class="m-next">{{ rate_line(rate) }}</p>
+      <ol class="m-ladder" aria-label="Job ladder">
+        {% for step in rate.ladder %}<li class="{{ 'is-reached' if step.reached }}{{ ' is-now' if step.title == rate.title }}"><b>{{ step.title }}</b><span class="num">{{ step.per_hour|usd }}/h</span><small>{% if step.nodes_needed %}{{ step.nodes_needed }} nodes{% else %}Start{% endif %}</small></li>{% endfor %}
+      </ol>
+      <p class="xs muted">Skill nodes unlock as you ship outputs and log deep hours: {{ rate.nodes }} of {{ rate.nodes_total }} so far. A raise counts from the moment the node unlocks, and the rate never goes down.</p>
+    </section>
+  </div>
+
+  <div class="m-two">
+    <section class="card card--stack" aria-labelledby="wkH">
+      <div class="card__head"><div><p class="eyebrow">This week</p><h2 id="wkH">{{ wk.monday|short_date }} to {{ wk.sunday|short_date }}</h2></div>
+        <span class="pill pill--sm {{ 'pill--ok' if wk.status == 'kept' else 'pill--soft' }}">{{ {"kept": "Week kept", "in_progress": "In progress", "baseline": "Baseline week", "not_kept": "A quiet week"}.get(wk.status, "In progress") }}</span></div>
+      <table class="m-table" aria-label="Earned this week by source">
+        <tbody>
+          {% for label, amount in source_rows(wk.earned) %}<tr><th scope="row">{{ label }}</th><td class="num">{{ amount|usd }}</td></tr>{% endfor %}
+          <tr class="is-total"><th scope="row">Earned so far</th><td class="num">{{ wk.earned.total|usd }}</td></tr>
+        </tbody>
+      </table>
+      <p class="small muted">Today: {{ wk.today.earned|usd }} from {{ wk.today.deep_minutes|hm }} of deep focus. Three-star days so far: <b>{{ eco.stars.days }}</b>{% if eco.stars.this_week %} ({{ eco.stars.this_week }} this week){% endif %}, {{ eco.constants.star_dollars|usd }} each.</p>
+    </section>
+
+    <section class="card card--stack m-rent" aria-labelledby="rentH">
+      <div class="card__head"><div><p class="eyebrow">Rent</p><h2 id="rentH">{% if rent.free %}No rent this week{% else %}{{ rent.amount|usd }} a week{% endif %}</h2></div>
+        <span class="pill pill--sm {{ 'pill--ok' if rent.covered else 'pill--soft' }}">{{ "Free" if rent.free else ("Covered" if rent.covered else "Not covered yet") }}</span></div>
+      <p>{{ rent.message }}</p>
+      <p class="small muted">Rent is taken in full or not at all, on Sunday night at week close. {% if not rent.free and rent.due_date %}Next one: {{ rent.due_date|long_date }}.{% endif %} <a href="/home">See your home</a></p>
+    </section>
+  </div>
+
+  <section class="card card--stack" id="recap" aria-labelledby="recapH">
+    {% if eco.recap.latest %}
+      {{ recap_card(eco.recap.latest) }}
+      {% if eco.recap.weeks|length > 1 %}
+      <details class="m-earlier"><summary>Earlier weeks</summary>
+        <ul class="m-weeks">{% for w in eco.recap.weeks[1:] %}<li><b>{{ w.monday|short_date }} to {{ w.sunday|short_date }}</b><span class="small">{{ w.message }}</span></li>{% endfor %}</ul>
+      </details>
+      {% endif %}
+    {% else %}
+      <h2 id="recapH">Rent-day recap</h2>
+      <p>Your first recap arrives when a week closes, on Sunday night at 04:00 Monday. It adds up what you earned, the rent, any interest and where your savings stand.</p>
+    {% endif %}
+  </section>
+
+  <section class="card card--stack" aria-labelledby="nwH">
+    <div class="card__head"><h2 id="nwH">Net worth</h2><span class="small muted">Savings, things you own and any deposit, at each week close</span></div>
+    {{ networth_svg(eco.recap.series) }}
+  </section>
+
+  <div class="m-three">
+    <a class="card m-tile" href="/store"><svg class="ic ic--lg" aria-hidden="true"><use href="{{ icons }}#i-shopping-bag"/></svg><b>NYC Store</b><span class="small muted">Furniture, outfits, experiences and tower upgrades</span></a>
+    <a class="card m-tile" href="/passport"><svg class="ic ic--lg" aria-hidden="true"><use href="{{ icons }}#i-ticket"/></svg><b>Passport</b><span class="small muted">{{ eco.passport|length }} postcard{{ "" if eco.passport|length == 1 else "s" }} collected</span></a>
+    <a class="card m-tile" href="/home"><svg class="ic ic--lg" aria-hidden="true"><use href="{{ icons }}#i-house"/></svg><b>Home</b><span class="small muted">{{ eco.home.name }}, {{ eco.home.address }}</span></a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

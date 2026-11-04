@@ -1,0 +1,807 @@
+{
+ "version": 1,
+ "generator": "scripts/people/build_all.sh (MakeHuman/MPFB2 in Blender + Quaternius UAL clips)",
+ "space": {
+  "units": "meters",
+  "up": "+y",
+  "forward": "+z",
+  "feet_at_y": 0,
+  "origin": "between the feet"
+ },
+ "compression": {
+  "meshopt": true,
+  "extensionsRequired": [
+   "EXT_meshopt_compression",
+   "KHR_mesh_quantization",
+   "EXT_texture_webp"
+  ],
+  "decoder": "vendor/three/addons/libs/meshopt_decoder.module.js (three@0.186.1)",
+  "usage": "gltfLoader.setMeshoptDecoder(MeshoptDecoder)"
+ },
+ "skeleton": {
+  "rig": "MPFB2 'game_engine' (Unreal-style bone names)",
+  "root": "Root",
+  "bones": [
+   "Root",
+   "pelvis",
+   "spine_01",
+   "spine_02",
+   "spine_03",
+   "clavicle_l",
+   "upperarm_l",
+   "lowerarm_l",
+   "hand_l",
+   "index_01_l",
+   "index_02_l",
+   "index_03_l",
+   "middle_01_l",
+   "middle_02_l",
+   "middle_03_l",
+   "pinky_01_l",
+   "pinky_02_l",
+   "pinky_03_l",
+   "ring_01_l",
+   "ring_02_l",
+   "ring_03_l",
+   "thumb_01_l",
+   "thumb_02_l",
+   "thumb_03_l",
+   "clavicle_r",
+   "upperarm_r",
+   "lowerarm_r",
+   "hand_r",
+   "index_01_r",
+   "index_02_r",
+   "index_03_r",
+   "middle_01_r",
+   "middle_02_r",
+   "middle_03_r",
+   "pinky_01_r",
+   "pinky_02_r",
+   "pinky_03_r",
+   "ring_01_r",
+   "ring_02_r",
+   "ring_03_r",
+   "thumb_01_r",
+   "thumb_02_r",
+   "thumb_03_r",
+   "neck_01",
+   "head",
+   "thigh_l",
+   "calf_l",
+   "foot_l",
+   "ball_l",
+   "thigh_r",
+   "calf_r",
+   "foot_r",
+   "ball_r"
+  ],
+  "shared": "every character and clips.glb use these exact bone names"
+ },
+ "clips": {
+  "file": "clips.glb",
+  "fps": 24,
+  "ref_character": "user",
+  "ref_hip_height_m": 0.905,
+  "tracks": "quaternion rotation for every bone + pelvis.position (no scale / other translations)",
+  "pelvis_scaling": "multiply pelvis.position values by character.hip_height_m / ref_hip_height_m",
+  "sleep": {
+   "pelvis_height_m": 0.134,
+   "head_toward_gltf": "-z",
+   "head_from_pelvis_m": 0.64
+  },
+  "items": {
+   "idle": {
+    "duration": 2.5,
+    "loop": true
+   },
+   "walk": {
+    "duration": 1.3333,
+    "loop": true,
+    "speed_mps": 0.804
+   },
+   "sit_idle": {
+    "duration": 3.3333,
+    "loop": true,
+    "pelvis_height_m": 0.535
+   },
+   "dance": {
+    "duration": 3.0,
+    "loop": true
+   },
+   "kneel": {
+    "duration": 1.375,
+    "loop": false
+   },
+   "water": {
+    "duration": 3.7917,
+    "loop": true
+   },
+   "sit_type": {
+    "duration": 6.6667,
+    "loop": true
+   },
+   "sit_read": {
+    "duration": 6.6667,
+    "loop": true
+   },
+   "sit_sip": {
+    "duration": 5.0,
+    "loop": true
+   },
+   "play_piano": {
+    "duration": 3.3333,
+    "loop": true
+   },
+   "idle_look": {
+    "duration": 5.0,
+    "loop": true
+   },
+   "stand_stretch": {
+    "duration": 3.7917,
+    "loop": false
+   },
+   "yawn": {
+    "duration": 3.2083,
+    "loop": false
+   },
+   "wave": {
+    "duration": 2.5833,
+    "loop": false
+   },
+   "point": {
+    "duration": 2.5833,
+    "loop": false
+   },
+   "cheer": {
+    "duration": 2.4167,
+    "loop": false
+   },
+   "sleep": {
+    "duration": 4.0,
+    "loop": true
+   }
+  }
+ },
+ "lod_hint": {
+  "close": "the user's own character / anything within ~4 m",
+  "mid": "~4-15 m",
+  "far": "crowds, > 15 m"
+ },
+ "characters": [
+  {
+   "id": "user",
+   "name": "You",
+   "role": "user",
+   "outfits": {
+    "everyday": {
+     "lods": {
+      "close": {
+       "file": "user/everyday.close.glb",
+       "tris": 14613,
+       "bytes": 723720,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/everyday.mid.glb",
+       "tris": 4622,
+       "bytes": 230388,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/everyday.far.glb",
+       "tris": 1465,
+       "bytes": 73200,
+       "texture_px": 128
+      }
+     }
+    },
+    "columbia_hoodie": {
+     "lods": {
+      "close": {
+       "file": "user/columbia_hoodie.close.glb",
+       "tris": 14605,
+       "bytes": 731300,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/columbia_hoodie.mid.glb",
+       "tris": 4618,
+       "bytes": 243100,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/columbia_hoodie.far.glb",
+       "tris": 1464,
+       "bytes": 78960,
+       "texture_px": 128
+      }
+     }
+    },
+    "nyu_hoodie": {
+     "lods": {
+      "close": {
+       "file": "user/nyu_hoodie.close.glb",
+       "tris": 14605,
+       "bytes": 660884,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/nyu_hoodie.mid.glb",
+       "tris": 4618,
+       "bytes": 236800,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/nyu_hoodie.far.glb",
+       "tris": 1464,
+       "bytes": 78144,
+       "texture_px": 128
+      }
+     }
+    },
+    "plain_jersey": {
+     "lods": {
+      "close": {
+       "file": "user/plain_jersey.close.glb",
+       "tris": 14617,
+       "bytes": 553896,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/plain_jersey.mid.glb",
+       "tris": 4627,
+       "bytes": 214892,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/plain_jersey.far.glb",
+       "tris": 1464,
+       "bytes": 71472,
+       "texture_px": 128
+      }
+     }
+    },
+    "running_gear": {
+     "lods": {
+      "close": {
+       "file": "user/running_gear.close.glb",
+       "tris": 14616,
+       "bytes": 553816,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/running_gear.mid.glb",
+       "tris": 4624,
+       "bytes": 221396,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/running_gear.far.glb",
+       "tris": 1467,
+       "bytes": 71060,
+       "texture_px": 128
+      }
+     }
+    },
+    "library_cardigan": {
+     "lods": {
+      "close": {
+       "file": "user/library_cardigan.close.glb",
+       "tris": 14609,
+       "bytes": 708844,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/library_cardigan.mid.glb",
+       "tris": 4611,
+       "bytes": 220520,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/library_cardigan.far.glb",
+       "tris": 1463,
+       "bytes": 68312,
+       "texture_px": 128
+      }
+     }
+    },
+    "winter_coat": {
+     "lods": {
+      "close": {
+       "file": "user/winter_coat.close.glb",
+       "tris": 14595,
+       "bytes": 681200,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/winter_coat.mid.glb",
+       "tris": 4616,
+       "bytes": 214328,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/winter_coat.far.glb",
+       "tris": 1499,
+       "bytes": 80332,
+       "texture_px": 128
+      }
+     }
+    },
+    "navy_suit": {
+     "lods": {
+      "close": {
+       "file": "user/navy_suit.close.glb",
+       "tris": 14608,
+       "bytes": 459036,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/navy_suit.mid.glb",
+       "tris": 4610,
+       "bytes": 184748,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/navy_suit.far.glb",
+       "tris": 1467,
+       "bytes": 61852,
+       "texture_px": 128
+      }
+     }
+    },
+    "camel_overcoat": {
+     "lods": {
+      "close": {
+       "file": "user/camel_overcoat.close.glb",
+       "tris": 14595,
+       "bytes": 771516,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/camel_overcoat.mid.glb",
+       "tris": 4616,
+       "bytes": 231044,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/camel_overcoat.far.glb",
+       "tris": 1499,
+       "bytes": 80328,
+       "texture_px": 128
+      }
+     }
+    },
+    "yellow_raincoat": {
+     "lods": {
+      "close": {
+       "file": "user/yellow_raincoat.close.glb",
+       "tris": 14601,
+       "bytes": 647352,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/yellow_raincoat.mid.glb",
+       "tris": 4622,
+       "bytes": 221424,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/yellow_raincoat.far.glb",
+       "tris": 1464,
+       "bytes": 76792,
+       "texture_px": 128
+      }
+     }
+    },
+    "varsity_jacket": {
+     "lods": {
+      "close": {
+       "file": "user/varsity_jacket.close.glb",
+       "tris": 14605,
+       "bytes": 697636,
+       "texture_px": 1024
+      },
+      "mid": {
+       "file": "user/varsity_jacket.mid.glb",
+       "tris": 4618,
+       "bytes": 244872,
+       "texture_px": 512
+      },
+      "far": {
+       "file": "user/varsity_jacket.far.glb",
+       "tris": 1464,
+       "bytes": 81868,
+       "texture_px": 128
+      }
+     }
+    }
+   },
+   "default_outfit": "everyday",
+   "height_m": 1.714,
+   "hip_height_m": 0.924
+  },
+  {
+   "id": "npc_maya",
+   "name": "Maya",
+   "role": "npc",
+   "height_m": 1.518,
+   "hip_height_m": 0.799,
+   "gender": "female",
+   "age_years": 23,
+   "accessories": [
+    "glasses"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_maya.close.glb",
+     "tris": 9692,
+     "bytes": 764460,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_maya.mid.glb",
+     "tris": 4604,
+     "bytes": 240492,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_maya.far.glb",
+     "tris": 1462,
+     "bytes": 76000,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_jamal",
+   "name": "Jamal",
+   "role": "npc",
+   "height_m": 1.949,
+   "hip_height_m": 1.068,
+   "gender": "male",
+   "age_years": 25,
+   "accessories": [
+    "headphones"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_jamal.close.glb",
+     "tris": 9702,
+     "bytes": 487104,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_jamal.mid.glb",
+     "tris": 4626,
+     "bytes": 218340,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_jamal.far.glb",
+     "tris": 1459,
+     "bytes": 79296,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_lena",
+   "name": "Lena",
+   "role": "npc",
+   "height_m": 1.597,
+   "hip_height_m": 0.856,
+   "gender": "female",
+   "age_years": 22,
+   "accessories": [
+    "backpack"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_lena.close.glb",
+     "tris": 9707,
+     "bytes": 698624,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_lena.mid.glb",
+     "tris": 4609,
+     "bytes": 265420,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_lena.far.glb",
+     "tris": 1458,
+     "bytes": 80960,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_kenji",
+   "name": "Kenji",
+   "role": "npc",
+   "height_m": 1.637,
+   "hip_height_m": 0.871,
+   "gender": "male",
+   "age_years": 26,
+   "accessories": [
+    "glasses"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_kenji.close.glb",
+     "tris": 9699,
+     "bytes": 388088,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_kenji.mid.glb",
+     "tris": 4618,
+     "bytes": 166304,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_kenji.far.glb",
+     "tris": 1460,
+     "bytes": 68616,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_sofia",
+   "name": "Sofia",
+   "role": "npc",
+   "height_m": 1.547,
+   "hip_height_m": 0.805,
+   "gender": "female",
+   "age_years": 24,
+   "accessories": [],
+   "lods": {
+    "close": {
+     "file": "npc/npc_sofia.close.glb",
+     "tris": 9696,
+     "bytes": 802476,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_sofia.mid.glb",
+     "tris": 4602,
+     "bytes": 245280,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_sofia.far.glb",
+     "tris": 1459,
+     "bytes": 70624,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_marcus",
+   "name": "Marcus",
+   "role": "npc",
+   "height_m": 1.747,
+   "hip_height_m": 0.99,
+   "gender": "male",
+   "age_years": 28,
+   "accessories": [
+    "cap"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_marcus.close.glb",
+     "tris": 9699,
+     "bytes": 931160,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_marcus.mid.glb",
+     "tris": 4615,
+     "bytes": 302860,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_marcus.far.glb",
+     "tris": 1466,
+     "bytes": 82616,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_aisha",
+   "name": "Aisha",
+   "role": "npc",
+   "height_m": 1.668,
+   "hip_height_m": 0.883,
+   "gender": "female",
+   "age_years": 24,
+   "accessories": [
+    "backpack"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_aisha.close.glb",
+     "tris": 9689,
+     "bytes": 953128,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_aisha.mid.glb",
+     "tris": 4600,
+     "bytes": 298252,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_aisha.far.glb",
+     "tris": 1460,
+     "bytes": 77808,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_daniel",
+   "name": "Daniel",
+   "role": "npc",
+   "height_m": 1.714,
+   "hip_height_m": 0.926,
+   "gender": "male",
+   "age_years": 21,
+   "accessories": [
+    "headphones"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_daniel.close.glb",
+     "tris": 9713,
+     "bytes": 566500,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_daniel.mid.glb",
+     "tris": 4601,
+     "bytes": 248328,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_daniel.far.glb",
+     "tris": 1462,
+     "bytes": 76264,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_priya",
+   "name": "Priya",
+   "role": "npc",
+   "height_m": 1.542,
+   "hip_height_m": 0.794,
+   "gender": "female",
+   "age_years": 26,
+   "accessories": [],
+   "lods": {
+    "close": {
+     "file": "npc/npc_priya.close.glb",
+     "tris": 9691,
+     "bytes": 805348,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_priya.mid.glb",
+     "tris": 4606,
+     "bytes": 209396,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_priya.far.glb",
+     "tris": 1460,
+     "bytes": 71820,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_leo",
+   "name": "Leo",
+   "role": "npc",
+   "height_m": 1.692,
+   "hip_height_m": 0.908,
+   "gender": "male",
+   "age_years": 24,
+   "accessories": [
+    "cap"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_leo.close.glb",
+     "tris": 9690,
+     "bytes": 1138712,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_leo.mid.glb",
+     "tris": 4611,
+     "bytes": 315896,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_leo.far.glb",
+     "tris": 1463,
+     "bytes": 74452,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_hana",
+   "name": "Hana",
+   "role": "npc",
+   "height_m": 1.315,
+   "hip_height_m": 0.679,
+   "gender": "female",
+   "age_years": 22,
+   "accessories": [
+    "backpack"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_hana.close.glb",
+     "tris": 9684,
+     "bytes": 537432,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_hana.mid.glb",
+     "tris": 4604,
+     "bytes": 200564,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_hana.far.glb",
+     "tris": 1462,
+     "bytes": 70252,
+     "texture_px": 128
+    }
+   }
+  },
+  {
+   "id": "npc_omar",
+   "name": "Omar",
+   "role": "npc",
+   "height_m": 1.762,
+   "hip_height_m": 0.961,
+   "gender": "male",
+   "age_years": 30,
+   "accessories": [
+    "beard"
+   ],
+   "lods": {
+    "close": {
+     "file": "npc/npc_omar.close.glb",
+     "tris": 9685,
+     "bytes": 575600,
+     "texture_px": 1024
+    },
+    "mid": {
+     "file": "npc/npc_omar.mid.glb",
+     "tris": 4604,
+     "bytes": 233960,
+     "texture_px": 512
+    },
+    "far": {
+     "file": "npc/npc_omar.far.glb",
+     "tris": 1464,
+     "bytes": 79332,
+     "texture_px": 128
+    }
+   }
+  }
+ ],
+ "total_bytes": 23314736,
+ "licenses": "LICENSES.md"
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+<!-- Candle City, 16 px: three rising bars (red, green, gold) on money green. -->
+<rect width="16" height="16" rx="3.5" fill="#0A2E1D"/>
+<rect x="2" y="9" width="3.4" height="4" rx=".9" fill="#FF6461"/>
+<rect x="6.3" y="6" width="3.4" height="7" rx=".9" fill="#3BE08E"/>
+<rect x="10.6" y="2.5" width="3.4" height="10.5" rx=".9" fill="#FFC93D"/>
+</svg>

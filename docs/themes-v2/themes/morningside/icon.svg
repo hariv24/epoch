@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Morningside icon: "Souvenir from the future".
+     A tourist snow globe of the place you're grinding towards: a Low-Library-style shallow dome over a colonnade,
+     snowing on a Morningside night, with ONE warm lit door (you're expected). Columbia-blue sticker tile so it pops
+     on a home screen full of dark icons; navy clay base with a little lit plaque.
+     Architecture motif only: no university logo, crest, crown or wordmark. Maskable: globe + base sit inside r=205. -->
+<defs>
+  <linearGradient id="bg" x2="0" y2="1"><stop offset="0" stop-color="#B9DDF4"/><stop offset="1" stop-color="#6FA6D9"/></linearGradient>
+  <radialGradient id="halo" cx=".5" cy=".45" r=".5"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".55"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+  <linearGradient id="sky" x2="0" y2="1"><stop offset="0" stop-color="#071A3A"/><stop offset="1" stop-color="#1D4C85"/></linearGradient>
+  <clipPath id="glass"><circle cx="256" cy="226" r="142"/></clipPath>
+  <linearGradient id="base" x2="0" y2="1"><stop offset="0" stop-color="#17396A"/><stop offset="1" stop-color="#0B2347"/></linearGradient>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/><rect width="512" height="512" fill="url(#halo)"/>
+<g clip-path="url(#glass)">
+  <rect x="100" y="70" width="312" height="320" fill="url(#sky)"/>
+  <path d="M100 330C170 306 342 306 412 330V400H100z" fill="#EAF4FC"/>
+  <g fill="#FFFFFF">
+    <path d="M200 250c0-34 25-54 56-54s56 20 56 54z"/><rect x="249" y="178" width="14" height="22" rx="4"/>
+    <rect x="186" y="248" width="140" height="14" rx="4"/>
+    <rect x="194" y="268" width="12" height="40" rx="4"/><rect x="215" y="268" width="12" height="40" rx="4"/><rect x="236" y="268" width="12" height="40" rx="4"/>
+    <rect x="264" y="268" width="12" height="40" rx="4"/><rect x="285" y="268" width="12" height="40" rx="4"/><rect x="306" y="268" width="12" height="40" rx="4"/>
+    <rect x="178" y="310" width="156" height="12" rx="4"/>
+  </g>
+  <path d="M249 308v-24a7 7 0 0 1 14 0v24z" fill="#FFCE7A"/>
+  <g fill="#FFFFFF"><circle cx="150" cy="150" r="6"/><circle cx="196" cy="118" r="4.5"/><circle cx="300" cy="126" r="6"/><circle cx="352" cy="170" r="5"/><circle cx="168" cy="210" r="4"/><circle cx="340" cy="226" r="6.5"/><circle cx="236" cy="150" r="3.5"/><circle cx="378" cy="262" r="4"/><circle cx="136" cy="270" r="5.5"/><circle cx="276" cy="100" r="3.5"/></g>
+</g>
+<circle cx="256" cy="226" r="142" fill="none" stroke="#FFFFFF" stroke-width="9"/>
+<path d="M152 168a118 118 0 0 1 70-62" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="14" fill="none" stroke-linecap="round"/>
+<path d="M160 352h192l22 70H138z" fill="#06142C" transform="translate(0 12)"/>
+<path d="M160 352h192l22 70H138z" fill="url(#base)"/>
+<rect x="146" y="344" width="220" height="20" rx="10" fill="#FFFFFF"/>
+<rect x="214" y="382" width="84" height="22" rx="6" fill="#04122A"/>
+<path d="M226 393h60" stroke="#FFCE7A" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/>
+</svg>

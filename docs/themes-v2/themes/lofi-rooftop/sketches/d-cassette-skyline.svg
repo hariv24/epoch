@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch D: a cassette whose window shows a sunset skyline; the reels are moon and sun -->
+<rect width="512" height="512" fill="#2A1640"/>
+<rect x="76" y="140" width="360" height="236" rx="28" fill="#FFB38A"/>
+<rect x="76" y="140" width="360" height="236" rx="28" fill="none" stroke="#C4643A" stroke-width="8"/>
+<rect x="124" y="190" width="264" height="104" rx="18" fill="#3D1E4A"/>
+<path d="M124 294 v-30 h30 v-24 h24 v40 h36 v-50 h26 v60 h34 v-30 h30 v44 h40 v-20 h44 v30z" fill="#1A0E28"/>
+<circle cx="186" cy="232" r="22" fill="#FFE0A8"/><circle cx="326" cy="232" r="22" fill="#5FD4C9"/>
+<path d="M160 376 l24 -48 h144 l24 48z" fill="#C4643A"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- M1: the Low Steps as a rising bar chart, dome on top -->
+<defs><linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="#123463"/><stop offset="1" stop-color="#071530"/></linearGradient></defs>
+<rect width="512" height="512" fill="url(#g)"/>
+<g transform="translate(0 12)" fill="#04102A" opacity=".55"><rect x="80" y="372" width="360" height="52" rx="10"/></g>
+<rect x="80" y="380" width="80" height="44" rx="10" fill="#2D5A8E"/><rect x="80" y="372" width="80" height="44" rx="10" fill="#3E6FA6"/>
+<rect x="150" y="332" width="80" height="92" rx="10" fill="#3E77B2"/><rect x="150" y="324" width="80" height="92" rx="10" fill="#5A8FC6"/>
+<rect x="220" y="284" width="80" height="140" rx="10" fill="#4F8CC4"/><rect x="220" y="276" width="80" height="140" rx="10" fill="#75AADB"/>
+<rect x="290" y="236" width="150" height="188" rx="12" fill="#7FB2DC"/><rect x="290" y="228" width="150" height="188" rx="12" fill="#B9D9EB"/>
+<g fill="#FFFFFF"><path d="M311 228v-44h108v44z" fill="#FFFFFF"/><path d="M318 184a47 47 0 0 1 94 0z"/><rect x="361" y="124" width="8" height="18" rx="3"/><rect x="304" y="176" width="122" height="10" rx="3"/></g>
+<g fill="#123463"><rect x="322" y="192" width="9" height="32" rx="3"/><rect x="342" y="192" width="9" height="32" rx="3"/><rect x="379" y="192" width="9" height="32" rx="3"/><rect x="399" y="192" width="9" height="32" rx="3"/><rect x="359" y="198" width="12" height="30" rx="5"/></g>
+</svg>

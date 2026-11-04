@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Underdog theme · "Shibuya Neon"
+   Night Clay's chunky clay, re-lit by Shibuya signage: hot-pink tube light as the reward colour,
+   electric cyan for actions, ultraviolet haze, near-black wet asphalt. Two vertical neon signs hang at the
+   edges of the window (one spells NYC, one says 上へ "upward"), the scramble crossing glows underfoot.
+   Dark-first; the light half is "Shibuya by day": paper-white with ink-pink accents.
+   ========================================================================== */
+:root{
+  --bg:          light-dark(#FFF5FA, #0B0712);
+  --s1:          light-dark(#FFFFFF, #170F25);
+  --s2:          light-dark(#FBE4F0, #221737);
+  --line:        light-dark(#EDCFE0, #3B2859);   /* card border + clay ledge */
+  --line-strong: light-dark(#9A5C88, #8A6CC8);
+  --ink:         light-dark(#1E0B2E, #FBF3FF);
+  --muted:       light-dark(#5C3F72, #C9B9E3);
+  --faint:       light-dark(#7A5E92, #A894CC);
+
+  /* reward = hot-pink tube */
+  --amber:       light-dark(#C8005F, #FF3D9A);
+  --amber-edge:  light-dark(#7E003B, #A8105E);
+  --on-amber:    light-dark(#FFFFFF, #1A0010);
+  --amber-ink:   light-dark(#A3004D, #FF7DBA);
+  --amber-soft:  light-dark(#FFD9EA, #3E0F30);
+
+  /* secondary = electric cyan */
+  --violet:      light-dark(#00687E, #2BE4FF);
+  --violet-edge: light-dark(#00414F, #0089A8);
+  --on-violet:   light-dark(#FFFFFF, #00161D);
+  --violet-soft: light-dark(#D3F4FA, #0C2C3A);
+
+  /* done = acid green tube */
+  --mint:        light-dark(#037146, #5CFFA8);
+  --mint-edge:   light-dark(#014A2D, #12A866);
+  --on-mint:     light-dark(#FFFFFF, #00170C);
+  --mint-soft:   light-dark(#D6F5E6, #0E3226);
+
+  --flame:       light-dark(#C2410C, #FF8A3D);
+  --sky:         light-dark(#00687E, #2BE4FF);
+  --rest:        light-dark(#6B3FC2, #B48CFF);   /* ultraviolet */
+  --error:       light-dark(#B42318, #FF8A8A);
+  --focus:       light-dark(#6B3FC2, #FFE45C);   /* a yellow tube: the one colour nothing else uses */
+
+  --c-python:  light-dark(#1F5FD6, #59A8FF);
+  --c-math:    light-dark(#6B3FC2, #B48CFF);
+  --c-ml:      light-dark(#037146, #5CFFA8);
+  --c-papers:  light-dark(#B4470C, #FF9F45);
+  --c-writing: light-dark(#A21CAF, #F48BFF);
+  --c-drift:   light-dark(#7A5E92, #A094BE);
+
+  --lift:   light-dark(rgb(120 20 80 / .18), rgb(0 0 0 / .6));
+  --gloss:  light-dark(rgb(255 255 255 / .8), rgb(255 255 255 / .09));
+  --scrim:  light-dark(rgb(40 10 40 / .45), rgb(6 3 12 / .78));
+  --glow-a: light-dark(#FFD6EA, #3A0A3A);   /* pink haze, top right */
+  --glow-b: light-dark(#D6F4FA, #062838);   /* cyan haze, bottom left */
+
+  /* theme-private: where the left sign hangs (moves past the nav rail on wide screens), sign strength */
+  --sn-left: 6px;
+  --sn-sign-op: .42;
+}
+@media (min-width:900px){ :root{ --sn-left: 100px } }
+/* phones: the 16px gutters would only show slivers of the signs, so they go dark there */
+@media (max-width:699px){ :root{ --sn-sign-op: 0 } }
+:root[data-theme="light"]{ --sn-sign-op: .16 }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --sn-sign-op: .16 } }
+@media (max-width:699px){ :root[data-theme="light"]{ --sn-sign-op: 0 } }
+
+/* ---------- background: pink / cyan / UV haze + the scramble crossing underfoot ---------- */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    url("bg.svg") center bottom / max(1600px, 100vw) auto no-repeat,
+    radial-gradient(820px 520px at 92% -6%, var(--glow-a), transparent 64%),
+    radial-gradient(760px 540px at -6% 102%, var(--glow-b), transparent 60%),
+    radial-gradient(640px 420px at 50% 55%, light-dark(rgb(166 107 255 / .06), rgb(120 60 255 / .10)), transparent 70%);
+}
+/* faint scanlines over the haze: reads as wet glass / signage glare, stays far below text contrast */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-linear-gradient(to bottom, light-dark(rgb(200 0 95 / .025), rgb(255 255 255 / .022)) 0 1px, transparent 1px 4px);
+}
+
+/* ---------- the two vertical neon signs, hung at the window edges ---------- */
+.app::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("sign-l.svg") left var(--sn-left) top 96px / 56px auto no-repeat;
+  opacity:var(--sn-sign-op)}
+.app::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("sign-r.svg") right 6px top 150px / 56px auto no-repeat;
+  opacity:var(--sn-sign-op)}
+/* the right sign flickers like a tired tube, once every few seconds (opacity only) */
+@keyframes sn-flicker{ 0%,86%,100%{opacity:var(--sn-sign-op)} 88%{opacity:calc(var(--sn-sign-op) * .35)} 90%{opacity:var(--sn-sign-op)} 92%{opacity:calc(var(--sn-sign-op) * .5)} 95%{opacity:var(--sn-sign-op)} }
+@media (prefers-reduced-motion: no-preference){
+  .app::after{ animation:sn-flicker 6s steps(1, end) infinite }   /* Motion = Off in Settings is stopped by style.css */
+}
+
+/* ---------- component tweaks ---------- */
+/* TWEAK: the primary clay button gets a pink tube glow under its ledge (box-shadow only, same shape) */
+.btn:not(.btn--violet,.btn--mint,.btn--ghost,.secondary,[aria-disabled="true"],:disabled){box-shadow:inset 0 2px 0 rgb(255 255 255/.45),inset 0 -4px 8px rgb(0 0 0/.10),0 5px 0 var(--edge),0 14px 26px -8px light-dark(rgb(200 0 95 / .35), rgb(255 61 154 / .55))}
+
+/* TWEAK: the dial glow follows the pink reward colour (style.css hard-codes amber) */
+.focus{--arc-glow:rgb(255 61 154 / .30)}
+
+/* TWEAK: +XP float glows pink */
+.floaty{text-shadow:0 2px 0 var(--amber-edge),0 0 16px rgb(255 61 154 / .65)}
+
+/* TWEAK: glass chips over the 3D city use the theme's near-black */
+.stage__badge .pill,.stage__tools .icon-btn,.camtag{background:rgb(11 7 18 / .74)}
+
+/* TWEAK: the neon mark needs no amber clay ledge; it glows instead */
+.brand svg{filter:drop-shadow(0 0 6px light-dark(rgb(200 0 95 / .25), rgb(255 61 154 / .55)))}

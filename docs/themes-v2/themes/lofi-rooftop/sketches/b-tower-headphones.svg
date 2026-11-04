@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch B: an NYC rooftop water tower wearing chunky headphones (an object, no face) -->
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1640"/><stop offset="1" stop-color="#E07A6A"/></linearGradient></defs>
+<rect width="512" height="512" fill="url(#sky)"/>
+<rect y="392" width="512" height="120" fill="#1C1030"/>
+<path d="M176 196 L256 120 L336 196 Z" fill="#7A3E4E"/>
+<rect x="180" y="192" width="152" height="140" rx="12" fill="#B05A4E"/>
+<g stroke="#8A4038" stroke-width="6"><path d="M180 230 H332 M180 272 H332 M180 312 H332"/></g>
+<g fill="#4A2638"><rect x="196" y="330" width="14" height="64"/><rect x="302" y="330" width="14" height="64"/><rect x="249" y="330" width="14" height="64"/></g>
+<path d="M150 250 C150 120 362 120 362 250" fill="none" stroke="#2A1640" stroke-width="22" stroke-linecap="round"/>
+<rect x="130" y="222" width="54" height="86" rx="22" fill="#5FD4C9"/><rect x="328" y="222" width="54" height="86" rx="22" fill="#5FD4C9"/>
+<rect x="142" y="236" width="20" height="58" rx="10" fill="#2E9488"/><rect x="350" y="236" width="20" height="58" rx="10" fill="#2E9488"/>
+</svg>

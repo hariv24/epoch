@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- W3: neon-sign arch in a Village window with string lights -->
+<defs><filter id="gl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+<rect width="512" height="512" fill="#1B0730"/>
+<path d="M60 120Q256 190 452 120" fill="none" stroke="#6E4A8E" stroke-width="4"/>
+<g fill="#FFC86B"><circle cx="100" cy="134" r="9"/><circle cx="160" cy="150" r="9"/><circle cx="220" cy="158" r="9"/><circle cx="292" cy="158" r="9"/><circle cx="352" cy="150" r="9"/><circle cx="412" cy="134" r="9"/></g>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M150 410V216H362V410M206 410V302a50 50 0 0 1 100 0V410M140 216H372" stroke="#C58BFF" stroke-width="30" filter="url(#gl)" opacity=".9"/>
+<path d="M150 410V216H362V410M206 410V302a50 50 0 0 1 100 0V410M140 216H372" stroke="#F3E2FF" stroke-width="12"/></g>
+</svg>

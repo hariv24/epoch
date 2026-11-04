@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Tokyo Night icon (maskable, full bleed; key shapes inside the r=205 safe circle): "Bini-gasa". A clear convenience-store vinyl umbrella sheltering your one lit tower
+     in the Tokyo rain. The windows are lit in Tokyo Night syntax colours. No text, no characters. -->
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3052"/><stop offset=".55" stop-color="#1A1B26"/><stop offset="1" stop-color="#121219"/></linearGradient>
+<radialGradient id="lamp" cx=".5" cy=".66" r=".42"><stop offset="0" stop-color="#FF9E64" stop-opacity=".38"/><stop offset="1" stop-color="#FF9E64" stop-opacity="0"/></radialGradient>
+<linearGradient id="vinyl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C0CAF5" stop-opacity=".34"/><stop offset="1" stop-color="#C0CAF5" stop-opacity=".12"/></linearGradient>
+<linearGradient id="tw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4A68BE"/><stop offset="1" stop-color="#3D59A1"/></linearGradient>
+<mask id="dry"><rect width="512" height="512" fill="#fff"/><path d="M84 250 L428 250 L440 512 L72 512Z" fill="#000" transform="rotate(-10 256 250)"/></mask>
+</defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<path d="M0 512V420h40v-40h36v-30h40v70h30v92ZM512 512V396h-34v-46h-40v62h-34v100Z" fill="#20233A"/>
+<rect width="512" height="512" fill="url(#lamp)"/>
+<g mask="url(#dry)" stroke="#7AA2F7" stroke-linecap="round" fill="none">
+ <path stroke-opacity=".55" stroke-width="9" d="M88 22l-14 56M196 4l-14 56M330 14l-14 56M448 36l-14 56M44 150l-14 56M480 170l-14 56M70 300l-14 56M462 290l-14 56M60 420l-14 56M496 384l-14 56"/>
+ <path stroke-opacity=".3" stroke-width="6" d="M262 2l-10 40M392 96l-10 40M140 92l-10 40M24 252l-10 40M496 200l-10 40M24 470l-10 34"/>
+</g>
+<!-- umbrella shaft (passes behind the tower) -->
+<g transform="rotate(-10 256 250)"><path d="M256 92V452" stroke="#A9B1D6" stroke-width="12" stroke-linecap="round"/></g>
+<!-- puddle -->
+<ellipse cx="258" cy="456" rx="112" ry="14" fill="#7AA2F7" opacity=".22"/>
+<path d="M180 458h40M276 460h60" stroke="#7DCFFF" stroke-opacity=".5" stroke-width="5" stroke-linecap="round"/>
+<!-- the tower: clay sticker with a darker ledge, one setback, a beacon -->
+<path d="M206 312h104v130a10 10 0 0 1-10 10H216a10 10 0 0 1-10-10Z" fill="#22305E" transform="translate(0 8)"/>
+<rect x="232" y="284" width="52" height="34" rx="6" fill="#3D59A1"/><rect x="232" y="284" width="52" height="9" rx="4" fill="#7AA2F7"/>
+<path d="M206 312h104v130a10 10 0 0 1-10 10H216a10 10 0 0 1-10-10Z" fill="url(#tw)"/>
+<rect x="206" y="306" width="104" height="12" rx="6" fill="#7AA2F7"/>
+<rect x="226" y="296" width="9" height="9" rx="2" fill="#E0AF68"/><rect x="262" y="296" width="9" height="9" rx="2" fill="#FF9E64"/>
+<rect x="214" y="322" width="16" height="18" rx="3.5" fill="#FF9E64"/><rect x="236" y="322" width="16" height="18" rx="3.5" fill="#E0AF68"/><rect x="258" y="322" width="16" height="18" rx="3.5" fill="#1F2335"/><rect x="280" y="322" width="16" height="18" rx="3.5" fill="#FF9E64"/><rect x="214" y="350" width="16" height="18" rx="3.5" fill="#1F2335"/><rect x="236" y="350" width="16" height="18" rx="3.5" fill="#FF9E64"/><rect x="258" y="350" width="16" height="18" rx="3.5" fill="#E0AF68"/><rect x="280" y="350" width="16" height="18" rx="3.5" fill="#7DCFFF"/><rect x="214" y="378" width="16" height="18" rx="3.5" fill="#E0AF68"/><rect x="236" y="378" width="16" height="18" rx="3.5" fill="#1F2335"/><rect x="258" y="378" width="16" height="18" rx="3.5" fill="#FF9E64"/><rect x="280" y="378" width="16" height="18" rx="3.5" fill="#FF9E64"/><rect x="214" y="406" width="16" height="18" rx="3.5" fill="#FF9E64"/><rect x="236" y="406" width="16" height="18" rx="3.5" fill="#BB9AF7"/><rect x="258" y="406" width="16" height="18" rx="3.5" fill="#1F2335"/><rect x="280" y="406" width="16" height="18" rx="3.5" fill="#E0AF68"/>
+<rect x="248" y="440" width="20" height="12" rx="3" fill="#FF9E64"/>
+<!-- the hook pokes out under the tower's right side -->
+<g transform="rotate(-10 256 250)"><path d="M256 436v18a26 26 0 0 0 52 0v-6" fill="none" stroke="#A9B1D6" stroke-width="12" stroke-linecap="round"/></g>
+<!-- canopy -->
+<g transform="rotate(-10 256 250)" stroke-linejoin="round">
+ <path d="M90 250 A166 156 0 0 1 422 250 Q394.3 234 366.7 250 Q339 234 311.3 250 Q283.7 234 256 250 Q228.3 234 200.7 250 Q173 234 145.3 250 Q117.7 234 90 250Z" fill="url(#vinyl)" stroke="#C0CAF5" stroke-width="12"/>
+ <path d="M256 94 Q178 150 145.3 250 M256 94 Q214 160 200.7 250 M256 94V250 M256 94 Q298 160 311.3 250 M256 94 Q334 150 366.7 250" fill="none" stroke="#C0CAF5" stroke-opacity=".55" stroke-width="5"/>
+ <path d="M134 186 Q176 128 236 114" fill="none" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="10" stroke-linecap="round"/>
+ <g fill="none" stroke="#7DCFFF" stroke-width="5" stroke-linecap="round"><path d="M168 132q-8-14-2-26M180 128q2-16 12-22"/><path d="M330 112q2-14 12-20M342 120q10-10 22-10"/></g>
+ <rect x="249" y="70" width="14" height="28" rx="6" fill="#C0CAF5"/>
+ <g fill="#7DCFFF"><circle cx="186" cy="200" r="8"/><circle cx="292" cy="146" r="7"/><circle cx="342" cy="214" r="8"/><circle cx="228" cy="226" r="6"/></g>
+ <g fill="#FFFFFF"><circle cx="184" cy="197" r="2.6"/><circle cx="290" cy="143" r="2.3"/><circle cx="340" cy="211" r="2.6"/></g>
+</g>
+</svg>

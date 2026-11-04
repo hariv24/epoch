@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200">
+<!-- Bodega background: the window sign, OPEN in red tubes and 24 HRS in green, single-stroke lettering (no font). -->
+<defs><filter id="g" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="7"/></filter></defs>
+<rect x="6" y="6" width="328" height="188" rx="26" fill="none" stroke="#4A3630" stroke-width="5"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+ <g id="open" transform="translate(-74 -150)">
+  <g stroke="#FF3B52" stroke-width="20" filter="url(#g)" opacity=".85"><ellipse cx="138" cy="226" rx="34" ry="46"/><path d="M196 272 V180 h30 a24 24 0 0 1 0 48 h-30"/><path d="M314 180 h-48 v92 h48 M266 226 h38"/><path d="M342 272 V180 l48 92 V180"/></g>
+  <g stroke="#FFC9D0" stroke-width="7"><ellipse cx="138" cy="226" rx="34" ry="46"/><path d="M196 272 V180 h30 a24 24 0 0 1 0 48 h-30"/><path d="M314 180 h-48 v92 h48 M266 226 h38"/><path d="M342 272 V180 l48 92 V180"/></g>
+ </g>
+ <g stroke="#2BF08A" stroke-width="15" filter="url(#g)" opacity=".85"><path d="M70 146 c4 -8 28 -8 28 6 c0 10 -16 16 -28 28 h30 M134 142 l-18 26 h28 M136 142 v38 M164 142 v38 M190 142 v38 M164 161 h26 M208 180 v-38 h17 a9.5 9.5 0 0 1 0 19 h-17 M221 161 l13 19 M270 148 c-4 -8 -26 -8 -26 3 c0 11 28 9 28 20 c0 11 -24 11 -28 2"/></g>
+ <g stroke="#D4FFE6" stroke-width="5"><path d="M70 146 c4 -8 28 -8 28 6 c0 10 -16 16 -28 28 h30 M134 142 l-18 26 h28 M136 142 v38 M164 142 v38 M190 142 v38 M164 161 h26 M208 180 v-38 h17 a9.5 9.5 0 0 1 0 19 h-17 M221 161 l13 19 M270 148 c-4 -8 -26 -8 -26 3 c0 11 28 9 28 20 c0 11 -24 11 -28 2"/></g>
+</g>
+</svg>

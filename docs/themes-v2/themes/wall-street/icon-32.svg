@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<!-- Candle City, 32 px cut: red dip, green climb, gold tower with beacon, on a money-green tile. -->
+<rect width="32" height="32" rx="7" fill="#0A2E1D"/>
+<path d="M7 17v9M16 11.5v13" stroke-width="1.6" stroke-linecap="round" stroke="#E0484C"/>
+<path d="M16 11.5v13" stroke-width="1.6" stroke-linecap="round" stroke="#2BC27A"/>
+<rect x="4" y="18" width="6" height="6" rx="1.6" fill="#FF6461"/>
+<rect x="13" y="13" width="6" height="9.5" rx="1.6" fill="#3BE08E"/>
+<rect x="22" y="8" width="6" height="16" rx="1.6" fill="#FFC93D"/>
+<rect x="24" y="5" width="2" height="4" fill="#FFC93D"/>
+<circle cx="25" cy="4" r="1.8" fill="#FFF6D6"/>
+<rect x="24" y="12" width="2" height="2" rx=".5" fill="#8E6000"/><rect x="24" y="17" width="2" height="2" rx=".5" fill="#8E6000"/>
+</svg>

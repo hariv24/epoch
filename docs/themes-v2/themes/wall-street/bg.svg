@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice">
+<!-- Wall Street background: a price line that dips early (the underdog start) then grinds to an all-time high,
+     plus a Greek-revival bank colonnade in gold line art. Drawn faint on purpose: it only shows between cards. -->
+<defs>
+<linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3BE08E" stop-opacity=".16"/><stop offset="1" stop-color="#3BE08E" stop-opacity="0"/></linearGradient>
+<radialGradient id="g"><stop offset="0" stop-color="#F5C542" stop-opacity=".55"/><stop offset="1" stop-color="#F5C542" stop-opacity="0"/></radialGradient>
+</defs>
+<g stroke="#9FB5A6" stroke-opacity=".10" stroke-width="1" stroke-dasharray="2 8"><path d="M0 160H1600M0 300H1600M0 440H1600M0 580H1600"/></g>
+<path d="M0 461 L22 467 L40 460 L58 478 L76 523 L98 512 L128 531 L150 530 L180 528 L198 572 L216 580 L246 552 L268 528 L290 519 L312 519 L338 510 L360 517 L382 534 L400 553 L422 559 L452 575 L482 572 L512 556 L534 565 L556 531 L582 529 L608 535 L634 530 L652 498 L682 477 L708 458 L738 457 L756 471 L782 455 L808 454 L838 423 L856 445 L886 443 L904 406 L930 409 L960 387 L990 401 L1016 361 L1046 348 L1064 344 L1086 353 L1108 354 L1138 332 L1168 298 L1198 287 L1224 302 L1254 306 L1280 297 L1306 285 L1336 288 L1358 241 L1380 215 L1402 183 L1424 172 L1442 156 L1468 166 L1494 186 L1512 171 L1542 153 L1600 108 L1600 700 L0 700Z" fill="url(#a)"/>
+<path d="M0 461 L22 467 L40 460 L58 478 L76 523 L98 512 L128 531 L150 530 L180 528 L198 572 L216 580 L246 552 L268 528 L290 519 L312 519 L338 510 L360 517 L382 534 L400 553 L422 559 L452 575 L482 572 L512 556 L534 565 L556 531 L582 529 L608 535 L634 530 L652 498 L682 477 L708 458 L738 457 L756 471 L782 455 L808 454 L838 423 L856 445 L886 443 L904 406 L930 409 L960 387 L990 401 L1016 361 L1046 348 L1064 344 L1086 353 L1108 354 L1138 332 L1168 298 L1198 287 L1224 302 L1254 306 L1280 297 L1306 285 L1336 288 L1358 241 L1380 215 L1402 183 L1424 172 L1442 156 L1468 166 L1494 186 L1512 171 L1542 153 L1600 108" fill="none" stroke="#3BE08E" stroke-opacity=".34" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="1590" cy="108" r="60" fill="url(#g)"/><circle cx="1590" cy="108" r="6" fill="#F5C542" fill-opacity=".8"/>
+<g fill="none" stroke="#F5C542" stroke-opacity=".16" stroke-width="2">
+<path d="M1120 490L1340 420L1560 490Z"/>
+<rect x="1130" y="490" width="420" height="14"/>
+<rect x="1150" y="500" width="28" height="180" rx="3"/><rect x="1220" y="500" width="28" height="180" rx="3"/><rect x="1291" y="500" width="28" height="180" rx="3"/><rect x="1361" y="500" width="28" height="180" rx="3"/><rect x="1432" y="500" width="28" height="180" rx="3"/><rect x="1502" y="500" width="28" height="180" rx="3"/>
+<rect x="1120" y="680" width="440" height="10"/><rect x="1106" y="690" width="468" height="10"/>
+</g>
+<g fill="none" stroke="#F5C542" stroke-opacity=".08" stroke-width="1"><path d="M1164 510V670"/><path d="M1234 510V670"/><path d="M1305 510V670"/><path d="M1375 510V670"/><path d="M1446 510V670"/><path d="M1516 510V670"/></g>
+</svg>

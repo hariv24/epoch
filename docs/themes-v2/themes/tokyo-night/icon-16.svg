@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+<!-- Tokyo Night 16px cut: umbrella canopy (with its tip and scalloped hem) over a tower with one lantern window. Three shapes. -->
+<rect width="16" height="16" rx="3.5" fill="#1A1B26"/>
+<path transform="rotate(-10 8 8)" d="M7.4 1h1.2v1.3A6.4 5.4 0 0 1 14.4 8.2q-1.6-.9-3.2 0q-1.6-.9-3.2 0q-1.6-.9-3.2 0q-1.6-.9-3.2 0A6.4 5.4 0 0 1 7.4 2.3Z" fill="#C0CAF5"/>
+<path d="M5.6 9.4h4.8V15.4H5.6Z M6.9 11h2.2v2.2H6.9Z" fill="#7AA2F7" fill-rule="evenodd"/>
+<rect x="6.9" y="11" width="2.2" height="2.2" fill="#FF9E64"/>
+</svg>

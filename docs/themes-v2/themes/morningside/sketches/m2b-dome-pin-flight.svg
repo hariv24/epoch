@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- M2b: a long-haul dotted flight arc lands as a pin on 116th St; the pin head holds Low Library's shallow dome + colonnade -->
+<defs><linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="#0E2852"/><stop offset="1" stop-color="#081A38"/></linearGradient></defs>
+<rect width="512" height="512" fill="url(#g)"/>
+<g stroke="#18386A" stroke-width="9"><path d="M0 132H512M0 244H512M0 356H512M0 468H512M100 0V512M212 0V512M324 0V512M436 0V512"/></g>
+<path d="M-20 520L330 -20" stroke="#21497E" stroke-width="30"/>
+<ellipse cx="256" cy="446" rx="62" ry="16" fill="none" stroke="#B9D9EB" stroke-width="6" opacity=".55"/>
+<ellipse cx="256" cy="446" rx="30" ry="8" fill="#B9D9EB" opacity=".6"/>
+<path d="M40 470C40 360 70 300 120 270" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round" stroke-dasharray="1 26" opacity=".85"/>
+<path d="M256 446C216 394 126 324 126 222a130 130 0 0 1 260 0c0 102-90 172-130 224z" fill="#2A5E98" transform="translate(0 14)"/>
+<path d="M256 446C216 394 126 324 126 222a130 130 0 0 1 260 0c0 102-90 172-130 224z" fill="#75AADB"/>
+<path d="M160 190a100 100 0 0 1 62-74" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="12" fill="none" stroke-linecap="round"/>
+<g fill="#FFFFFF"><path d="M196 206c0-30 27-48 60-48s60 18 60 48z"/><rect x="249" y="140" width="14" height="20" rx="4"/><rect x="182" y="204" width="148" height="14" rx="4"/>
+<rect x="190" y="224" width="12" height="42" rx="4"/><rect x="212" y="224" width="12" height="42" rx="4"/><rect x="234" y="224" width="12" height="42" rx="4"/><rect x="266" y="224" width="12" height="42" rx="4"/><rect x="288" y="224" width="12" height="42" rx="4"/><rect x="310" y="224" width="12" height="42" rx="4"/>
+<rect x="176" y="270" width="160" height="12" rx="4"/><rect x="164" y="286" width="184" height="12" rx="4"/></g>
+</svg>

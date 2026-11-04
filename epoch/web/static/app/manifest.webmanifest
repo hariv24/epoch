@@ -1,0 +1,25 @@
+{
+  "name": "Epoch",
+  "short_name": "Epoch",
+  "description": "Your New York: a quiet study tracker. The Focus Screen keeps the timer and the construction cam on a second screen.",
+  "id": "/pomodoro",
+  "start_url": "/pomodoro?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#081A33",
+  "theme_color": "#081A33",
+  "categories": ["productivity", "education"],
+  "icons": [
+    { "src": "/static/app/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/static/app/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/static/app/brand/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/static/app/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/static/app/brand/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Focus Screen", "short_name": "Focus", "url": "/pomodoro?source=shortcut", "icons": [{ "src": "/static/app/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Today", "url": "/?source=shortcut", "icons": [{ "src": "/static/app/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}

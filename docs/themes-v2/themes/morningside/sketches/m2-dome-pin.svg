@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- M2: map pin with the dome inside, on the Morningside street grid -->
+<rect width="512" height="512" fill="#0A1E3F"/>
+<g stroke="#17345F" stroke-width="10"><path d="M0 120H512M0 220H512M0 320H512M0 420H512M110 0V512M230 0V512M350 0V512M470 0V512"/></g>
+<path d="M60 512L330 0" stroke="#1F4677" stroke-width="26"/>
+<path d="M92 452C150 440 170 420 200 400" fill="none" stroke="#B9D9EB" stroke-width="12" stroke-linecap="round" stroke-dasharray="2 24"/>
+<path d="M256 444C220 392 132 322 132 226a124 124 0 0 1 248 0c0 96-88 166-124 218z" fill="#1F4F86" transform="translate(0 12)"/>
+<path d="M256 444C220 392 132 322 132 226a124 124 0 0 1 248 0c0 96-88 166-124 218z" fill="#75AADB"/>
+<g fill="#FFFFFF"><path d="M204 214a52 52 0 0 1 104 0z"/><rect x="251" y="146" width="10" height="20" rx="3"/><rect x="186" y="210" width="140" height="14" rx="4"/><rect x="180" y="276" width="152" height="14" rx="4"/>
+<rect x="194" y="228" width="13" height="44" rx="4"/><rect x="221" y="228" width="13" height="44" rx="4"/><rect x="278" y="228" width="13" height="44" rx="4"/><rect x="305" y="228" width="13" height="44" rx="4"/><rect x="248" y="228" width="16" height="44" rx="4"/></g>
+</svg>

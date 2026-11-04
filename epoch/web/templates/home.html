@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% set icons = "/static/app/icons.svg" %}
+<div class="view-head"><div><h1>Home</h1><p>Where you live in New York, what it costs and what's inside.</p></div></div>
+{% include "_money_tabs.html" %}
+{% if quiet %}{% include "_money_quiet.html" %}{% else %}
+{% set h = eco.home %}{% set rent = eco.rent %}
+<div class="stack-4" data-js="money-root">
+  <div class="m-two">
+    <section class="card card--stack m-home" aria-labelledby="hH">
+      <p class="eyebrow">You live in {{ h.district }}</p>
+      <h2 id="hH">{{ h.name }}</h2>
+      <p class="m-addr"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-map-pin"/></svg>{{ h.address }}, New York</p>
+      <p class="small muted">{{ h.blurb }}</p>
+      <dl class="m-facts">
+        <div><dt>Size</dt><dd>{{ {"studio": "Studio", "1-bed": "One bedroom", "loft": "Loft", "penthouse": "Penthouse"}.get(h.size, h.size) }}</dd></div>
+        <div><dt>Slots</dt><dd class="num">{{ h.placed|length }} of {{ h.slots }} used</dd></div>
+        <div><dt>Floor</dt><dd class="num">{{ h.floor }}</dd></div>
+        <div><dt>Deposit held</dt><dd class="num">{{ h.deposit_held|usd }}</dd></div>
+      </dl>
+      <div class="card__actions"><button class="btn" type="button" data-js="open-room"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-eye"/></svg>Open my room</button><a class="btn btn--ghost" href="/store#furniture">Furnish it</a></div>
+    </section>
+
+    <section class="card card--stack m-rent" aria-labelledby="rentH">
+      <div class="card__head"><div><p class="eyebrow">Rent</p><h2 id="rentH">{% if rent.free %}No rent this week{% else %}{{ rent.amount|usd }} a week{% endif %}</h2></div>
+        <span class="pill pill--sm {{ 'pill--ok' if rent.covered else 'pill--soft' }}">{{ "Free week" if rent.free else ("Covered" if rent.covered else "Not covered yet") }}</span></div>
+      <p>{{ rent.message }}</p>
+      {% if rent.unpaid_streak %}<p class="note"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-info"/></svg><span>{{ "One quiet week so far." if rent.unpaid_streak == 1 else rent.unpaid_streak ~ " quiet weeks in a row." }} {{ "One more and you'd move to a smaller place for now." if rent.unpaid_streak == 1 else "" }}</span></p>{% endif %}
+      <p class="small muted">Rent comes out of savings in full on Sunday night, or not at all, and savings never go below $0. If {{ rent.weeks_to_move }} weeks in a row aren't covered, you step down to the next smaller home. Your furniture goes to storage, nothing is lost, and you can move back up whenever you can cover the deposit.</p>
+    </section>
+  </div>
+
+  <section class="card card--stack" aria-labelledby="roomH">
+    <div class="card__head"><h2 id="roomH">In your room</h2><span class="small muted">{{ h.placed|length }} of {{ h.slots }} slots</span></div>
+    <ul class="rm-slots">
+      {% for i in range(h.slots) %}
+        {% set pl = h.placed|selectattr("slot", "equalto", i)|first %}
+        {% if pl %}
+        <li class="rm-slot is-full">{{ glyph(pl.category) }}<span class="rm-slot__t"><b>{{ pl.name }}</b><small>Slot {{ i + 1 }}</small></span>
+          <button class="btn btn--ghost btn--sm" type="button" data-js="equip" data-kind="furniture" data-item="{{ pl.item }}" data-on="0">To storage</button></li>
+        {% else %}
+        <li class="rm-slot"><span class="rm-slot__empty" aria-hidden="true"></span><span class="rm-slot__t"><b>Empty</b><small>Slot {{ i + 1 }}</small></span></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="card card--stack" aria-labelledby="stH">
+    <div class="card__head"><h2 id="stH">Storage</h2><span class="small muted">{{ eco.storage|length }} piece{{ "" if eco.storage|length == 1 else "s" }}</span></div>
+    {% if eco.storage %}
+    <ul class="rm-slots">
+      {% for s in eco.storage %}
+      <li class="rm-slot is-full">{{ glyph(s.category) }}<span class="rm-slot__t"><b>{{ s.name }}</b><small>Waiting in storage</small></span>
+        {% if h.placed|length < h.slots %}<button class="btn btn--violet btn--sm" type="button" data-js="equip" data-kind="furniture" data-item="{{ s.item }}" data-on="1">Place in room</button>{% else %}<span class="xs muted">Room is full</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="small muted">Nothing in storage. Whatever doesn't fit a smaller home waits here safely, and comes back when you have room.</p>{% endif %}
+  </section>
+
+  <section class="card card--stack" aria-labelledby="ladH">
+    <div class="card__head"><h2 id="ladH">Places to live</h2><span class="small muted">One for each district you open</span></div>
+    <ol class="ladder2">
+      {% for x in eco.homes %}
+      <li class="home-row{{ ' is-current' if x.current }}{{ ' is-locked' if not x.unlocked }}" data-home="{{ x.id }}">
+        <div class="home-row__main"><b>{{ x.name }}</b><span class="xs muted">{{ x.district }} · {{ x.address }}</span>
+          <span class="xs home-row__tags"><span class="tag">{{ {"studio": "Studio", "1-bed": "One bedroom", "loft": "Loft", "penthouse": "Penthouse"}.get(x.size, x.size) }}</span><span class="tag">{{ x.slots }} slots</span></span></div>
+        <div class="home-row__money"><b class="num">{{ x.rent|usd }}<small>/wk</small></b><span class="xs muted">deposit {{ x.deposit|usd }}</span></div>
+        <div class="home-row__act">
+          {% if x.current %}<span class="item__own"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg>You live here</span>
+          {% elif x.can_move %}<button class="btn btn--sm {{ 'btn--violet' if x.deposit_net <= 0 else '' }}" type="button" data-js="move" data-home="{{ x.id }}" data-name="{{ x.name }}">Move here</button>
+          {% elif not x.unlocked %}<span class="item__gate small"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-lock"/></svg>{{ x.why_not }}</span>
+          {% else %}<span class="small muted">{{ x.why_not }}</span>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+</div>
+{% include "_confirm_dialog.html" %}
+{% endif %}
+{% endblock %}

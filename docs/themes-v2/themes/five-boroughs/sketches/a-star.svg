@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" fill="#1B1030"/>
+<g transform="translate(256 262)">
+<!-- five points, each split light/dark half like folded paper -->
+<g id="p"><path d="M0 -170L40 -55L0 0z" fill="#FFC93C"/><path d="M0 -170L-40 -55L0 0z" fill="#E0A21A"/></g>
+<g transform="rotate(72)"><path d="M0 -170L40 -55L0 0z" fill="#FF5FA8"/><path d="M0 -170L-40 -55L0 0z" fill="#D63A85"/></g>
+<g transform="rotate(144)"><path d="M0 -170L40 -55L0 0z" fill="#FF8A2A"/><path d="M0 -170L-40 -55L0 0z" fill="#D9660C"/></g>
+<g transform="rotate(216)"><path d="M0 -170L40 -55L0 0z" fill="#2FD6B5"/><path d="M0 -170L-40 -55L0 0z" fill="#16A88C"/></g>
+<g transform="rotate(288)"><path d="M0 -170L40 -55L0 0z" fill="#5B8CFF"/><path d="M0 -170L-40 -55L0 0z" fill="#3D68D9"/></g>
+</g></svg>

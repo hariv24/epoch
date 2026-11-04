@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">
+<!-- Block Party header mark (no tile): tilted pink boombox, five-ring speaker, rising EQ bars. -->
+<g transform="rotate(-8 17 18)">
+<path d="M11 10V8a2.5 2.5 0 0 1 2.5-2.5h7A2.5 2.5 0 0 1 23 8v2" fill="none" stroke="#C2307A" stroke-width="2.6"/>
+<rect x="2.5" y="10" width="29" height="18" rx="4.5" fill="#FF5FA8"/>
+<circle cx="11" cy="19" r="6.6" fill="#5B8CFF"/><circle cx="11" cy="19" r="4.4" fill="#2FD6B5"/><circle cx="11" cy="19" r="2.3" fill="#FFC93C"/><circle cx="11" cy="19" r=".9" fill="#FF8A2A"/>
+<rect x="20" y="21" width="2.2" height="4" rx=".9" fill="#2FD6B5"/><rect x="23.4" y="19" width="2.2" height="6" rx=".9" fill="#FFC93C"/><rect x="26.8" y="16.5" width="2.2" height="8.5" rx=".9" fill="#FF8A2A"/>
+<rect x="20" y="12.5" width="9" height="2.8" rx="1.1" fill="#3D2470"/>
+</g>
+</svg>

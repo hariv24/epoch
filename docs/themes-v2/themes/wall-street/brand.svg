@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34">
+<!-- Candle City header mark (no tile): red dip, green climb, gold tower + beacon. -->
+<path d="M7 16v13" stroke-width="2" stroke-linecap="round" stroke="#E0484C"/>
+<path d="M17 10v17" stroke-width="2" stroke-linecap="round" stroke="#2BC27A"/>
+<rect x="3.5" y="18" width="7" height="8" rx="2" fill="#FF6461"/>
+<rect x="13.5" y="12" width="7" height="12" rx="2" fill="#3BE08E"/>
+<rect x="23.5" y="8" width="7" height="20" rx="2" fill="#FFC93D"/>
+<rect x="26" y="4.5" width="2" height="4" fill="#FFC93D"/>
+<circle cx="27" cy="3.6" r="2" fill="#FFF6D6"/>
+<rect x="25.4" y="12" width="1.6" height="2" rx=".4" fill="#8E6000"/><rect x="27.6" y="16" width="1.6" height="2" rx=".4" fill="#8E6000"/><rect x="25.4" y="20" width="1.6" height="2" rx=".4" fill="#8E6000"/>
+</svg>

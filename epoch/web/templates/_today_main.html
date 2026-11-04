@@ -1,0 +1,251 @@
+{% set T = gs.today %}
+{% set L = gs.level %}
+{% set icons = "/static/app/icons.svg" %}
+{% set prun = pomodoro.run if pomodoro else none %}
+{% set crown_left = [T.target_minutes - [T.deep_minutes, deep_cap]|min, 0]|max %}
+{% set doors_left = [T.floor_minutes - T.deep_minutes, 0]|max %}
+{%- set hud_lead -%}
+  {%- if T.mark and not T.floor_met %}Rest day
+  {%- elif not T.floor_met %}Doors in {{ fmt_min(doors_left) }}
+  {%- elif not T.target_met %}Crown in {{ fmt_min(crown_left) }}
+  {%- else %}Crown lit{% endif -%}
+{%- endset -%}
+{#
+  Today is the room (docs/COZY.md 3a). The apartment fills the screen below the app header, with the HUD over it; everything else
+  lives in the "Today" drawer (a side drawer on desktop and tablet, a bottom sheet on phones). There is no hourly log card: focus
+  blocks log themselves, and "+ Add time" (in the drawer) opens the old log form in a sheet for the rare session without the timer.
+
+  Stable hooks:
+    home-stage  the section (data-hour, data-asleep, is-3d / is-flat / is-decorating: city/home_today.js + room.js)
+    home-scene  the scene box: the canvas (room.js), the decorating UI, the 2D apartment without WebGL (cozy.js); data-no-dock = no docked log bar
+    home-hud    the HUD, rendered here so it works before the 3D and cozy.js load (data-cozy-built: cozy.js fills it, never rebuilds it)
+                level-card (level and XP, app.js renderLevel), hud-money / hud-job / hud-missions / hud-chest / hud-stars (cozy.js),
+                hud-deep (today's deep time and crown progress, app.js renderHudDeep), start-studying, today-open, hud-decorate, hud-outside
+    today-drawer  dialog#todayDlg: Today's three, wins, plan, today's log, + Add time, Ship an output (and the old ring card's numbers)
+    stage[data-source-only]  an offscreen city scene: never shown, it only renders the apartment's real window view
+#}
+<div id="today-main" class="roomday" data-js="roomday">
+  <section class="homestage roomday__stage js-only" data-js="home-stage" aria-labelledby="homeH">
+    <h1 id="homeH" class="sr-only">Today, at home</h1>
+    <div class="homestage__scene" data-js="home-scene" data-no-dock role="group" aria-label="Your home">
+      <p class="homestage__away" data-js="home-away" hidden></p>
+      <div class="homehud cozy-hud dayhud" data-js="home-hud" data-cozy-built="1">
+        <div class="dayhud__tl">
+          <div class="hchip hchip--level" data-js="level-card" data-quiet-hide data-game-only role="group" aria-label="Level">
+            <span class="hlevel__badge" data-js="level-badge" aria-hidden="true"><svg class="ic" data-js="dist-icon"><use href="{{ icons }}#i-{{ district_icon.get(L.district, 'building-2') }}"/></svg></span>
+            <span class="hlevel__t">
+              <b class="hlevel__name" data-js="level-name">Level {{ L.number }} · {{ L.district }}</b>
+              <span class="hlevel__bar xp__bar" role="progressbar" aria-label="Progress to the next level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ (L.progress * 100)|round|int }}" data-js="xp-bar"><span class="xp__fill" data-js="xp-fill" style="--p:{{ L.progress }}"></span></span>
+              <small class="hlevel__xp"><span class="num" data-js="xp-num">{{ L.xp|digits }}</span> XP<span class="hlevel__sep"> · </span><span data-js="xp-to">{{ L.to_next|digits }} to Level {{ L.number + 1 }}</span></small>
+            </span>
+          </div>
+          <div class="dayhud__row">
+            <a class="hchip hchip--money" href="/money" data-js="hud-money" data-quiet-hide data-game-only aria-label="Savings{% if not gm.quiet_mode %} {{ wallet.text }}{% endif %}. Open the wallet"><svg class="hcoin" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="#f4c977" stroke="#b8862b" stroke-width="1.6"/><circle cx="12" cy="12" r="6.6" fill="none" stroke="#d9a440" stroke-width="1.2"/><path d="M12 7.6v8.8M14.3 9.4c-.5-.7-1.3-1-2.3-1-1.3 0-2.2.7-2.2 1.6 0 2.2 4.6 1.2 4.6 3.6 0 1-.9 1.7-2.4 1.7-1.1 0-2-.4-2.5-1.1" fill="none" stroke="#8a5d14" stroke-width="1.3" stroke-linecap="round"/></svg><b class="num" data-js="hud-money-num">{{ '' if gm.quiet_mode else wallet.text }}</b></a>
+            <span class="hchip hchip--job" data-js="hud-job" data-quiet-hide data-game-only hidden></span>
+          </div>
+        </div>
+        <div class="cozy-hud__tr dayhud__tr">
+          <button class="hchip hchip--missions" type="button" data-js="hud-missions" data-quiet-hide data-game-only aria-haspopup="dialog" aria-controls="missionsDlg" hidden>
+            <svg class="hring" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle class="hring__t" cx="12" cy="12" r="9"/><circle class="hring__a" data-js="hud-ring" cx="12" cy="12" r="9" stroke-dasharray="56.55" stroke-dashoffset="56.55"/></svg>
+            <span class="hchip__t">Missions <b class="num" data-js="hud-missions-n">0/3</b></span></button>
+          <button class="hchip hchip--chest" type="button" data-js="hud-chest" data-quiet-hide data-game-only hidden><svg class="hchest" viewBox="0 0 32 28" aria-hidden="true" focusable="false"><path d="M4 12 Q4 4 16 4 Q28 4 28 12Z" fill="#a8774f" stroke="#5b4128" stroke-width="1.6"/><rect x="4" y="12" width="24" height="13" rx="2" fill="#9a6a44" stroke="#5b4128" stroke-width="1.6"/><rect x="14" y="4.2" width="4" height="20.8" fill="#8cc4ee"/><rect x="14.2" y="13" width="3.6" height="4" rx="1" fill="#c9a14a"/></svg><b class="num" data-js="hud-chest-n"></b></button>
+          {% set stars_on = gs.quests|selectattr('done')|list|length %}
+          <span class="hchip hchip--stars" data-js="hud-stars" data-quiet-hide data-game-only role="img" aria-label="{{ stars_on }} of 3 stars today">{% for q in gs.quests %}<svg class="ic{{ ' on' if q.done }}" aria-hidden="true"><use href="{{ icons }}#i-star"/></svg>{% endfor %}</span>
+        </div>
+        <div class="dayhud__bar">
+          <div class="dayhud__left">
+            <button class="hchip hchip--deep" type="button" data-js="hud-deep" data-open-dialog="#todayDlg" aria-haspopup="dialog" aria-controls="todayDlg" aria-label="{{ T.deep_minutes|hm }} deep today. {{ hud_lead }}. Open Today">
+              <svg class="dring" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle class="dring__t" cx="20" cy="20" r="16"/><circle class="dring__a dring__a--out{{ ' is-done' if T.target_met }}" data-js="hud-crown-arc" cx="20" cy="20" r="16" pathLength="100" style="--p:{{ T.ring.target_p }}"/><circle class="dring__t" cx="20" cy="20" r="10.5"/><circle class="dring__a dring__a--in{{ ' is-done' if T.floor_met }}" data-js="hud-floor-arc" cx="20" cy="20" r="10.5" pathLength="100" style="--p:{{ T.ring.floor_p }}"/></svg>
+              <span class="hdeep__t"><b class="num" data-js="hud-deep-num">{{ T.deep_minutes|hm }}</b><small><span class="hdeep__deep">deep today · </span><span data-js="hud-deep-lead">{{ hud_lead }}</span></small></span>
+            </button>
+            <button class="hbtn hbtn--today" type="button" data-js="today-open" data-open-dialog="#todayDlg" aria-haspopup="dialog" aria-controls="todayDlg"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-calendar-check"/></svg><span>Today</span>{% if pending_lapse %}<i class="hbtn__dot" aria-hidden="true"></i><span class="sr-only">, one thing waiting</span>{% endif %}</button>
+          </div>
+          <a class="btn dayhud__go" href="/pomodoro?new=1" data-js="start-studying"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-book-open"/></svg><span>Start studying</span></a>
+          <div class="dayhud__right">
+            <button class="hbtn" type="button" data-js="hud-decorate" aria-label="Decorate your home"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-layout-grid"/></svg><span>Decorate</span></button>
+            <a class="hbtn" href="/world#city" data-js="hud-outside" aria-label="Look outside: your block in the city"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-eye"/></svg><span>Look outside</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {# the city scene the apartment window is rendered from (manhattan.js viewFrom). It sits off screen and never draws on its own. #}
+  <div class="roomsrc js-only" aria-hidden="true"><div class="stage" data-js="stage" data-stage="week" data-source-only></div></div>
+  <script>
+    (function () {
+      // boot the home scene after first paint (requestIdleCallback), with the same import map app.js uses for the 3D scenes
+      var base = '{{ asset_base }}';
+      function go() {
+        if (!window.Witness || !document.querySelector('[data-js="home-stage"]')) return;
+        if (!document.querySelector('script[type="importmap"]')) {
+          var s = document.createElement('script'); s.type = 'importmap';
+          s.textContent = JSON.stringify({ imports: { 'three': base + '/vendor/three/three.module.js', 'three/addons/': base + '/vendor/three/addons/' } });
+          document.head.appendChild(s);
+        }
+        import(base + '/app/city/home_today.js').then(function (m) { return m.bootHomeToday(); }).catch(function (e) { console.warn('home scene unavailable', e); });
+      }
+      function later() { if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 600 }); else setTimeout(go, 60); }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', later); else later();
+    })();
+  </script>
+
+  {# ---------------- the Today drawer: a side drawer (desktop, tablet) or a bottom sheet (phone). Without JavaScript it is simply the page. ---------------- #}
+  <dialog class="sheet daydrawer" id="todayDlg" data-js="today-drawer" aria-labelledby="todayDlgH">
+    <div class="daydrawer__panel">
+      <header class="daydrawer__head">
+        <div><p class="eyebrow epoch-line" data-js="day-line">{{ gs.day_line }}</p><h2 id="todayDlgH" tabindex="-1" data-autofocus>Today</h2></div>
+        <button class="icon-btn js-only" type="button" data-close-dialog aria-label="Close Today"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-x"/></svg></button>
+      </header>
+
+      {% set RO = gs.rollover %}
+      <div class="banner calm" data-js="rollover-note"{% if not (RO.day_text or RO.cutoff_text) %} hidden{% endif %}>
+        <div><span data-js="rollover-day">{{ RO.day_text }}</span>{% if RO.day_text and RO.cutoff_text %} {% endif %}<span data-js="rollover-cutoff">{{ RO.cutoff_text }}</span></div>
+      </div>
+      {% if pending_lapse %}
+      <div class="banner">
+        <div><strong>{{ pending_lapse|day_label }} didn't reach the {{ T.floor_minutes }}-minute floor.</strong>
+          Mark it as rest, repair it, or let it go. No penalty either way.</div>
+        <a class="btn btn--sm" href="/lapse" data-open-dialog="#lapseDlg">Choose what to do</a>
+      </div>
+      {% endif %}
+      {% if repair_day %}
+      <div class="banner calm">
+        <div><strong>Repair window open</strong> for {{ repair_day|day_label }}. Reach the floor on both of the next two days
+        (through {{ repair_until|day_label }}) and it shows as repaired.</div>
+      </div>
+      {% endif %}
+      {% if day.is_comeback %}
+      <div class="banner calm"><div><strong>Comeback day.</strong> That's the one that counts most.</div></div>
+      {% endif %}
+      <div class="nudge" data-js="postcard-nudge" hidden>
+        <svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-mail"/></svg>
+        <span>Your week's postcard is ready to make.</span>
+        <a class="btn btn--violet" href="/world?postcard=1#week" data-js="postcard-open">Make it</a>
+      </div>
+
+      <div class="daydrawer__acts">
+        <a class="btn btn--sm" href="#logDlg" data-open-dialog="#logDlg" data-js="add-time"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-plus"/></svg>Add time</a>
+        <a class="btn btn--sm btn--violet" href="/world?view=shelf#shelf" data-open-dialog="#shipDlg" data-js="ship-open"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-trophy"/></svg>Ship an output</a>
+        <a class="btn btn--sm btn--ghost" href="/plan" data-open-dialog="#planDlg"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-calendar-check"/></svg>Plan</a>
+      </div>
+
+      {% set prun = pomodoro.run if pomodoro else none %}
+      <div class="runcard{{ ' is-break' if prun and prun.phase == 'break' }}" data-js="today-run"{% if not pomodoro or not (pomodoro.active or pomodoro.pending_ratings) %} hidden{% endif %}>
+        <div class="runcard__t">
+          <span class="runcard__ic" aria-hidden="true"><svg class="ic"><use href="{{ icons }}#i-timer"/></svg></span>
+          <div class="runcard__txt">
+            <b data-js="run-title">{% if prun and pomodoro.active %}{{ 'Break' if prun.phase == 'break' else prun.category }}{% if prun.label and prun.phase != 'break' %}: {{ prun.label }}{% endif %}{% elif pomodoro and pomodoro.pending_ratings %}A block is ready to rate{% endif %}</b>
+            <span class="small muted" data-js="run-sub">{% if prun and pomodoro.active %}Cycle {{ prun.cycle }} of {{ prun.cycles }}{% if prun.paused %} · paused{% endif %}{% if pomodoro.pending_ratings %} · {{ pomodoro.pending_ratings|length }} to rate{% endif %}{% endif %}</span>
+          </div>
+          <span class="runcard__clock num" data-js="run-clock">{% if prun and pomodoro.active %}{{ '%d:%02d'|format(prun.remaining_seconds // 60, prun.remaining_seconds % 60) }}{% endif %}</span>
+        </div>
+        <a class="btn" href="/pomodoro">Open the focus screen</a>
+      </div>
+      <div data-js="focus-slot">
+        {% if focus and not focus.pomodoro %}
+        <div class="focuspill">
+          <div><b>{{ focus.category }}{% if focus.label %}: {{ focus.label }}{% endif %}</b>
+            <span class="num" data-js="focus-clock" data-started="{{ focus.started }}">{{ '%02d:%02d'|format(focus.elapsed // 60, focus.elapsed % 60) }}</span>
+            <span class="small muted">of {{ focus.planned }}m, until {{ focus.until }}. {% if focus.time_is_up %}Time. How did it go?{% else %}Quiet till then.{% endif %}</span></div>
+          <form method="post" action="/focus/stop" data-enhance="focus-stop">
+            {% for value, label in focus_outcomes %}
+            <button class="btn btn--sm {{ 'btn--violet' if loop.first else 'btn--ghost' }}" type="submit" name="outcome" value="{{ value }}">{{ label }}</button>
+            {% endfor %}
+            <button class="btn btn--sm btn--ghost" type="submit" name="outcome" value="cancelled">Cancel (logs nothing)</button>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+
+      <section class="card ringcard daydrawer__ring" aria-labelledby="ringH">
+        <div class="ringwrap" data-js="ring-wrap">
+          <svg viewBox="-8 -8 176 176" aria-hidden="true">
+            <circle class="track" cx="80" cy="80" r="70"/><circle class="arc arc--out{{ ' is-done' if T.target_met }}" data-js="arc-target" cx="80" cy="80" r="70" pathLength="100" style="--p:{{ T.ring.target_p }}"/>
+            <circle class="track" cx="80" cy="80" r="50"/><circle class="arc arc--in{{ ' is-done' if T.floor_met }}" data-js="arc-floor" cx="80" cy="80" r="50" pathLength="100" style="--p:{{ T.ring.floor_p }}"/>
+            <g data-js="ghost-g" transform="rotate({{ ghost_angle }} 80 80)"{% if not ghost_minutes %} style="display:none"{% endif %}><line class="ghost" x1="80" y1="2" x2="80" y2="16"/></g>
+          </svg>
+          <div class="mid"><b class="num{{ ' long' if (T.deep_minutes|hm)|length > 4 }}" data-js="deep-num">{{ T.deep_minutes|hm }}</b><small>deep today</small></div>
+        </div>
+        <div class="ringtext">
+          <div class="daydrawer__h3"><h3 id="ringH">Deep time</h3>{% include "_tower_how.html" %}</div>
+          <p class="lead" data-js="ring-lead">
+            {%- if T.mark and not T.floor_met %}Rest day. Doors stay open if you want them.
+            {%- elif not T.floor_met %}Doors in {{ fmt_min(doors_left) }}.
+            {%- elif not T.target_met %}Doors open. Crown in {{ fmt_min(crown_left) }}.
+            {%- else %}Crown lit. Anything extra is shown but not counted.{% endif -%}
+          </p>
+          <ul class="legend">
+            <li><i style="background:var(--accent)"></i><span>Doors (floor) <span class="num" data-js="floor-min">{{ T.floor_minutes }}</span>m</span><span class="ok" data-js="floor-ok"{% if not T.floor_met %} hidden{% endif %}><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg><span class="sr-only">done</span></span></li>
+            <li><i style="background:var(--reward-strong)"></i><span>Crown (target) <span class="num" data-js="target-min">{{ T.target_minutes }}</span>m</span><span class="ok" data-js="target-ok"{% if not T.target_met %} hidden{% endif %}><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg><span class="sr-only">done</span></span></li>
+            <li><i class="gh"></i><span class="muted" data-js="ghost-text">{% if ghost_minutes %}Last week, same day: {{ fmt_min(ghost_minutes) }}{% else %}Last week, same day: nothing logged{% endif %}</span></li>
+          </ul>
+          <p class="xs muted" data-js="cap-note"{% if not T.over_cap_min %} hidden{% endif %}>{% if T.over_cap_min %}+{{ T.over_cap_min }}m, past the cap. Shown, never counted.{% endif %}</p>
+          <p class="xs muted towerline" data-js="tower-line" aria-live="polite">{{ T.tower_line }}</p>
+          <p class="xs muted">
+            {% if has_contract %}Week: {{ week.outputs_count }}/{{ week.outputs_required }} outputs, {{ week.floor_days }}/{{ week.floor_days_required }} floor days, {{ week.skips_left }} skips left
+            · {{ weeks_kept }} of {{ weeks_with_contract }} weeks kept lately.
+            {% else %}Baseline week: just log. Targets start {{ contract_start|day_label if contract_start else "soon" }}.{% endif %}
+          </p>
+        </div>
+        <div class="flow" data-js="flow-meter" data-game-only>
+          {% set F = gs.flow %}
+          <div class="flow__head"><span class="row-label" id="flowH">Flow</span><span class="flow__hours small num" data-js="flow-hours">{{ F.hours_lit }} lit</span></div>
+          <div class="flow__lights" data-js="flow-lights" role="img" aria-labelledby="flowH flowT">
+            {% for i in range(6) %}{% set f = [[(F.minutes - i * 60) / 60, 0]|max, 1]|min %}<span class="avlight{{ ' is-on' if f >= 1 }}" style="--f:{{ '%.2f'|format(f) }}"><svg viewBox="0 0 24 40" aria-hidden="true"><path class="pole" d="M12 38V12M12 12c0-4 3-6 7-6"/><circle class="bulb" cx="19.5" cy="6.5" r="3.4"/></svg></span>{% endfor %}
+          </div>
+          <p class="small muted flow__text" id="flowT" data-js="flow-text">
+            {%- if F.active and F.minutes %}In flow for {{ F.minutes|hm }}. {{ F.to_next_hour_min }}m to the next light.
+            {%- elif F.best_today %}Best chain today: {{ F.best_today|hm }}. The next hour you log starts a fresh one.
+            {%- else %}Back-to-back hours light the avenue, one lamp per hour.{% endif -%}
+          </p>
+        </div>
+      </section>
+
+      <section class="card" data-js="quests-card" data-quiet-hide data-game-only aria-labelledby="questH">
+        <div class="card__head"><h3 id="questH">Today's three</h3><div class="stars" data-js="stars" aria-label="{{ gs.quests|selectattr('done')|list|length }} of 3 quest stars">
+          {% for q in gs.quests %}<svg class="ic{{ ' on' if q.done }}" aria-hidden="true"><use href="{{ icons }}#i-star"/></svg>{% endfor %}</div></div>
+        <ul class="quests" data-js="quests">
+          {% for q in gs.quests %}
+          <li class="quest{{ ' is-done' if q.done }}"><span class="quest__box"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg></span><span class="quest__t"><span class="quest__l">{{ q.label }}</span>{% if q.detail %}<small>{{ q.detail }}</small>{% endif %}</span></li>
+          {% endfor %}
+        </ul>
+        {% set HW = tower_how(request) %}
+        <p class="xs muted daydrawer__rule">Stars on today's tower roof: one for your first log, one when the doors open, one for {{ HW.star_text }} of deep focus. All three is Clear Skies. Stars give no XP, and nothing is ever taken away.</p>
+      </section>
+
+      <section class="card" aria-labelledby="winsH">
+        <div class="card__head"><h3 id="winsH">Wins feed</h3><span class="xs muted">facts only</span></div>
+        <ul class="wins" data-js="wins">
+          {% for w in gs.wins %}
+          {% set v = win_view(w) %}
+          <li class="win"><svg class="ic" aria-hidden="true" style="--cc:var({{ v.color }})"><use href="{{ icons }}#i-{{ v.icon }}"/></svg><span>{{ v.text }}{% if v.extra %}<small>{{ v.extra }}</small>{% endif %}</span></li>
+          {% else %}
+          <li class="win"><span class="muted">Nothing here yet. Your first focus block lands here.</span></li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      {% include "_today_plan.html" %}
+
+      <section class="card logs-card" aria-labelledby="logsH">
+        <div class="card__head"><h3 id="logsH">Today's log</h3><span class="xs muted">{{ day.logged_minutes|hm }} logged</span></div>
+        {% include "_entries.html" %}
+        <p class="xs muted">Logged something wrong? Delete it and add it again with Add time.</p>
+      </section>
+
+      <div class="daydrawer__foot">
+        {% if not day.mark %}
+        <form method="post" action="/skip" data-enhance="day-mark" data-api="/api/day-mark" class="actions__pair">
+          <input type="hidden" name="day" value="{{ today.isoformat() }}">
+          <button class="btn btn--ghost btn--sm" type="submit" name="kind" value="rest"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-tent-tree"/></svg><span>Rest day <span class="small muted">({{ skips_left }} left)</span></span></button>
+          <button class="btn btn--ghost btn--sm" type="submit" name="kind" value="skip"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-arrow-right"/></svg>Skip</button>
+        </form>
+        {% else %}
+        <span class="pill pill--rest"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-tent-tree"/></svg>Today is a {{ day.mark }} day</span>
+        {% endif %}
+        {% set ss_panel = false %}{% set ss_strip = true %}
+        {% include "_soundscape.html" %}
+      </div>
+    </div>
+  </dialog>
+</div>

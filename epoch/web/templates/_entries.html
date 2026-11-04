@@ -1,0 +1,27 @@
+{% from "_catcolor.html" import cc with context %}
+<div id="entries" data-js="entries">
+  {% if entries %}
+  <ul class="timeline">
+    {% for e in entries %}
+    <li>
+      <span class="time">{{ e.span }}</span>
+      <span class="what"><i class="sw" style="background: {{ cc(e.category) }}"></i><strong>{{ e.category }}</strong>
+        {{ e.minutes|hm }}{% if e.deep %} <span class="pill pill--sm">deep</span>{% endif %}{% if e.note %} <span class="muted">{{ e.note }}</span>{% endif %}</span>
+      <form method="post" action="/entries/{{ e.id }}/delete" hx-post="/entries/{{ e.id }}/delete" hx-target="#entries" hx-swap="outerHTML" hx-confirm="Remove this entry?">
+        <button class="link danger" type="submit" aria-label="Delete this entry">Delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="small muted">Nothing logged yet today.</p>
+  {% endif %}
+  {% if outputs_today %}
+  <ul class="plain">
+    {% for o in outputs_today %}
+    <li><i class="sw" style="background: {{ cc(o.stage) }}"></i><strong>{{ o.stage }}</strong>: {{ o.what }}
+      {% if o.url|safe_link %}<a href="{{ o.url }}" target="_blank" rel="noopener noreferrer">link</a>{% endif %}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>

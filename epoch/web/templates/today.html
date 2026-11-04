@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_plan_form.html" import plan_form %}
+{% from "_lapse_form.html" import lapse_form %}
+{% block title %}Today{% endblock %}
+{% block content %}
+{# Today is the room (docs/COZY.md 3a): the scene, the HUD and the Today drawer are in _today_main.html; the sheets below open from the drawer. #}
+{% include "_today_main.html" %}
+{% include "_cozy_drawer.html" ignore missing %}
+{% include "_log_sheet.html" %}
+
+<dialog class="sheet" id="shipDlg" aria-labelledby="shipH">
+  <form class="sheet__panel" method="post" action="/outputs" data-enhance="output">
+    <h2 id="shipH">What did you ship?</h2>
+    <p class="small muted">A note, a commit, a notebook or a post all count. It also counts as today's floor.</p>
+    <fieldset><legend class="row-label">Which ladder</legend><div class="chips">
+      {% for s in output_stages %}
+      <label class="chip chip--{{ ladder_chip[s] }}"><input type="radio" name="stage" value="{{ s }}" {% if s == default_category %}checked{% endif %}><span>{{ s }}</span></label>
+      {% endfor %}
+    </div></fieldset>
+    <label class="lbl">One line<input class="field field--plain" name="what" type="text" autocomplete="off" placeholder="numpy broadcasting notebook" maxlength="120"></label>
+    <label class="lbl">Link (optional)<input class="field field--plain" name="url" type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="https://github.com/…"></label>
+    <div class="sheet__actions"><button class="btn btn--ghost" type="button" data-close-dialog>Not now</button><button class="btn" type="submit">Ship it</button></div>
+  </form>
+</dialog>
+
+<dialog class="sheet" id="planDlg" aria-labelledby="planDlgH">
+  <div class="sheet__panel">
+    <h2 id="planDlgH">Plan</h2>
+    {{ plan_form(plan, '/') }}
+    <div class="sheet__actions"><button class="btn btn--ghost" type="button" data-close-dialog>Close</button></div>
+  </div>
+</dialog>
+
+{% if lapse %}
+<dialog class="sheet" id="lapseDlg" aria-labelledby="lapseDlgH">
+  <div class="sheet__panel">
+    <h2 id="lapseDlgH" tabindex="-1" data-autofocus>{{ lapse.missed|day_label }}'s lot is waiting</h2>
+    {{ lapse_form(lapse) }}
+    <div class="sheet__actions"><button class="btn btn--ghost" type="button" data-close-dialog>Later</button></div>
+  </div>
+</dialog>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+  // Keep today's log list in step with the live page (app.js announces each refresh).
+  document.addEventListener('witness:refreshed', function () {
+    if (window.htmx && document.getElementById('entries')) {
+      window.htmx.ajax('GET', '/today/entries', { target: '#entries', swap: 'outerHTML' });
+    }
+  });
+</script>
+{% endblock %}

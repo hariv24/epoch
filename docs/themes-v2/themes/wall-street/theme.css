@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Wall Street: the Financial District after the closing bell.
+   Verde-antico marble surfaces, gold as the ONE reward colour, ivory marble as the second clay,
+   uptick green for "done". Night Clay form language untouched: only tokens, three background
+   layers and a few documented tweaks.
+   ========================================================================== */
+:root{
+  /* surfaces + text (dark = green marble lobby at night, light = white marble at noon) */
+  --bg:          light-dark(#F3EFE4, #07120D);
+  --s1:          light-dark(#FFFFFF, #0F1E17);
+  --s2:          light-dark(#ECE5D2, #16291F);
+  --line:        light-dark(#DCD1B6, #34361F);   /* brass trim: card borders + clay ledges */
+  --line-strong: light-dark(#7A6A3A, #857A45);   /* brass rail: inputs, ghost-button ledges */
+  --ink:         light-dark(#102519, #F4EFDF);
+  --muted:       light-dark(#4A5A4F, #AEBDAC);
+  --faint:       light-dark(#5E6E62, #8DA394);
+
+  /* gold: the reward (XP, primary button, level badge, ring) */
+  --amber:       light-dark(#A87A00, #F5C542);
+  --amber-edge:  light-dark(#6B4E00, #A57C0B);
+  --on-amber:    #1A1200;
+  --amber-ink:   light-dark(#7A5800, #F5C542);
+  --amber-soft:  light-dark(#F6E7B4, #2E2609);
+
+  /* "violet" slot = ivory marble clay (dark) / ink-green clay (light): secondary buttons, links, checked chips */
+  --violet:      light-dark(#16402B, #E9DFC7);
+  --violet-edge: light-dark(#0A2618, #9C8F70);
+  --on-violet:   light-dark(#FFFFFF, #10241A);
+  --violet-soft: light-dark(#E2EDE3, #24302A);
+
+  /* uptick green: done / floor reached / break */
+  --mint:        light-dark(#067A50, #3BE08E);
+  --mint-edge:   light-dark(#04543A, #1A9A5C);
+  --on-mint:     light-dark(#FFFFFF, #03140B);
+  --mint-soft:   light-dark(#D9F2E3, #0F3622);
+
+  --flame:       light-dark(#C2410C, #FF8A4C);
+  --sky:         light-dark(#0369A1, #6CC6F0);
+  --rest:        light-dark(#6B5FB5, #B9AEFF);
+  --error:       light-dark(#B42318, #FF8F8F);
+  --focus:       light-dark(#16402B, #FFE59A);
+
+  --c-python:  light-dark(#2F6FED, #6CB4FF);
+  --c-math:    light-dark(#6D4FE0, #B3A4FF);
+  --c-ml:      light-dark(#067A50, #3BE08E);
+  --c-papers:  light-dark(#C2410C, #FF8C6B);
+  --c-writing: light-dark(#B8239B, #F58AE0);
+  --c-drift:   light-dark(#5E6E62, #93A79A);
+
+  --lift:   light-dark(rgb(20 50 30 / .20), rgb(0 0 0 / .6));
+  --gloss:  light-dark(rgb(255 255 255 / .8), rgb(255 250 230 / .09));
+  --scrim:  light-dark(rgb(16 37 25 / .45), rgb(2 8 5 / .74));
+  --glow-a: light-dark(#F6E3A8, #2A2608);
+  --glow-b: light-dark(#D6EBDD, #0A2E1C);
+}
+
+/* ---------- background ---------- */
+/* layer 1: verde-antico marble veins + a gold lamp glow (top right) and a green glow (bottom left) */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(820px 520px at 92% -10%, var(--glow-a), transparent 64%),
+    radial-gradient(760px 540px at -8% 108%, var(--glow-b), transparent 60%),
+    url("bg-marble.svg") center / cover no-repeat;
+}
+/* layer 2: the price line (dip, then grind to an all-time high) and a gold colonnade, fading upwards */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("bg.svg") center bottom / 100% auto no-repeat;
+  -webkit-mask-image:linear-gradient(to top, #000 45%, transparent 92%);
+          mask-image:linear-gradient(to top, #000 45%, transparent 92%);
+}
+/* layer 3: a vertical ticker tape crawling down the right edge, only where nothing sits on top of it */
+.app::before{content:none}
+@media (min-width: 1240px){
+  .app::before{content:"";position:fixed;inset-block:0 -1720px;inset-inline-end:10px;inline-size:28px;z-index:-1;pointer-events:none;
+    background:url("bg-ticker.svg") 0 0 / 28px 1720px repeat-y;opacity:.55;
+  }
+}
+@media (min-width: 1240px) and (prefers-reduced-motion: no-preference){
+  /* TWEAK: the tape crawls only when motion is allowed (OS setting and the in-app switch) */
+  :root:not([data-motion="off"]) .app::before{animation:ws-tape 60s linear infinite}
+}
+@keyframes ws-tape{to{transform:translateY(-1720px)}}
+
+/* ---------- tweaks ---------- */
+/* TWEAK: glass chips over the 3D city take the green-black of the new night */
+.stage__badge .pill, .stage__tools .icon-btn, .camtag{background:rgb(4 18 11 / .74)}
+/* TWEAK: focus dial glow follows gold instead of Night Clay amber */
+.focus{--arc-glow:rgb(245 197 66 / .28)}
+/* TWEAK: the +XP float glows gold */
+.floaty{text-shadow:0 2px 0 rgb(0 0 0 / .35), 0 0 18px rgb(245 197 66 / .55)}
+/* TWEAK: the multi-colour candle mark gets a neutral clay ledge, not an amber one */
+.brand svg{filter:drop-shadow(0 3px 0 rgb(0 0 0 / .45))}

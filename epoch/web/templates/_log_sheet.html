@@ -1,0 +1,48 @@
+{# "+ Add time" (docs/COZY.md 3a): the old Today log form, now in a sheet for the rare session logged without the timer.
+   Focus blocks log themselves. Same hooks and the same /log and /api/log endpoints as before (app.js initLog / submitLog).
+   Without JavaScript the sheet is shown on the page under the Today drawer. #}
+{% set icons = "/static/app/icons.svg" %}
+<dialog class="sheet logsheet" id="logDlg" data-js="log-sheet" aria-labelledby="logH">
+  <div class="sheet__panel">
+    <div class="logsheet__head">
+      <div><h2 id="logH">Add time</h2><p class="small muted">For a session you did without the timer. Focus blocks log themselves.</p></div>
+      <span class="small" data-js="clock-line"></span>
+      <button class="icon-btn js-only" type="button" data-close-dialog aria-label="Close"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-x"/></svg></button>
+    </div>
+    <form class="logform" method="post" action="/log" data-js="log-form">
+      <div class="fieldwrap">
+        <svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-pen-line"/></svg>
+        <label class="sr-only" for="logText">What you did and for how long, for example 45m numpy ex 1-12</label>
+        <input class="field" id="logText" name="text" type="text" data-js="log-text" value="{{ form_text }}" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" placeholder="45m numpy ex 1-12" maxlength="300">
+      </div>
+      <div class="preview" data-js="log-preview"></div>
+      <div class="sr-only" role="status" aria-live="polite" data-js="log-status"></div>
+      <div>
+        <span class="row-label" id="repeatLbl">Again, one tap</span>
+        <div class="chips chips--scroll" data-js="repeat-chips" aria-labelledby="repeatLbl">
+          {% for r in gs.repeat_chips %}
+          <button class="chipbtn" type="button" data-category="{{ r.category }}" data-minutes="{{ r.minutes }}" data-note="{{ r.note }}" data-deep="{{ 1 if r.deep else 0 }}" data-rest="{{ 1 if r.category == 'Rest' else 0 }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-rotate-ccw"/></svg><span>{{ r.minutes|hm }} {{ r.note or r.label }}</span><small>{{ r.label }}</small></button>
+          {% else %}
+          <span class="small muted">Your last three logs show up here.</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="chips-split">
+        <fieldset><legend class="row-label">How long</legend>
+          <div class="chips" data-js="dur-chips">
+            {% for value, label in duration_chips %}
+            <label class="chip chip--time"><input type="radio" name="minutes" value="{{ value }}"><span>{{ label }}</span></label>
+            {% endfor %}
+          </div></fieldset>
+        <fieldset><legend class="row-label">What was it</legend>
+          <div class="chips" data-js="cat-chips">
+            {% for value, label, icon, css, deep, rest in log_chips %}
+            <label class="chip chip--{{ css }}"><input type="radio" name="category" value="{{ value }}" data-deep="{{ 1 if deep else 0 }}"{% if rest %} data-rest="1"{% endif %}><span><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ icon }}"/></svg>{{ label }}</span></label>
+            {% endfor %}
+          </div></fieldset>
+      </div>
+      <button class="btn btn--log" type="submit" data-js="log-btn"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-plus"/></svg><span data-js="log-btn-text">Log it</span></button>
+      <div class="logfoot"><span class="honest">Rest and drift count as honest hours. They add a lamp to your street, never a penalty. Other kinds work typed: "30m commute", "20m admin".</span></div>
+    </form>
+  </div>
+</dialog>

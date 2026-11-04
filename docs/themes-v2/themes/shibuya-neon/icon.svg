@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Shibuya Neon icon: a hot-pink neon tube sign of the kanji 上 (ue: "up, above, rising"), whose upright
+     stroke breaks out through the top of its electric-cyan frame. The underdog going up and out of the box.
+     Drawn as strokes (no font). No characters, no animals. -->
+<defs>
+<radialGradient id="wall" cx=".5" cy=".46" r=".72"><stop offset="0" stop-color="#2B0F3F"/><stop offset=".6" stop-color="#140A22"/><stop offset="1" stop-color="#0B0712"/></radialGradient>
+<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="13"/></filter>
+<filter id="glow2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+<rect width="512" height="512" fill="url(#wall)"/>
+<g stroke="#FFFFFF" stroke-opacity=".035" stroke-width="3"><path d="M0 96H512M0 192H512M0 288H512M0 384H512M0 480H512M128 0V96M384 0V96M64 96V192M320 96V192M128 192V288M384 192V288M64 288V384M320 288V384M128 384V480M384 384V480"/></g>
+<!-- cyan frame, open at the top where the stroke breaks through -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M218 132H146a36 36 0 0 0-36 36V376a36 36 0 0 0 36 36H366a36 36 0 0 0 36-36V168a36 36 0 0 0-36-36H262" stroke="#00E5FF" stroke-width="30" filter="url(#glow2)" opacity=".85"/>
+ <path d="M218 132H146a36 36 0 0 0-36 36V376a36 36 0 0 0 36 36H366a36 36 0 0 0 36-36V168a36 36 0 0 0-36-36H262" stroke="#3DEBFF" stroke-width="14"/>
+ <path d="M218 132H146a36 36 0 0 0-36 36V376a36 36 0 0 0 36 36H366a36 36 0 0 0 36-36V168a36 36 0 0 0-36-36H262" stroke="#D9FBFF" stroke-width="4"/>
+</g>
+<!-- 上 : 1 upright (breaks out the top), 2 short bar to the right, 3 long base -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M240 74V352M240 228H340M160 352H352" stroke="#FF1F8E" stroke-width="58" filter="url(#glow)" opacity=".95"/>
+ <path d="M240 74V352M240 228H340M160 352H352" stroke="#FF3D9A" stroke-width="30"/>
+ <path d="M240 74V352M240 228H340M160 352H352" stroke="#FFD1EA" stroke-width="7"/>
+</g>
+<!-- spark where it breaks out -->
+<g stroke="#FFE45C" stroke-width="7" stroke-linecap="round"><path d="M196 98l-20-16M284 98l20-16"/></g>
+</svg>

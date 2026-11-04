@@ -1,0 +1,7 @@
+{# The money pages' own sub-navigation and the live savings pill. Context: money_tabs, page, eco. #}
+<div class="m-bar">
+  <nav class="seg seg--links" aria-label="Money sections">
+    {% for key, href, label in money_tabs %}<a href="{{ href }}"{% if page == key %} aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}
+  </nav>
+  {% if not quiet %}<span class="pill m-savings" title="Your savings"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-wallet"/></svg><span>Savings <b class="num" data-js="m-savings" data-cents="{{ eco.balance_cents }}">{{ eco.balance|usd }}</b></span></span>{% endif %}
+</div>

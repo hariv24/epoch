@@ -1,0 +1,18 @@
+{# Soundscape picker. Synthesised in the browser (audio.js), off by default. Context: gm (soundscape, soundscape_volume), ss_panel (true = popover on the Focus Screen, else a card). #}
+{% set cur = gm.soundscape or "off" %}
+{% set vol = gm.soundscape_volume if gm.soundscape_volume is not none else 40 %}
+{% set icons = "/static/app/icons.svg" %}
+{% set scapes = [("off", "Off", "volume-x"), ("rain", "Rain", "cloud-rain"), ("cafe", "Cafe", "coffee"), ("brown", "Brown noise", "headphones"), ("subway", "Subway", "train-front")] %}
+<section class="sounds js-only{{ ' sounds--panel' if ss_panel else (' sounds--strip' if ss_strip else ' card') }}" {% if ss_panel %}id="soundsPanel" role="dialog" aria-label="Soundscape" hidden{% else %}aria-labelledby="ssH"{% endif %} data-js="soundscape" data-current="{{ cur }}" data-volume="{{ vol }}">
+  <div class="sounds__head"><h2 id="ssH">Soundscape</h2><button class="icon-btn sounds__x" type="button" data-js="sounds-close" aria-label="Close"{% if not ss_panel %} hidden{% endif %}><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-x"/></svg></button></div>
+  <p class="small muted">Made in your browser from noise. No files, no network. Off until you pick one.</p>
+  <div class="ss-choices" role="radiogroup" aria-label="Soundscape">
+    {% for key, label, icon in scapes %}
+    <label class="ss-opt"><input type="radio" name="soundscape{{ '-p' if ss_panel }}" value="{{ key }}" data-js="ss-choice"{% if cur == key %} checked{% endif %}><span><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ icon }}"/></svg>{{ label }}</span></label>
+    {% endfor %}
+  </div>
+  <label class="ss-vol"><span>Volume <b class="num" data-js="ss-vol-text">{{ vol }}</b></span>
+    <input type="range" min="0" max="100" step="1" value="{{ vol }}" data-js="ss-volume" aria-label="Soundscape volume"></label>
+  <label class="check ss-breaks"><input type="checkbox" data-js="ss-breaks"> Pause the sound during breaks</label>
+  <p class="small ss-hint" data-js="ss-hint" role="status" aria-live="polite"></p>
+</section>

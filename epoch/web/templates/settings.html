@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<div class="view-head"><div><h1>Settings</h1><p>Rules, game toggles and connections. Everything stays on this computer.</p></div></div>
+
+{% if errors %}
+<div class="flash warn"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>
+{% endif %}
+
+<div class="stack-4">
+<div class="two" id="game">
+  <form class="card set" method="post" action="/settings/game" aria-labelledby="gameH">
+    <h2 id="gameH">Game</h2>
+    {% macro toggle(key, title, hint, on) %}
+    <div class="setrow"><div><b>{{ title }}</b><small>{{ hint }}</small></div>
+      <label class="switch"><input type="checkbox" name="{{ key }}" value="1" data-js="game-setting"{% if on %} checked{% endif %}><span></span><span class="sr-only">{{ title }}</span></label></div>
+    {% endmacro %}
+    {% macro choice(key, title, hint, options, current) %}
+    <div class="setrow"><div><b>{{ title }}</b><small>{{ hint }}</small></div>
+      <div class="seg" role="radiogroup" aria-label="{{ title }}">
+        {% for value, label in options %}<label><input type="radio" name="{{ key }}" value="{{ value }}" data-js="game-setting"{% if current == value %} checked{% endif %}><span>{{ label }}</span></label>{% endfor %}
+      </div></div>
+    {% endmacro %}
+    {{ toggle("game_enabled", "Game layer", "Off gives a plain tracker: no levels, quests or celebrations.", game_values.game_enabled) }}
+    {{ toggle("quiet_mode", "Quiet mode", "Hides XP, levels and quests. Keeps the city and the log.", game_values.quiet_mode) }}
+    {{ toggle("sound", "Sound", "Off by default. Tiny synthesized blips and the Focus Screen chimes, no files.", game_values.sound) }}
+    {{ choice("motion", "Motion", "Auto follows your OS. Off snaps everything and stops confetti.", [("auto", "Auto"), ("on", "On"), ("off", "Off")], game_values.motion) }}
+    {{ choice("three_d", "3D city", "Off shows the flat skyline instead.", [("auto", "On"), ("off", "Off")], game_values.three_d) }}
+    {{ choice("sky_tz", "Sky clock", "Your evening study under a New York morning, if you like.", [("local", "My time"), ("ny", "New York")], game_values.sky_tz) }}
+    {{ toggle("weather_enabled", "Weather", "New York's weather in the header and over the city. One free lookup every 20 minutes, no account.", game_values.weather_enabled) }}
+    {{ toggle("seasonal_enabled", "Seasonal decorations", "Halloween pumpkins, Diwali lamps, holiday lights and more, on the dates they happen. Cosmetic only.", game_values.seasonal_enabled) }}
+    {{ toggle("daily_missions", "Daily missions", "Three small missions a day; all three fill a chest. Off stops new missions; chests you already earned stay.", game_values.daily_missions if game_values.daily_missions is not none else true) }}
+    {{ toggle("hide_achievements", "Hide achievements", "Removes the achievements grid from the Shelf.", game_values.hide_achievements) }}
+    <button class="btn no-js-only" type="submit">Save game settings</button>
+  </form>
+
+  <section class="card set" aria-labelledby="lookH">
+    <h2 id="lookH">Look</h2>
+    <div class="setrow"><div><b>Appearance</b><small>Auto follows your system. Saved in this browser only.</small></div>
+      <div class="seg js-only" role="radiogroup" aria-label="Appearance">
+        <label><input type="radio" name="theme_pref" value="auto" data-js="theme-choice" checked><span>Auto</span></label>
+        <label><input type="radio" name="theme_pref" value="light" data-js="theme-choice"><span>Light</span></label>
+        <label><input type="radio" name="theme_pref" value="dark" data-js="theme-choice"><span>Dark</span></label>
+      </div></div>
+    <div class="setrow js-only"><div><b>Keyboard shortcuts</b><small>"/" jumps to the log field; "g" then t, f, c, w or s switches tabs. Saved in this browser only.</small></div>
+      <label class="switch"><input type="checkbox" data-js="shortcuts-toggle" checked><span></span><span class="sr-only">Keyboard shortcuts</span></label></div>
+    <h3>Connections</h3>
+    <ul class="status plain">
+      <li><span class="dot {{ 'on' if status.telegram }}"></span> Telegram: {{ "configured" if status.telegram else "not set up (the web app works fine without it)" }}</li>
+      <li><span class="dot {{ 'on' if status.openrouter }}"></span> Free language model:
+        {% if status.openrouter %}on · {{ status.calls_today }} of {{ status.calls_cap }} calls today
+          <div class="small muted">{% for m in status.models %}{{ m }}{{ ", " if not loop.last }}{% endfor %}</div>
+        {% else %}not set up (typed logs use plain rules){% endif %}</li>
+      <li><span class="dot {{ 'on' if status.aw }}"></span> ActivityWatch:
+        {% if status.aw %}reachable{% else %}not reachable at {{ status.aw_url }} (suggestions are off){% endif %}</li>
+    </ul>
+    {% if helping %}
+    <h3>Is the game layer helping?</h3>
+    <div class="helping">
+      <p class="small muted">{{ helping.note }}</p>
+      <dl>
+        <dt></dt><dd><b>Before</b></dd><dd><b>After</b></dd>
+        {% for label, key, kind in [("Days with a floor", "floor_rate", "pct"), ("Days closed", "close_rate", "pct"), ("Hours covered", "coverage", "pct"), ("Entries a day", "entries_per_day", "num")] %}
+        <dt>{{ label }}</dt>
+        <dd>{% if helping.before %}{{ ((helping.before[key] * 100)|round|int ~ "%") if kind == "pct" else helping.before[key] }}{% else %}n/a{% endif %}</dd>
+        <dd>{{ ((helping.after[key] * 100)|round|int ~ "%") if kind == "pct" else helping.after[key] }}</dd>
+        {% endfor %}
+      </dl>
+      <p class="xs muted">{{ helping.caveat }}</p>
+    </div>
+    {% endif %}
+  </section>
+</div>
+
+{% include "_lan_panel.html" %}
+
+<form method="post" action="/settings" class="stack-4">
+  <section class="card set" id="money" aria-labelledby="monH">
+    <h2 id="monH">Stars and money</h2>
+    <div class="setrow"><div><b>Third star: deep focus per day</b><small>The third star lights at this much deep focus in a day. It brings the $50 three-star bonus and a gold crown. Deep-focus pay has no daily limit, whatever you pick. Saves as soon as you tap; it is the same choice as under Floor, target and plans.</small></div>
+      <div class="seg js-only" role="radiogroup" aria-label="Third star: deep focus per day (quick choice)">
+        {% for minutes, label in star_choices %}<label><input type="radio" name="star_quick" value="{{ minutes }}" data-js="star-setting"{% if values.deep_star_minutes|string == minutes|string %} checked{% endif %}><span title="{{ label }}">{{ minutes // 60 }} h<span class="sr-only"> ({{ label }})</span></span></label>{% endfor %}
+      </div></div>
+    <div class="setrow"><div><b>Quiet mode hides all money</b><small>The wallet, the store, rent, the Passport and every dollar sign go away. What you earn is still banked. Switch it in the Game card above.</small></div>
+      <span class="pill pill--sm {{ 'pill--soft' if game_values.quiet_mode else '' }}" data-js="quiet-state">{{ "Quiet mode is on" if game_values.quiet_mode else "Money is showing" }}</span></div>
+  </section>
+  {% for title, fields in groups %}
+  <section class="card">
+    <h2>{{ title }}</h2>
+    <div class="fieldgrid">
+    {% for f in fields %}
+    <div class="field-row{% if f.kind in ("days", "bool") %} field-row--wide{% endif %}">
+      {% if f.kind == "days" %}
+      <span class="row-label">{{ f.label }}</span>
+      <div class="chips">
+        {% for name in weekday_names %}
+        <label class="chip"><input type="checkbox" name="{{ f.key }}" value="{{ loop.index0 }}" {% if loop.index0 in values[f.key] %}checked{% endif %}><span>{{ name }}</span></label>
+        {% endfor %}
+      </div>
+      {% elif f.kind == "bool" %}
+      <label class="check"><input type="checkbox" name="{{ f.key }}" value="1" {% if values[f.key] %}checked{% endif %}> {{ f.label }}</label>
+      {% else %}
+      <label for="f-{{ f.key }}" class="row-label">{{ f.label }}</label>
+      {% if f.kind == "int" %}
+        <input class="field field--plain" id="f-{{ f.key }}" type="number" name="{{ f.key }}" value="{{ values[f.key] }}" min="{{ f.low }}" max="{{ f.high }}">
+      {% elif f.kind == "time" %}
+        <input class="field field--plain" id="f-{{ f.key }}" type="time" name="{{ f.key }}" value="{{ values[f.key] }}">
+      {% elif f.kind == "choice" %}
+        <select id="f-{{ f.key }}" name="{{ f.key }}">{% for v, label in f.options %}<option value="{{ v }}" {% if v|string == values[f.key] %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+      {% elif f.kind == "cutoff" %}
+        {% set known = f.options|map(attribute=0)|list %}
+        <select id="f-{{ f.key }}" name="{{ f.key }}">{% for v, label in f.options %}<option value="{{ v }}" {% if v == values[f.key] %}selected{% endif %}>{{ label }}</option>{% endfor %}
+          {% if values[f.key] not in known %}<option value="{{ values[f.key] }}" selected>{{ values[f.key] }}</option>{% endif %}</select>
+      {% elif f.kind == "phase" %}
+        <select id="f-{{ f.key }}" name="{{ f.key }}">{% for s in stages %}<option value="{{ s }}" {% if s == values[f.key] %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+      {% elif f.kind == "optint" %}
+        <input class="field field--plain" id="f-{{ f.key }}" type="text" inputmode="numeric" name="{{ f.key }}" value="{{ values[f.key] }}">
+      {% else %}
+        <input class="field field--plain" id="f-{{ f.key }}" type="text" name="{{ f.key }}" value="{{ values[f.key] }}">
+      {% endif %}
+      {% endif %}
+      {% if f.help %}<span class="small muted">{{ f.help }}</span>{% endif %}
+    </div>
+    {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+  <p class="small muted">Tracking started on {{ start_date }}.</p>
+  <button class="btn" type="submit">Save settings</button>
+</form>
+
+<section class="card" aria-labelledby="awH">
+  <h2 id="awH">ActivityWatch rules</h2>
+  <p class="small muted">The first matching rule (lowest priority number) decides a category. Patterns are case-insensitive regular expressions.</p>
+  <div class="table-wrap">
+  <table class="ledger">
+    <thead><tr><th>Priority</th><th>Looks at</th><th>Pattern</th><th>Category</th><th>Deep</th><th></th></tr></thead>
+    <tbody>
+      {% for r in aw_rules %}
+      <tr>
+        <td>{{ r.priority }}</td><td>{{ r.field }}</td><td><code>{{ r.pattern }}</code></td>
+        <td><i class="sw" style="background: {{ colors.get(r.category, '#ccc') }}"></i>{{ r.category }}</td>
+        <td>{{ "yes" if r.deep else "no" }}</td>
+        <td><form method="post" action="/settings/aw-rules/{{ r.id }}/delete" class="inline-form"><button class="link danger" type="submit">Delete</button></form></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="muted">No rules. Everything will show as Unknown.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <h3>Add a rule</h3>
+  <form method="post" action="/settings/aw-rules" class="stack-3">
+    <div class="row">
+      <label>Looks at
+        <select name="field">{% for f in rule_fields %}<option value="{{ f }}" {% if f == rule_form.field %}selected{% endif %}>{{ f }}</option>{% endfor %}</select></label>
+      <input class="field field--plain" type="text" name="pattern" value="{{ rule_form.pattern }}" placeholder="regular expression, e.g. arxiv\.org" aria-label="Pattern" required>
+    </div>
+    <div class="row">
+      <label>Category
+        <select name="category">{% for c in all_categories %}<option value="{{ c }}" {% if c == rule_form.category %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></label>
+      <label class="check"><input type="checkbox" name="deep" value="1" {% if rule_form.deep %}checked{% endif %}> Deep</label>
+      <label>Priority <input type="number" name="priority" value="{{ rule_form.priority }}" min="0" max="1000"></label>
+      <button class="btn btn--ghost" type="submit">Add rule</button>
+    </div>
+  </form>
+</section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ asset_base }}/app/lan.js" defer></script>{% endblock %}

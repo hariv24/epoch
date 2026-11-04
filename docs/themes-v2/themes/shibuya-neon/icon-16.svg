@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+<!-- Shibuya Neon 16px cut: 上 (ue, "up") in pink inside a cyan frame. Three shapes. -->
+<rect width="16" height="16" rx="3.5" fill="#140A22"/>
+<rect x="2.2" y="3.6" width="11.6" height="10" rx="1.6" fill="none" stroke="#3DEBFF" stroke-width="1.2"/>
+<path d="M7.4 1.6V11.2M7.4 6.8h3.4M4.6 11.2h6.6" fill="none" stroke="#FF4FA8" stroke-width="1.9" stroke-linecap="round"/>
+</svg>

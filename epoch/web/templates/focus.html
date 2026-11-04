@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Focus{% endblock %}
+{% block content %}
+<div class="view-head"><div><h1>Focus</h1><p>One block, no switching. <a href="/">Back to Today</a>. Want breaks and a big countdown? <a href="/pomodoro">Open the focus screen</a>.</p></div></div>
+<section class="card stack-4">
+  {% if focus %}
+  <p>
+    <strong>{{ focus.category }}</strong>{% if focus.label %}: {{ focus.label }}{% endif %}
+    · {{ focus.planned }} min, until {{ focus.until }}.
+    {% if focus.time_is_up %}<strong>Time.</strong> How did it go?{% else %}Quiet till then.{% endif %}
+  </p>
+  <form method="post" action="/focus/stop" data-enhance="focus-stop">
+    <div class="chips">
+      {% for value, label in focus_outcomes %}
+      <button class="btn {{ 'btn--violet' if loop.first else 'btn--ghost' }}" type="submit" name="outcome" value="{{ value }}">{{ label }}</button>
+      {% endfor %}
+      <button class="btn btn--ghost" type="submit" name="outcome" value="cancelled">Cancel (logs nothing)</button>
+    </div>
+  </form>
+  {% else %}
+  <form method="post" action="/focus/start">
+    <div class="row">
+      <label>Minutes <input type="number" name="minutes" min="1" max="240" value="50" required></label>
+      <label>Category
+        <select name="category">{% for c in quick_categories %}<option value="{{ c }}" {% if c == default_category %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></label>
+      <input class="field field--plain" type="text" name="label" placeholder="What are you working on?" maxlength="120" aria-label="Label">
+    </div>
+    <button class="btn" type="submit">Start focus</button>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

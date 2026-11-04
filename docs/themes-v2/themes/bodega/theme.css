@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Bodega: the corner store at 2am. Warm black street, fluorescent-cream light, deli-mustard
+   reward, the red OPEN tubes and the green 24 HRS tubes, a striped awning, stocked shelves,
+   a checker floor. Night Clay form language untouched: only tokens + background layers.
+   Dark-first; the light half is "the same store at noon under the tubes".
+   ========================================================================== */
+:root{
+  /* surfaces + text: warm street-black, fluorescent cream ink */
+  --bg:        light-dark(#FFF8E6, #15100D);
+  --s1:        light-dark(#FFFFFF, #221A15);
+  --s2:        light-dark(#FBEFD2, #2D231C);
+  --line:      light-dark(#EAD8AE, #473729);
+  --line-strong: light-dark(#8C7556, #8F7964);
+  --ink:       light-dark(#24170E, #FFF6E2);
+  --muted:     light-dark(#66513D, #D6C3A6);
+  --faint:     light-dark(#7A6650, #B39F84);
+
+  /* reward: deli-mustard / lotto-sign yellow */
+  --amber:       light-dark(#C27400, #FFC531);
+  --amber-edge:  light-dark(#7E4B00, #B5850A);
+  --on-amber:    #1E1400;
+  --amber-ink:   light-dark(#7E4B00, #FFD258);
+  --amber-soft:  light-dark(#FFE7A8, #3D2E0C);
+
+  /* secondary: cherry neon (pinker than the red OPEN tubes, so it never reads as "danger") */
+  --violet:      light-dark(#C2185B, #FF6B9A);
+  --violet-edge: light-dark(#86103E, #B8336A);
+  --on-violet:   light-dark(#FFFFFF, #2A0414);
+  --violet-soft: light-dark(#FFE0EA, #461A2A);
+
+  /* done: the green 24 HRS neon */
+  --mint:        light-dark(#0B7A3E, #45E68E);
+  --mint-edge:   light-dark(#06542A, #1E9E58);
+  --on-mint:     light-dark(#FFFFFF, #03170B);
+  --mint-soft:   light-dark(#D7F5E2, #12321F);
+
+  --flame:       light-dark(#C2410C, #FF8A3D);
+  --sky:         light-dark(#0369A1, #6CC4FF);
+  --rest:        light-dark(#6B5FB5, #C7B3FF);
+  --error:       light-dark(#A33A12, #FFAA85);
+  --focus:       light-dark(#1F4FD8, #FFF0B8);
+
+  --c-python:  light-dark(#2F6FED, #6CB4FF);
+  --c-math:    light-dark(#6D4FE0, #B7A4FF);
+  --c-ml:      light-dark(#0B7A3E, #45E68E);
+  --c-papers:  light-dark(#C8452A, #FF9466);
+  --c-writing: light-dark(#B8239B, #FF8FD8);
+  --c-drift:   light-dark(#7A6650, #B39F84);
+
+  --lift:   light-dark(rgb(90 60 20 / .20), rgb(0 0 0 / .6));
+  --gloss:  light-dark(rgb(255 255 255 / .8), rgb(255 240 200 / .09));
+  --scrim:  light-dark(rgb(36 23 14 / .45), rgb(10 6 4 / .75));
+  --glow-a: light-dark(#FFE3E3, #3E1218);   /* red neon spill, top right */
+  --glow-b: light-dark(#D7F5E2, #0E2A1A);   /* green neon spill, bottom left */
+
+  /* background-only colours */
+  --bd-tube:  light-dark(#FFFFFF, #2A2218);   /* fluorescent tube wash at the very top */
+  --bd-tile:  light-dark(#F3E6C6, #1C1511);   /* the dark square of the checker floor */
+}
+
+/* ---- neon spill + fluorescent wash (replaces the Night Clay glows) ---- */
+body::before{
+  background:
+    linear-gradient(to bottom, var(--bd-tube), transparent 160px),
+    radial-gradient(820px 520px at 96% 4%, var(--glow-a), transparent 64%),
+    radial-gradient(760px 520px at -6% 104%, var(--glow-b), transparent 60%);
+}
+/* ---- striped awning across the top ---- */
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("awning.svg") left top / 80px 64px repeat-x;
+}
+/* ---- checker floor, fading up from the bottom ---- */
+.app::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-conic-gradient(var(--bd-tile) 0 25%, transparent 0 50%) 0 0 / 56px 56px;
+  -webkit-mask-image:linear-gradient(to top, #000, transparent 30%);
+          mask-image:linear-gradient(to top, #000, transparent 30%);
+}
+/* ---- shelves of stock, only around the edges (fades out under the content column) ---- */
+.app::after{
+  content:"";position:fixed;inset:64px 0 0;z-index:-1;pointer-events:none;
+  background:url("shelves.svg") 0 0 / 320px 180px repeat;opacity:.12;
+  -webkit-mask-image:radial-gradient(ellipse 60% 72% at 50% 46%, transparent 40%, #000 100%);
+          mask-image:radial-gradient(ellipse 60% 72% at 50% 46%, transparent 40%, #000 100%);
+}
+/* ---- the OPEN / 24 HRS window sign: hangs in the header gap on Today, glows beside the dial on Focus ---- */
+.shell::before{
+  content:"";position:fixed;z-index:-1;pointer-events:none;display:none;
+  inset-block-start:2px;inset-inline-start:calc(50vw + 48px - 70px);
+  inline-size:140px;block-size:82px;
+  background:url("neon.svg") center / contain no-repeat;--bd-sign:.5;opacity:var(--bd-sign);transform:rotate(-3deg);
+}
+@media (min-width:1100px){ .shell::before{display:block} }
+/* TWEAK: on the Focus Screen the header centre is taken, so the sign moves beside the dial */
+body[data-page="pomodoro"] .shell::before{display:block;inset-block-start:96px;inset-inline-start:auto;inset-inline-end:-28px;inline-size:250px;block-size:147px;--bd-sign:.36}
+@keyframes bd-flicker{ 0%,88%,91%,94%,100%{opacity:var(--bd-sign)} 89%{opacity:calc(var(--bd-sign) * .4)} 92.5%{opacity:calc(var(--bd-sign) * .6)} }
+@media (prefers-reduced-motion: no-preference){
+  .shell::before{animation:bd-flicker 11s steps(1,end) infinite}
+}
+/* TWEAK: the app's own motion switch also stops the sign flicker */
+:root[data-motion="off"] .shell::before{animation:none}
+
+/* TWEAK: glass chips over the city take the warm street-black instead of navy */
+.stage__badge .pill, .stage__tools .icon-btn, .camtag{background:rgb(21 16 13 / .74)}
+/* TWEAK: focus dial glow follows the mustard reward (and neon green on breaks) */
+.focus{--arc-glow:rgb(255 197 49 / .24)}
+/* TWEAK: focus dial glow follows the mustard reward (and neon green on breaks) */
+.focus[data-phase="break"]{--arc-glow:rgb(69 230 142 / .2)}
+/* TWEAK: +XP float glows deli-mustard */
+.floaty{text-shadow:0 2px 0 var(--amber-edge),0 0 14px rgb(255 197 49 / .55)}

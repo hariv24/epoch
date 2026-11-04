@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Five Boroughs icon: "Block Party". A die-cut sticker of a boombox, tilted mid-bounce.
+     Hip-hop was born at a Bronx block party; NYC is one long mixtape. The big speaker is five rings,
+     one per borough (Brooklyn blue, Queens teal, Manhattan taxi yellow, Staten Island ferry orange,
+     on a Bronx-pink body), and the EQ bars climb left to right: levels going up.
+     Key shapes stay inside the 205 px maskable circle; only the sound sparks reach past it. -->
+<defs><radialGradient id="bg" cx=".5" cy=".42" r=".75"><stop offset="0" stop-color="#3A1A52"/><stop offset=".65" stop-color="#1E1034"/><stop offset="1" stop-color="#140A24"/></radialGradient></defs>
+<rect width="512" height="512" fill="url(#bg)"/>
+<g stroke-linecap="round" stroke-width="14" fill="none"><path d="M424 176l28-20" stroke="#FFC93C"/><path d="M438 222l34-4" stroke="#2FD6B5"/><path d="M398 140l10-30" stroke="#5B8CFF"/><path d="M90 380l-30 14" stroke="#FF8A2A"/><path d="M104 418l-20 26" stroke="#FF5FA8"/></g>
+<g transform="translate(256 262) scale(1.07) translate(-256 -262) rotate(-8 256 270)">
+<!-- sticker outline -->
+<path d="M170 176v-26a26 26 0 0 1 26-26h120a26 26 0 0 1 26 26v26" fill="none" stroke="#FFF4E0" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="84" y="160" width="344" height="234" rx="46" fill="#FFF4E0"/>
+<!-- handle -->
+<path d="M170 176v-26a26 26 0 0 1 26-26h120a26 26 0 0 1 26 26v26" fill="none" stroke="#3D2470" stroke-width="16" stroke-linecap="round"/>
+<!-- body with clay ledge -->
+<rect x="96" y="186" width="320" height="196" rx="36" fill="#B8357A"/>
+<rect x="96" y="172" width="320" height="196" rx="36" fill="#FF5FA8"/>
+<rect x="112" y="186" width="12" height="150" rx="6" fill="#fff" opacity=".32"/>
+<!-- the five-ring speaker -->
+<circle cx="190" cy="270" r="76" fill="#3D2470"/>
+<circle cx="190" cy="270" r="64" fill="#5B8CFF"/><circle cx="190" cy="270" r="47" fill="#2FD6B5"/><circle cx="190" cy="270" r="30" fill="#FFC93C"/><circle cx="190" cy="270" r="13" fill="#FF8A2A"/>
+<path d="M152 232a54 54 0 0 1 30-16" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".45"/>
+<!-- tape deck -->
+<rect x="286" y="196" width="108" height="64" rx="12" fill="#3D2470"/>
+<rect x="296" y="206" width="88" height="24" rx="6" fill="#FFC93C"/><rect x="296" y="230" width="88" height="20" rx="6" fill="#FF8A2A"/>
+<rect x="312" y="214" width="56" height="8" rx="4" fill="#3D2470" opacity=".35"/>
+<!-- EQ bars, rising -->
+<rect x="290" y="316" width="16" height="32" rx="6" fill="#2FD6B5"/><rect x="314" y="302" width="16" height="46" rx="6" fill="#5B8CFF"/><rect x="338" y="288" width="16" height="60" rx="6" fill="#FFC93C"/><rect x="362" y="274" width="16" height="74" rx="6" fill="#FF8A2A"/>
+</g>
+</svg>

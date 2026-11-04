@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20" viewBox="0 0 200 20">
+<!-- Five Boroughs bunting: block-party pennants on a sagging string, one colour per borough.
+     Repeats across the top edge; every tip stays above y=19 so it never runs behind header text. -->
+<path d="M0 2Q100.0 14 200 2" fill="none" stroke="#FFF4E6" stroke-opacity=".6" stroke-width="1.2"/>
+<path d="M10.0 2.9L30.0 4.7L20.0 14.9Z" fill="#FF5FA8"/><path d="M50.0 6.2L70.0 7.3L60.0 17.9Z" fill="#FFC93C"/><path d="M90.0 7.9L110.0 7.9L100.0 19.0Z" fill="#2FD6B5"/><path d="M130.0 7.3L150.0 6.2L140.0 17.9Z" fill="#5B8CFF"/><path d="M170.0 4.7L190.0 2.9L180.0 14.9Z" fill="#FF8A2A"/>
+</svg>

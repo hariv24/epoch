@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Lofi Rooftop: a Brooklyn-style wooden water tower wearing chunky headphones, vibing on a rainy dusk rooftop.
+     No face, no character: just the most New York object there is, tuned in to the study beat. -->
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F1236"/><stop offset=".5" stop-color="#4A2156"/><stop offset=".78" stop-color="#A3456A"/><stop offset="1" stop-color="#F4956E"/></linearGradient>
+<linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E07A58"/><stop offset=".55" stop-color="#C45E48"/><stop offset="1" stop-color="#93413C"/></linearGradient>
+<linearGradient id="roof" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6E3352"/><stop offset="1" stop-color="#3E1C3C"/></linearGradient>
+<linearGradient id="cup" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7FE6DA"/><stop offset="1" stop-color="#46BFB3"/></linearGradient>
+</defs>
+<rect width="512" height="512" fill="url(#sky)"/>
+<!-- crescent moon -->
+<mask id="moon"><rect width="512" height="512" fill="#fff"/><circle cx="404" cy="112" r="26" fill="#000"/></mask>
+<circle cx="390" cy="124" r="28" fill="#FFD9A0" mask="url(#moon)"/>
+<!-- far skyline -->
+<g transform="translate(0 40)">
+<path d="M0 392 V352 h34 v-28 h40 v40 h28 v-54 h36 v54 h236 v-38 h30 v-24 h34 v62 h36 v-30 h38 v58Z" fill="#3B1C4A"/>
+<g fill="#FFC58A" opacity=".85"><rect x="46" y="338" width="8" height="10" rx="2"/><rect x="114" y="324" width="8" height="10" rx="2"/><rect x="420" y="344" width="8" height="10" rx="2"/><rect x="384" y="336" width="8" height="10" rx="2"/></g>
+</g>
+<!-- rain -->
+<g stroke="#E9D6FF" stroke-opacity=".38" stroke-width="5" stroke-linecap="round">
+<path d="M96 96 l-12 34"/><path d="M150 52 l-12 34"/><path d="M448 214 l-12 34"/><path d="M70 214 l-12 34"/><path d="M332 40 l-12 34"/><path d="M462 76 l-12 34"/><path d="M118 290 l-10 28"/><path d="M420 282 l-10 28"/>
+</g>
+<g transform="translate(256 274) scale(1.1) translate(-256 -248)">
+<!-- legs + bracing -->
+<g fill="#2A1236"><rect x="196" y="320" width="16" height="88"/><rect x="248" y="320" width="16" height="88"/><rect x="300" y="320" width="16" height="88"/></g>
+<path d="M204 340 L308 392 M308 340 L204 392" stroke="#2A1236" stroke-width="8"/>
+<!-- tank: clay ledge, barrel, hoops -->
+<rect x="176" y="198" width="160" height="134" rx="16" fill="#6E2C36"/>
+<rect x="176" y="186" width="160" height="136" rx="16" fill="url(#wood)"/>
+<g stroke="#FFFFFF" stroke-opacity=".14" stroke-width="4"><path d="M206 192 V318 M236 192 V318 M276 192 V318 M306 192 V318"/></g>
+<g fill="#4A1F34"><rect x="172" y="216" width="168" height="10" rx="5"/><rect x="172" y="256" width="168" height="10" rx="5"/><rect x="172" y="296" width="168" height="10" rx="5"/></g>
+<rect x="186" y="196" width="10" height="110" rx="5" fill="#FFFFFF" fill-opacity=".22"/>
+<!-- conical roof + finial -->
+<path d="M160 196 L256 118 L352 196 Z" fill="url(#roof)" stroke="#2A1236" stroke-width="8" stroke-linejoin="round"/>
+<circle cx="256" cy="114" r="10" fill="#FFB38A" stroke="#2A1236" stroke-width="6"/>
+<!-- headphones: band, then cups with clay ledge -->
+<path d="M148 250 C146 50 366 50 364 250" fill="none" stroke="#123F3C" stroke-width="30" stroke-linecap="round"/>
+<path d="M148 250 C146 50 366 50 364 250" fill="none" stroke="#2E9488" stroke-width="20" stroke-linecap="round"/>
+<path d="M170 118 C210 80 300 80 340 116" fill="none" stroke="#A6F0E8" stroke-opacity=".6" stroke-width="5" stroke-linecap="round"/>
+<rect x="118" y="214" width="62" height="108" rx="28" fill="#1F6F68"/>
+<rect x="118" y="204" width="62" height="108" rx="28" fill="url(#cup)"/>
+<rect x="332" y="214" width="62" height="108" rx="28" fill="#1F6F68"/>
+<rect x="332" y="204" width="62" height="108" rx="28" fill="url(#cup)"/>
+<rect x="130" y="222" width="12" height="54" rx="6" fill="#FFFFFF" fill-opacity=".45"/>
+<rect x="344" y="222" width="12" height="54" rx="6" fill="#FFFFFF" fill-opacity=".45"/>
+<circle cx="372" cy="292" r="7" fill="#FFB38A"/>
+</g>
+<!-- rooftop parapet (in front of the leg feet) -->
+<rect y="444" width="512" height="68" fill="#170B24"/><rect y="440" width="512" height="10" fill="#2E1840"/>
+</svg>

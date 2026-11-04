@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Close{% endblock %}
+{% block content %}
+{% set icons = "/static/app/icons.svg" %}
+<div class="view-head"><div><p class="eyebrow epoch-line" data-js="close-day">Day {{ day_number }} · {{ day_date|day_label }}</p><h1>{% if is_today %}Close the day{% else %}Closing {{ day_date|day_label }}{% endif %}</h1>
+    <p>Fill the gaps, or say you don't remember. Both are fine. <span class="xs muted">Fog: <span class="num" data-js="fog-minutes">{{ fog_minutes|hm }}</span></span></p></div>
+  <span class="pill pill--rest">
+    <svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-cloud-fog"/></svg><span><span class="num" data-js="fog-count">{{ gaps|length }}</span><span data-js="fog-label"> {{ 'foggy hour' if gaps|length == 1 else 'foggy hours' }}</span></span></span></div>
+
+<div class="daynav" role="group" aria-label="Which day">
+  <a class="chip" href="/close?day={{ prev_day.isoformat() }}"><span><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-chevron-left"/></svg>{{ prev_day|day_label }}</span></a>
+  {% if not is_today %}<a class="chip" href="/close"><span>Today</span></a>{% endif %}
+</div>
+
+<div class="stack-4">
+  <section class="card herocard"><div class="stage" data-js="stage" data-stage="week"><div class="fallback" data-js="fallback" role="img" aria-label="This week's towers">{{ week_svg }}</div><div class="daycard" data-js="day-card" hidden></div></div></section>
+
+  {% if is_job_day %}
+  <section class="card card--stack" aria-labelledby="jobH">
+    <h2 id="jobH">Day job</h2>
+    {% if job_state %}<p>Recorded: {{ job_state }}.</p>{% endif %}
+    <form method="post" action="/close" class="chips">
+      <input type="hidden" name="day" value="{{ day_date.isoformat() }}">
+      {% for value, label in job_choices %}
+      <button class="btn {{ 'btn--ghost' if not (loop.first and not job_state) }}" type="submit" name="choice" value="{{ value }}">{{ label }}</button>
+      {% endfor %}
+    </form>
+  </section>
+  {% endif %}
+
+  <div class="stepper" data-js="gaps">
+    {% for g in gaps %}
+    <div class="gap">
+      <div class="gap__t"><b>{{ g.span }}</b><span class="small muted">{{ g.minutes|hm }} not logged</span></div>
+      {% if g.guess or g.suggestions %}
+      <div class="gap__block">
+        <span class="row-label">ActivityWatch thinks</span>
+        <div class="chips suggest">
+        {% for s in ([g.guess] if g.guess else []) + g.suggestions %}
+        <form method="post" action="/close/label" data-enhance="close-label">
+          <input type="hidden" name="day" value="{{ day_date.isoformat() }}">
+          <input type="hidden" name="start" value="{{ s.start }}">
+          <input type="hidden" name="end" value="{{ s.end }}">
+          <input type="hidden" name="source" value="aw">
+          {% if s.deep %}<input type="hidden" name="deep" value="1">{% endif %}
+          <button class="chipbtn is-guess" type="submit" name="category" value="{{ s.category }}" title="{{ s.apps }}"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-sparkles"/></svg><span>{% if s is sameas g.guess %}Looks like {{ s.category }}{% else %}{{ s.span }} {{ s.category }} ({{ s.minutes|hm }}){% endif %}</span>{% if s.apps %}<small>{{ s.apps }}</small>{% endif %}</button>
+        </form>
+        {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      <form method="post" action="/close/label" data-enhance="close-label">
+        <input type="hidden" name="day" value="{{ day_date.isoformat() }}">
+        <input type="hidden" name="start" value="{{ g.start }}">
+        <input type="hidden" name="end" value="{{ g.end }}">
+        <div class="chips">
+          {% for c in gap_categories %}
+          <button class="chipbtn" type="submit" name="category" value="{{ c }}">{% if gap_icons.get(c) %}<svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ gap_icons[c] }}"/></svg>{% else %}<i class="sw" style="background: {{ colors[c] }}"></i>{% endif %}<span>{{ c }}</span></button>
+          {% endfor %}
+          <button class="chipbtn" type="submit" name="category" value="Don't remember"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-cloud-fog"/></svg><span>Don't remember</span></button>
+        </div>
+        <label class="check small"><input type="checkbox" name="deep" value="1" checked> Counts as focused (deep) when it's study work</label>
+      </form>
+    </div>
+    {% else %}
+    <p class="note"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg><span>Every waking stretch has a label. Nothing left to close.</span></p>
+    {% endfor %}
+  </div>
+
+  <section class="card card--stack" aria-labelledby="sumH">
+    <h2 id="sumH">Summary</h2>
+    <div class="stack-1">
+    <p>
+      Deep <strong>{{ day.deep_minutes|hm }}</strong> · floor <strong>{{ "met" if day.floor_met else "not yet" }}</strong>
+      · target {{ day.target_minutes|hm }}{% if day.target_met %} (met){% elif target_gap %} ({{ target_gap|hm }} to go){% endif %}
+    </p>
+    <p class="small">
+      {% if planned_minutes %}Planned {{ planned_minutes|hm }}, logged {{ day.logged_minutes|hm }} in all.{% else %}Logged {{ day.logged_minutes|hm }} in all.{% endif %}
+      {% if week.outputs_required is not none %}Outputs this week: {{ week.outputs_count }}/{{ week.outputs_required }}.{% else %}Outputs this week: {{ week.outputs_count }}.{% endif %}
+    </p>
+    </div>
+    <div class="card__actions"><a class="btn btn--ghost" href="/plan?day=tomorrow">Plan tomorrow's first block</a></div>
+  </section>
+
+  {% if econ and not econ.quiet %}
+  {% set rent = econ.rent %}
+  <section class="card card--stack rentday" data-quiet-hide data-game-only aria-labelledby="rdH">
+    <div class="card__head"><div><p class="eyebrow">Rent day</p><h2 id="rdH">The week so far, {{ econ.week.monday|short_date }} to {{ econ.week.sunday|short_date }}</h2></div>
+      <span class="pill pill--sm {{ 'pill--ok' if rent.covered else 'pill--soft' }}">{{ "No rent this week" if rent.free else ("Rent covered" if rent.covered else "Rent not covered yet") }}</span></div>
+    <table class="m-table" aria-label="Earned this week by source">
+      <tbody>
+        {% for label, amount in source_rows(econ.week.earned) %}<tr><th scope="row">{{ label }}</th><td class="num">{{ amount|usd }}</td></tr>{% endfor %}
+        <tr class="is-total"><th scope="row">Earned this week</th><td class="num">{{ econ.week.earned.total|usd }}</td></tr>
+        {% if not rent.free %}<tr><th scope="row">Rent, taken tonight at close</th><td class="num">{{ rent.amount|usd }}</td></tr>{% endif %}
+        <tr><th scope="row">Savings now</th><td class="num">{{ econ.balance|usd }}</td></tr>
+      </tbody>
+    </table>
+    <p class="small">{{ rent.message }} Interest on savings is added at close if the week is kept.</p>
+    <div class="card__actions"><a class="btn btn--violet" href="/money#recap">Open the full recap</a></div>
+  </section>
+  {% endif %}
+
+  <form class="card card--well card--stack" data-js="seal-card" method="post" action="/close/seal" data-enhance="close-seal">
+    <input type="hidden" name="day" value="{{ day_date.isoformat() }}">
+    <h2>Seal the day</h2>
+    <p class="small muted" data-js="seal-hint">
+      {%- if sealed %}Sealed. Tomorrow's lot is waiting.
+      {%- elif job_open %}Answer the day-job question above, then seal.
+      {%- elif gaps %}{{ gaps|length }} {{ 'hour' if gaps|length == 1 else 'hours' }} left to settle. "Don't remember" is a fine answer.
+      {%- elif not closed %}Log one honest hour first (rest and drift count), then seal.
+      {%- else %}Everything is settled. Seal the day when you are ready.{% endif -%}
+    </p>
+    <button class="btn btn--block" type="submit" data-js="seal-btn" data-ready="{{ '1' if (closed and not sealed and not job_open and not gaps) else '0' }}"{% if job_open %} data-job-open="1"{% endif %}{% if sealed %} data-sealed="1"{% endif %}><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ 'check' if sealed else 'moon' }}"/></svg><span data-js="seal-label">{{ 'Day sealed' if sealed else 'Seal the day' }}</span></button>
+  </form>
+
+  <section class="card" data-js="recap"{% if not sealed %} hidden{% endif %}>
+    {% if sealed and recap %}
+    <div class="card__head"><h2>Day {{ recap.day_number }} recap</h2><span class="pill pill--mint"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-moon"/></svg>Sealed</span></div>
+    <div class="recap">
+      <div class="total"><b class="num">{{ recap.floors }}</b><span>floors</span></div>
+      <div class="total"><b class="num">{{ recap.deep_minutes|hm }}</b><span>deep today</span></div>
+      <div class="total"><b class="num">{{ recap.outputs|length }}</b><span>outputs today</span></div>
+      <div class="total" data-quiet-hide><b class="num">{{ recap.level.district }}</b><span>Level {{ recap.level.number }}, {{ recap.level.xp|digits }} XP</span></div>
+    </div>
+    <p class="small muted">{{ recap.headline }} The map is accurate.</p>
+    {% endif %}
+  </section>
+</div>
+
+{% endblock %}

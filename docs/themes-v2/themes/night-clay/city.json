@@ -1,0 +1,13 @@
+{
+  "_comment": "Night Clay: the values the 3D scene uses today (city/sky.js night key, city.js fog, city/shader.js windows).",
+  "skyTop": "#050A1E",
+  "skyMid": "#0B1A40",
+  "skyBottom": "#183062",
+  "fog": "#202050",
+  "windowWarm": "#FFCC6B",
+  "windowCool": "#B8DBFF",
+  "accent": "#FFB224",
+  "beacon": "#FFB224",
+  "stageBg": ["#171A40", "#3B2A6B"],
+  "previewTint": null
+}

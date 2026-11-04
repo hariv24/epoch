@@ -1,0 +1,79 @@
+{# Plan blocks for one day. Used by the Today drawer and the /plan page. Needs the plan_context() keys. #}
+{% macro plan_form(p, back='') %}
+{% from "_catcolor.html" import cc with context %}
+<p class="small muted">{{ p.target|day_label }} · up to {{ p.max_blocks }} blocks. Each one becomes an if-then sentence, so starting is a decision you've already made.</p>
+<div class="chips" role="group" aria-label="Which day">
+  <a class="chip" href="/plan?day=today"><span{% if p.which == "today" %} style="border-color:var(--accent)"{% endif %}>Today</span></a>
+  <a class="chip" href="/plan?day=tomorrow"><span{% if p.which == "tomorrow" %} style="border-color:var(--accent)"{% endif %}>Tomorrow</span></a>
+</div>
+{% if p.overrun_warning %}<div class="flash info">{{ p.overrun_warning }}</div>{% endif %}
+
+<h3>Blocks</h3>
+{% if p.blocks %}
+<ul class="blocks plain">
+  {% for b in p.blocks %}
+  <li>
+    <div class="block-title"><i class="sw" style="background: {{ cc(b.category) }}"></i>
+      <strong>{{ b.category }}</strong> {{ b.minutes }} min{% if b.cue_time %} at {{ b.cue_time }}{% endif %}
+      {% if b.status != "planned" %}<span class="pill pill--sm">{{ b.status }}</span>{% endif %}</div>
+    <div class="ifthen">{{ b.if_then }}</div>
+    <form method="post" action="/plan/{{ b.id }}/delete" class="inline-form">
+      <input type="hidden" name="day" value="{{ p.which }}">
+      <input type="hidden" name="back" value="{{ back|default('') }}">
+      <button class="link danger" type="submit">Remove</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="small muted">Nothing planned for this day yet.</p>
+{% endif %}
+
+{% if p.free_slots > 0 %}
+<h3>Add blocks</h3>
+<form method="post" action="/plan">
+  <input type="hidden" name="day" value="{{ p.which }}">
+  <input type="hidden" name="back" value="{{ back|default('') }}">
+  {% for n in p.slot_numbers %}
+  <fieldset class="plan-row">
+    <legend class="row-label">Block {{ p.blocks|length + n + 1 }}</legend>
+    <div class="row">
+      <label>Category
+        <select name="category">
+          {% for c in p.plan_categories %}<option value="{{ c }}" {% if c == p.default_category %}selected{% endif %}>{{ c }}</option>{% endfor %}
+        </select></label>
+      <label>Minutes <input type="number" name="minutes" min="1" max="600" placeholder="{{ 45 if n == 0 else '' }}"></label>
+      <label>Starts at <input type="time" name="cue_time" value="{{ p.default_cue }}"></label>
+    </div>
+    <input class="field field--plain" type="text" name="task" placeholder="Exactly what you'll open (e.g. ch.6 ex 1-10)" maxlength="120" aria-label="Task">
+  </fieldset>
+  {% endfor %}
+  <p class="small muted">Leave a block's minutes empty to skip it.</p>
+  <div class="card__actions">
+    <button class="btn" type="submit">Save plan</button>
+    {# submits the small form below (form attribute), so both choices sit on one row #}
+    <button class="btn btn--ghost" type="submit" form="planFloor-{{ p.which }}">Floor only ({{ p.floor_minutes }} min)</button>
+  </div>
+</form>
+<form method="post" action="/plan" class="inline-form" id="planFloor-{{ p.which }}">
+  <input type="hidden" name="day" value="{{ p.which }}">
+  <input type="hidden" name="back" value="{{ back|default('') }}">
+  <input type="hidden" name="preset" value="floor">
+</form>
+{% else %}
+<p class="small muted">That's the most blocks for a day. Remove one to change the plan.</p>
+{% endif %}
+
+<h3>Rest day</h3>
+{% if p.day_mark %}
+<p>{{ p.target|day_label }} is marked as a {{ p.day_mark.kind }} day.</p>
+{% else %}
+<p class="small muted">A planned rest day uses one of the week's skips ({{ p.week.skips_left }} left).</p>
+<form method="post" action="/skip" class="row">
+  <input type="hidden" name="day" value="{{ p.target.isoformat() }}">
+  <input type="hidden" name="kind" value="rest">
+  <input type="hidden" name="back" value="{{ '/' if back == '/' else '/plan' }}">
+  <button class="btn btn--ghost" type="submit">Make {{ p.target|day_label }} a rest day</button>
+</form>
+{% endif %}
+{% endmacro %}

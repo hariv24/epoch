@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% set kiosk = true %}
+{% block title %}Focus{% endblock %}
+{% block content %}
+{# The Focus Screen. One DOM for every state: the server renders the current state and every control is a real form
+   (works without JavaScript); focus.js then keeps it live (SSE with polling fallback) and turns the forms into API calls.
+   Context: pomodoro (docs/FEATURES-V2.md section 3), quick_categories, presets, default_category, focus_outcomes, custom_limits, extend_choices.
+   States: idle | work | break | between (a work block just ended: the run HOLDS until the person rates the block, presses Start break or Keep going) | done. #}
+{% set icons = "/static/app/icons.svg" %}
+{% set P = pomodoro %}
+{% set R = P.run %}
+{% set wants_new = request.query_params.get("new") if request is defined else none %}
+{% if R and P.active %}{% set st = "between" if R.phase == "waiting" else R.phase %}
+{% elif R and not wants_new %}{% set st = "done" %}
+{% else %}{% set st = "idle" %}{% endif %}
+{% set secs = R.remaining_seconds if (R and P.active) else 0 %}
+{% set W = R.waiting if (R and P.active) else none %}
+{% set cust = P.custom %}
+{% set lim = custom_limits %}
+{% set frac = (R.elapsed_seconds / R.phase_seconds) if (R and P.active and R.phase_seconds) else 0 %}
+<div class="focus has-spot" data-js="focus" data-state="{{ st }}" data-paused="{{ 'true' if (R and R.paused and P.active) else 'false' }}" data-rev="{{ P.rev }}" data-pending="{{ P.pending_ratings|length }}">
+
+  <header class="focus__bar">
+    <a class="focus__back" href="/?home=1" data-js="go-home" title="Back to your room; a run keeps going"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-chevron-left"/></svg><span>Go home</span></a>
+    <div class="focus__mid">
+      <span class="focus__epoch eyebrow" data-js="day-tag">Day {{ day_number_today }}</span>
+      <span class="focus__clock num" data-js="clock-line" aria-label="Current time"></span>
+      <span class="focus__sync js-only" data-js="sync-state" data-mode="off" title="Live: this screen follows every device"><i aria-hidden="true"></i><span>Live</span></span>
+    </div>
+    <div class="focus__tools">
+      <button class="icon-btn js-only" type="button" data-js="sounds-open" aria-haspopup="dialog" aria-expanded="false" aria-controls="soundsPanel" aria-label="Sound and soundscape" title="Sound"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-headphones"/></svg></button>
+      <button class="icon-btn js-only" type="button" data-js="sound-toggle" aria-pressed="{{ 'true' if gm.sound else 'false' }}" aria-label="Chimes are {{ 'on. Turn off' if gm.sound else 'off. Turn on' }}" title="Chimes at phase changes"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ 'volume-2' if gm.sound else 'volume-x' }}"/></svg></button>
+      <button class="icon-btn js-only" type="button" data-js="theme-toggle" aria-label="Switch between light and dark"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-moon"/></svg></button>
+      <button class="icon-btn js-only" type="button" data-js="fullscreen" aria-pressed="false" aria-label="Full screen" title="Full screen" hidden><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-maximize"/></svg></button>
+    </div>
+  </header>
+
+  <div class="focus__grid" data-js="pomodoro-state" data-rev="{{ P.rev }}">
+    {# the study spot (docs/COZY.md 4.5): the spot's 3D scene fills this frame (city/spots/, wired by focus.js); today's construction cam is a
+       picture-in-picture in the corner (tap it to swap the two). Without WebGL the frame keeps a 2D picture of the spot. #}
+    {% set SP = P.spot if P.spot else {"id": "butler", "name": "Butler Library reading room", "short": "Butler Library", "pin": "Studying at Butler", "outdoor": false} %}
+    <section class="focus__cam spotcam" aria-label="Your study spot" data-js="spotcam">
+      <div class="spotstage" data-js="spot-stage" data-spot="{{ SP.id }}" role="img" aria-label="{{ SP.name }}.">
+        <div class="spotstage__art" data-js="spot-art" aria-hidden="true"></div>
+      </div>
+      <div class="spotchips">
+        <button class="spotchip js-only" type="button" data-js="spot-chip" aria-haspopup="dialog" aria-controls="spotDlg" title="Choose where you study">
+          <svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-map-pin"/></svg><span data-js="spot-chip-text">{{ SP.short }}</span><svg class="ic spotchip__more" aria-hidden="true"><use href="{{ icons }}#i-chevron-right"/></svg></button>
+      </div>
+      <div class="focus__pip" data-js="pip">
+        <div class="stage stage--cam" data-js="stage" data-stage="week">
+          <div class="fallback" data-js="fallback" role="img" aria-label="Skyline of this week's towers"></div>
+          <div class="stage__badge"><span class="pill"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-camera"/></svg>Construction cam</span>{% include "_tower_how.html" %}</div>
+          <div class="camtag" data-js="cam-tag"><span class="camtag__dot" data-js="cam-dot"></span><span data-js="cam-text">{% if R and P.active %}{{ R.category }}{% else %}Today's tower{% endif %}</span></div>
+        </div>
+      </div>
+      <button class="pip__tap js-only" type="button" data-js="pip-swap" aria-pressed="false" aria-label="Show today's tower big" title="Swap the views"><span class="pip__hint"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-layers"/></svg></span></button>
+      <div class="spotidle js-only" data-js="spot-idle">
+        <p class="spotidle__t" data-js="spot-idle-text">Your seat at {{ SP.short }} is waiting.</p>
+        <button class="btn btn--go" type="button" data-js="spot-start"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-play"/></svg><span>Start a focus run</span></button>
+      </div>
+    </section>
+
+    <section class="focus__main" aria-label="Timer">
+
+      {# ---- the run: phase, dial, task ---- #}
+      <div class="focus__run">
+        <button class="ratebar js-only" type="button" data-js="rate-bar" hidden><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg><span data-js="rate-bar-text">1 block to rate</span></button>
+        <div class="focus__phase">
+          <span class="phasepill" data-js="phase-pill"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ 'coffee' if st == 'break' else 'brain' }}"/></svg><span data-js="phase-label">
+            {%- if st == "work" %}{{ "Paused" if R.paused else "Deep work" }}{% elif st == "between" %}Block done{% elif st == "break" %}{{ "Break, paused" if R.paused else "Break" }}{% elif st == "done" %}{{ "Run complete" if R.status == "finished" else "Run stopped" }}{% else %}Ready{% endif -%}
+          </span></span>
+          <span class="cyc" data-js="cycle-text">{% if R and P.active %}Cycle {{ R.cycle }} of {{ R.cycles }}{% elif R and R.status == "finished" %}{{ R.cycles }} {{ "cycle" if R.cycles == 1 else "cycles" }}{% elif R %}Stopped in cycle {{ R.cycle }}{% endif %}</span>
+        </div>
+
+        <div class="dial" data-js="dial" style="--p:{{ '%.2f'|format(frac * 100) }}" role="timer" aria-live="off" aria-label="Time left in this phase">
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            <circle class="dial__track" cx="200" cy="200" r="176"/>
+            <circle class="dial__arc" data-js="dial-arc" cx="200" cy="200" r="176" pathLength="100"/>
+            <circle class="dial__dot" data-js="dial-dot" cx="200" cy="24" r="9"/>
+          </svg>
+          <div class="dial__mid">
+            <b class="dial__time num" data-js="dial-time">{{ '%02d:%02d'|format(secs // 60, secs % 60) }}</b>
+            <span class="dial__sub" data-js="dial-sub">{% if st == "work" %}left in this block{% elif st == "break" %}of rest{% endif %}</span>
+          </div>
+        </div>
+        <p class="ptotal small muted" data-js="phase-total">
+          {%- if R and P.active and st in ("work", "break") -%}{{ "Break" if st == "break" else "Block" }}: {{ R.phase_seconds // 60 }} min{% if R.extra_seconds %} in all ({{ R.base_seconds // 60 }} + {{ R.extra_seconds // 60 }} more){% endif %}
+          {%- endif -%}
+        </p>
+        <p class="sr-only" role="status" aria-live="polite" data-js="focus-live"></p>
+
+        <div class="task" data-js="task">
+          <span class="task__cat" data-js="task-cat">{% if R %}{{ R.category }}{% endif %}</span>
+          <span class="task__label" data-js="task-label">{% if R and R.label %}{{ R.label }}{% endif %}</span>
+        </div>
+        <p class="next" data-js="next-text">
+          {%- if R and P.active and R.next %}Next: {{ "a break" if R.next.phase == "break" else "a work block" }}, {{ R.next.seconds // 60 }} min.{% elif R and P.active %}Last block of the run.{% endif -%}
+        </p>
+
+        {# ---- between: a block just ended and the run is holding for you; nothing is counting down ---- #}
+        <div class="between" data-js="between">
+          <p class="between__t" data-js="between-title">{% if W %}Block done: {{ W.minutes }} min{% else %}Block done{% endif %}</p>
+          <p class="small muted" data-js="between-sub">{% if R and R.last %}That was the last block. Rate it, or keep going if you are not done.{% elif R and R.next and R.next.phase == "break" %}Your {{ R.next.seconds // 60 }} min break has not started. It starts when you tap Start break.{% else %}The next block starts when you tap Start.{% endif %}</p>
+        </div>
+
+        {# ---- done: a quiet summary ---- #}
+        <div class="summary" data-js="summary">
+          <p class="summary__t">{% if R and R.status == "finished" %}All {{ R.cycles }} {{ "block" if R.cycles == 1 else "blocks" }} done.{% elif R and R.blocks_kept %}The time you did is kept.{% else %}Nothing was logged from this run.{% endif %}</p>
+          <p class="small muted" data-js="summary-sub">{% if R and R.blocks_kept %}Every block you rated is in today's log.{% else %}Start another whenever you are ready.{% endif %}</p>
+        </div>
+
+        {# ---- break: three gentle reminders ---- #}
+        <ul class="tips" data-js="tips" aria-label="While you rest">
+          <li><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-person-standing"/></svg><b>Stretch</b><span>Roll your shoulders and reach up high.</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-droplet"/></svg><b>Water</b><span>Have a glass. It is break time.</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-eye"/></svg><b>Eyes</b><span>Look at something far away for 20 seconds.</span></li>
+        </ul>
+      </div>
+
+      {# ---- idle: choose a rhythm and a kind of work ---- #}
+      <form class="setup" method="post" action="/pomodoro/start" data-js="start-form">
+        <div class="setup__top"><h1 class="setup__h">Start a focus run</h1><button class="icon-btn js-only setup__x" type="button" data-js="setup-close" aria-label="Back to the study spot" title="Back"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-x"/></svg></button></div>
+        <p class="setup__spot js-only small" data-js="setup-spot"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-map-pin"/></svg><span>At <b data-js="setup-spot-name">{{ SP.short }}</b></span> <button class="link" type="button" data-js="setup-spot-change">Change</button></p>
+        <p class="notice small" data-js="legacy-note"{% if not P.legacy_focus %} hidden{% endif %}>A single focus session (started on the Focus page or in Telegram) is still running. <a href="/focus">Finish or cancel it</a>, then start a run here.</p>
+        <fieldset class="setup__block"><legend class="row-label">Rhythm: work / break x blocks</legend>
+          <div class="presets">
+            {% for p in presets %}
+            <label class="preset"><input type="radio" name="preset" value="{{ p.id }}"{% if p.id == P.default_preset %} checked{% endif %}>
+              <span><b class="num">{{ p.work_min }}<i> / </i>{{ p.break_min }}</b><small>x {{ p.cycles }} blocks</small><em>{{ ((p.work_min * p.cycles + p.break_min * (p.cycles - 1)) // 60) }}h {{ '%02d'|format((p.work_min * p.cycles + p.break_min * (p.cycles - 1)) % 60) }}m in all</em></span></label>
+            {% endfor %}
+            <label class="preset preset--custom"><input type="radio" name="preset" value="custom"{% if P.default_preset == "custom" %} checked{% endif %} data-js="preset-custom">
+              <span><b class="num">Custom</b><small>set your own</small><em data-js="custom-card-sub">{{ cust.work_min }} / {{ cust.break_min }} x {{ cust.cycles }}</em></span></label>
+          </div>
+          <div class="custom" data-js="custom-panel"{% if P.default_preset != "custom" %} hidden{% endif %}>
+            {% for name, label, unit, step in [("work_min", "Work", "min each block", 5), ("break_min", "Break", "min between blocks", 5), ("cycles", "Blocks", "in this run", 1)] %}
+            <div class="stepper" data-js="stepper">
+              <label class="stepper__l" for="cu-{{ name }}">{{ label }}</label>
+              <button class="stepper__b" type="button" data-step="-{{ step }}" aria-label="Less {{ label|lower }}"><span aria-hidden="true">&minus;</span></button>
+              <input class="stepper__n num" id="cu-{{ name }}" name="{{ name }}" type="number" inputmode="numeric" pattern="[0-9]*" min="{{ lim[name][0] }}" max="{{ lim[name][1] }}" step="1" value="{{ cust[name] }}" data-js="custom-{{ name }}">
+              <button class="stepper__b" type="button" data-step="{{ step }}" aria-label="More {{ label|lower }}"><span aria-hidden="true">+</span></button>
+              <span class="stepper__u small muted">{{ unit }}</span>
+            </div>
+            {% endfor %}
+            <p class="custom__sum small muted" data-js="custom-total"></p>
+          </div>
+        </fieldset>
+        <fieldset class="setup__block"><legend class="row-label">What kind of work</legend>
+          <div class="chips chips--big">
+            {% for s, css in ladder_chip.items() %}
+            <label class="chip chip--{{ css }}"><input type="radio" name="category" value="{{ s }}"{% if s == default_category %} checked{% endif %}><span><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ cat_icon.get(s, 'sparkles') }}"/></svg>{{ s }}</span></label>
+            {% endfor %}
+          </div>
+        </fieldset>
+        <label class="lbl setup__label"><span>What are you working on? <em class="muted">(optional)</em></span>
+          <input class="field field--plain" name="label" type="text" maxlength="120" autocomplete="off" placeholder="numpy broadcasting ex 1-12" enterkeyhint="go"></label>
+        <button class="btn btn--go" type="submit"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-play"/></svg><span>Start</span></button>
+      </form>
+
+      {# ---- more time: "+5 min" on the block, on the break, or from the end-of-block hold (the block is folded back in) ---- #}
+      <form class="extend" method="post" action="/pomodoro/extend" data-js="act" data-act="extend" aria-label="Add time">
+        <span class="extend__t" data-js="extend-title">{% if st == "break" %}Need a longer break?{% elif st == "between" %}Not done yet? Keep going:{% else %}Need more time on this block?{% endif %}</span>
+        <div class="extend__btns">
+          {% for m in extend_choices %}<button class="btn btn--ghost btn--extend x{{ m }}" type="submit" name="minutes" value="{{ m }}">+{{ m }} min</button>{% endfor %}
+        </div>
+      </form>
+
+      {# ---- controls ---- #}
+      <div class="controls" data-js="controls">
+        <form method="post" action="/pomodoro/next" data-js="act" data-act="next" class="c-next"><button class="btn btn--go" type="submit"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ 'coffee' if (R and R.next and R.next.phase == 'break') else 'play' }}"/></svg><span data-js="next-label">{% if R and R.next and R.next.phase == "break" %}Start {{ R.next.seconds // 60 }} min break{% elif R and R.next %}Start next block{% else %}Finish the run{% endif %}</span></button></form>
+        <form method="post" action="/pomodoro/pause" data-js="act" data-act="pause" class="c-pause"><button class="btn btn--go btn--violet" type="submit"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-pause"/></svg><span>Pause</span></button></form>
+        <form method="post" action="/pomodoro/resume" data-js="act" data-act="resume" class="c-resume"><button class="btn btn--go" type="submit"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-play"/></svg><span>Resume</span></button></form>
+        <form method="post" action="/pomodoro/skip-break" data-js="act" data-act="skip-break" class="c-skip"><button class="btn btn--go btn--ghost" type="submit"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-skip-forward"/></svg><span>End break early</span></button></form>
+        <details class="stopbox c-stop" data-js="stopbox">
+          <summary class="btn btn--go btn--ghost"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-square"/></svg><span>Stop</span></summary>
+          <div class="stopbox__panel">
+            <p class="small" data-js="stop-note">{% if st == "break" or st == "between" %}Stopping now ends the run. The blocks you finished stay.{% else %}Stopping mid-block keeps the time you did, so you can rate it.{% endif %}</p>
+            <div class="stopbox__row">
+              <form method="post" action="/pomodoro/stop" data-js="act" data-act="stop"><button class="btn btn--violet" type="submit">Stop and keep the time</button></form>
+              <form method="post" action="/pomodoro/stop" data-js="act" data-act="stop-discard"><input type="hidden" name="discard" value="1"><button class="btn btn--ghost" type="submit">Stop, log nothing</button></form>
+            </div>
+          </div>
+        </details>
+        <a class="btn btn--go c-again" href="/pomodoro?new=1" data-js="again"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-play"/></svg><span>Start another run</span></a>
+      </div>
+      <p class="focus__keep small muted" data-js="keep-line">{% if P.keep_awake and P.active and not (R and R.paused) %}This Mac stays awake while the timer runs.{% endif %}</p>
+    </section>
+  </div>
+
+  {# ---- the rating sheet: a block just ended ---- #}
+  {% set pend = P.pending_ratings[0] if P.pending_ratings else none %}
+  <div class="rate" data-js="rate" {% if not pend %}hidden{% endif %}>
+    <div class="rate__scrim" data-js="rate-scrim"></div>
+    <form class="rate__card" method="post" action="/pomodoro/rate" data-js="rate-form" role="dialog" aria-modal="true" aria-labelledby="rateH">
+      <input type="hidden" name="block_id" value="{{ pend.block_id if pend else '' }}" data-js="rate-block">
+      <div class="rate__head">
+        <h2 id="rateH" data-js="rate-title">{% if pend %}{{ "Stopped early" if pend.partial else "Block done" }}: {{ pend.minutes }} min of {{ pend.category }}{% else %}How did the block go?{% endif %}</h2>
+        <p class="small muted" data-js="rate-sub">{% if pend and pend.label %}{{ pend.label }}{% else %}Pick one. It becomes one entry in today's log.{% endif %}</p>
+      </div>
+      <fieldset class="rate__cats"><legend class="row-label">What was it</legend>
+        <div class="chips chips--big">
+          {% for s, css in ladder_chip.items() %}
+          <label class="chip chip--{{ css }}"><input type="radio" name="category" value="{{ s }}"{% if (pend and pend.category == s) or (not pend and s == default_category) %} checked{% endif %}><span><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-{{ cat_icon.get(s, 'sparkles') }}"/></svg>{{ s }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <label class="lbl rate__note"><span>A note <em class="muted">(optional)</em></span>
+        <input class="field field--plain" name="note" type="text" maxlength="150" autocomplete="off" placeholder="what moved forward" data-js="rate-note"></label>
+      <fieldset class="rate__how"><legend class="row-label">How did the block go? Tap one to log it.</legend>
+        <div class="rate__btns">
+          <button class="btn btn--rate btn--mint" type="submit" name="focus" value="full"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-check"/></svg><span>Full focus</span></button>
+          <button class="btn btn--rate btn--violet" type="submit" name="focus" value="mostly"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-target"/></svg><span>Mostly</span></button>
+          <button class="btn btn--rate btn--ghost" type="submit" name="focus" value="pulled_away"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-cloud-fog"/></svg><span>Pulled away</span></button>
+        </div>
+      </fieldset>
+      {% set holds = W and pend and W.block_id == pend.block_id and W.unrated %}
+      <div class="rate__keep" data-js="rate-keep"{% if not holds %} hidden{% endif %}>
+        <span class="row-label">Not done yet? Keep going. Your break waits.</span>
+        <div class="rate__keepbtns">
+          {% for m in extend_choices %}<button class="btn btn--ghost btn--extend" type="submit" form="keepForm" name="minutes" value="{{ m }}">+{{ m }} min</button>{% endfor %}
+        </div>
+      </div>
+      <div class="rate__more">
+        <button class="rate__next link" type="submit" formaction="/pomodoro/next" formnovalidate data-act="next" data-js="rate-next"{% if not holds %} hidden{% endif %}>{% if R and R.next and R.next.phase == "break" %}Start my break, rate later{% elif R and R.next %}Start the next block, rate later{% else %}Finish the run, rate later{% endif %}</button>
+        <button class="rate__later link js-only" type="button" data-js="rate-later"{% if holds %} hidden{% endif %}>Rate it a little later</button>
+        <button class="rate__skip link" type="submit" formaction="/pomodoro/discard" formnovalidate data-act="discard" title="Nothing is logged for this block">This didn't happen</button>
+      </div>
+    </form>
+    {# the "+5 min" buttons above belong to this form (form="keepForm"), so Enter in the note box still means "Full focus" #}
+    <form id="keepForm" method="post" action="/pomodoro/extend" data-js="act" data-act="extend" hidden></form>
+  </div>
+
+  {# ---- the spot picker: where the next run happens (GET /api/spots, POST /api/spots/select, unlock = the store's two-step buy) ---- #}
+  <dialog class="sheet spotdlg" id="spotDlg" aria-labelledby="spotDlgH" data-js="spot-dlg">
+    <div class="sheet__panel">
+      <div class="spotdlg__head"><h2 id="spotDlgH">Where do you want to study?</h2><button class="icon-btn" type="button" data-close-dialog aria-label="Close"><svg class="ic" aria-hidden="true"><use href="{{ icons }}#i-x"/></svg></button></div>
+      <p class="small muted" data-js="spot-dlg-note">Your next run starts at the spot you pick.</p>
+      <ul class="spotlist" data-js="spot-list" aria-live="polite"><li class="small muted">Loading the spots...</li></ul>
+    </div>
+  </dialog>
+
+  {# ---- sound popover ---- #}
+  {% set ss_panel = true %}
+  {% include "_soundscape.html" %}
+  <p class="focus__nojs no-js-only small muted">Reload this page to see the timer move. With JavaScript it updates live, on every screen.</p>
+</div>
+{% endblock %}

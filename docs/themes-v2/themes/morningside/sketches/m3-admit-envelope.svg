@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- M3: the admit envelope, wax seal with a dome -->
+<rect width="512" height="512" fill="#0B1F3A"/>
+<rect x="150" y="104" width="212" height="170" rx="14" fill="#FFFFFF"/><rect x="178" y="138" width="120" height="14" rx="7" fill="#B9D9EB"/><rect x="178" y="168" width="156" height="12" rx="6" fill="#DCEBF5"/>
+<rect x="96" y="196" width="320" height="214" rx="26" fill="#9CC4E4" transform="translate(0 12)"/>
+<rect x="96" y="196" width="320" height="214" rx="26" fill="#DCEBF5"/>
+<path d="M96 222L256 318L416 222V196H96z" fill="#B9D9EB"/>
+<circle cx="256" cy="312" r="62" fill="#1E4F86" transform="translate(0 8)"/><circle cx="256" cy="312" r="62" fill="#3E7CC0"/>
+<g fill="#FFFFFF"><path d="M226 310a30 30 0 0 1 60 0z"/><rect x="216" y="306" width="80" height="8" rx="3"/><rect x="222" y="318" width="8" height="20" rx="3"/><rect x="240" y="318" width="8" height="20" rx="3"/><rect x="264" y="318" width="8" height="20" rx="3"/><rect x="282" y="318" width="8" height="20" rx="3"/><rect x="212" y="340" width="88" height="8" rx="3"/></g>
+</svg>

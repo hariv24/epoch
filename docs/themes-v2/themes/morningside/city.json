@@ -1,0 +1,13 @@
+{
+  "_comment": "Morningside: a blue-hour Upper West Side night. Limestone-warm windows, Columbia-blue cranes and beacons.",
+  "skyTop": "#05122A",
+  "skyMid": "#0E2B57",
+  "skyBottom": "#2F639B",
+  "fog": "#183A68",
+  "windowWarm": "#FFE3AE",
+  "windowCool": "#CDE7FF",
+  "accent": "#8CC4EE",
+  "beacon": "#D2E9FF",
+  "stageBg": ["#0B1F3F", "#24508A"],
+  "previewTint": { "css": "linear-gradient(#05122A, #2F639B)", "blend": "color", "opacity": 0.32 }
+}

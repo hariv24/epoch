@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex">
+  <title>Pair this device · Epoch</title>
+  {% include "_head_icons.html" %}
+  <link rel="preload" href="{{ asset_base }}/vendor/fonts/fredoka-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ asset_base }}/vendor/fonts/nunito-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ asset_base }}/app/style.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var t = localStorage.getItem('witness.app.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+{# Standalone on purpose: an unpaired device must see no app chrome and no data. #}
+<body data-page="pair" class="pairpage">
+<main class="pairwrap" id="main">
+  <div class="paircard card card--hero">
+    <a class="brand pairbrand" href="/pair" aria-label="Epoch">
+      {% include "_brand_mark.html" %}
+      Epoch
+    </a>
+    <h1>Pair this device</h1>
+    {% if message and role != "owner" %}<div class="flash {{ kind }}" role="status" data-js="pair-message">{{ message }}</div>{% endif %}
+    {% if role == "owner" %}
+    <p class="pairlead">This is the computer running Epoch, so it does not need a code. To pair a tablet, open <b>Settings</b>, then <b>Use on your tablet</b>, and make a code there.</p>
+    <a class="btn btn--go" href="/settings#lan">Open Settings</a>
+    {% else %}
+    <p class="pairlead">Type the six digits shown on your computer. You can find them in Settings, under Use on your tablet.</p>
+    <form class="pairform" method="post" action="/pair" data-js="pair-form">
+      {% if token %}<input type="hidden" name="t" value="{{ token }}">{% endif %}
+      <label class="pairfield"><span class="row-label">Six-digit code</span>
+        <input class="paircode-input num" type="text" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]{6,7}" maxlength="7" required autofocus placeholder="000 000" aria-describedby="pairHelp" data-js="pair-code"></label>
+      <p class="small muted" id="pairHelp">It works once and lasts ten minutes.</p>
+      <label class="pairfield"><span class="row-label">Name for this device <span class="muted">(optional)</span></span>
+        <input class="field field--plain" type="text" name="name" maxlength="40" autocomplete="off" placeholder="Realme tablet" data-js="pair-name"></label>
+      <button class="btn btn--go" type="submit" data-js="pair-submit"><svg class="ic" aria-hidden="true"><use href="/static/app/icons.svg#i-link"/></svg><span>Pair</span></button>
+    </form>
+    {% endif %}
+    <p class="pairfoot xs muted">Epoch stays on your home network. Nothing here is sent to the internet.</p>
+  </div>
+</main>
+<script>
+(function () {
+  var f = document.querySelector('[data-js="pair-form"]'); if (!f) return;
+  var code = f.querySelector('[data-js="pair-code"]'), name = f.querySelector('[data-js="pair-name"]'), btn = f.querySelector('[data-js="pair-submit"]');
+  var msg = document.querySelector('[data-js="pair-message"]');
+  function digits() { return (code.value || '').replace(/\D/g, '').slice(0, 6); }
+  function show(text) {
+    if (!msg) { msg = document.createElement('div'); msg.className = 'flash warn'; msg.setAttribute('role', 'status'); msg.dataset.js = 'pair-message'; f.parentNode.insertBefore(msg, f.parentNode.querySelector('.pairlead')); }
+    msg.className = 'flash warn'; msg.textContent = text;
+  }
+  function submit() {
+    if (btn.classList.contains('is-busy')) return;
+    btn.classList.add('is-busy');
+    var t = f.querySelector('[name="t"]');
+    fetch('/api/pair/redeem', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ code: digits(), t: t ? t.value : '', name: name.value }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function (j) {
+        if (j && j.ok) { location.href = '/pomodoro'; return; }
+        btn.classList.remove('is-busy'); show((j && j.hint) || 'That code did not work. Check the digits on your computer.'); code.focus(); code.select();
+      })
+      .catch(function () { btn.classList.remove('is-busy'); f.submit(); });
+  }
+  code.addEventListener('input', function () {
+    var d = digits(); code.value = d.length > 3 ? d.slice(0, 3) + ' ' + d.slice(3) : d;
+    if (d.length === 6) { if (matchMedia('(pointer:coarse)').matches) name.focus(); }
+  });
+  f.addEventListener('submit', function (e) { e.preventDefault(); if (digits().length < 6) { show('Type all six digits.'); code.focus(); return; } submit(); });
+})();
+</script>
+</body>
+</html>

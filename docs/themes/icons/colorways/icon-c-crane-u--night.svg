@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<title>Underdog icon C - Crane U</title>
+<rect width="512" height="512" fill="#0A0E15"/><path d="M92 170 H196 V340 H316 V170 H420 V380 Q420 436 364 436 H148 Q92 436 92 380 Z" fill="#FF8A1F"/><g fill="#0A0E15">
+    <rect x="128" y="206" width="32" height="30" rx="4"/><rect x="128" y="262" width="32" height="30" rx="4"/><rect x="128" y="318" width="32" height="30" rx="4"/>
+    <rect x="352" y="206" width="32" height="30" rx="4"/><rect x="352" y="262" width="32" height="30" rx="4"/><rect x="352" y="318" width="32" height="30" rx="4"/></g><g fill="#F4F0E6" stroke="#F4F0E6" stroke-linejoin="round">
+    <rect x="132" y="62" width="24" height="112" stroke="none"/>
+    <rect x="76" y="60" width="352" height="20" rx="3" stroke="none"/>
+    <rect x="76" y="80" width="38" height="30" rx="3" stroke="none" fill="#4A5B78" />
+    <path d="M144 38 L144 62" stroke-width="10" fill="none"/>
+    <path d="M144 38 L392 70 M144 38 L96 70" stroke-width="5" fill="none"/>
+    <path d="M382 80 V128" stroke-width="7" fill="none"/>
+    <rect x="368" y="126" width="28" height="20" rx="4" stroke="none"/></g>
+</svg>

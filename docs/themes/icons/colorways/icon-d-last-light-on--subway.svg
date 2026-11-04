@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<title>Underdog icon D - Last Light On</title>
+<rect width="512" height="512" fill="#FFFFFF"/><g fill="#B4B8BF">
+      <path d="M186 430 V262 H202 V240 H266 V262 H282 V430 Z"/>
+      <path d="M306 430 V160 H322 V118 H346 V78 H352 V44 H356 V78 H362 V118 H386 V160 H402 V430 Z"/>
+    </g><g fill="#FF6319">
+      <rect x="212" y="286" width="16" height="22"/><rect x="240" y="336" width="16" height="22"/>
+      <rect x="336" y="190" width="16" height="22"/><rect x="368" y="244" width="16" height="22"/><rect x="326" y="300" width="16" height="22"/><rect x="364" y="356" width="16" height="22"/>
+    </g><rect x="72" y="326" width="100" height="104" rx="8" fill="#0039A6"/>
+    <rect x="98" y="356" width="48" height="48" rx="6" fill="#FFFFFF"/><rect x="56" y="430" width="400" height="14" rx="7" fill="#0A0A0A"/>
+</svg>

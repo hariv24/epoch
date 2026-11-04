@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<!-- Block Party, 32 px: pink boombox, five-ring speaker, rising EQ bars, on plum. -->
+<rect width="32" height="32" rx="7" fill="#1E1034"/>
+<g transform="rotate(-8 16 17)">
+<path d="M11 10V8.5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2V10" fill="none" stroke="#FFF4E0" stroke-width="2"/>
+<rect x="4" y="10" width="24" height="15" rx="3.5" fill="#FF5FA8"/>
+<circle cx="11" cy="17.5" r="5.4" fill="#5B8CFF"/><circle cx="11" cy="17.5" r="3.6" fill="#2FD6B5"/><circle cx="11" cy="17.5" r="1.8" fill="#FFC93C"/>
+<rect x="18.5" y="19" width="2" height="3.5" rx=".8" fill="#2FD6B5"/><rect x="21.5" y="17" width="2" height="5.5" rx=".8" fill="#FFC93C"/><rect x="24.5" y="15" width="2" height="7.5" rx=".8" fill="#FF8A2A"/>
+<rect x="18.5" y="12.2" width="8" height="2.4" rx="1" fill="#3D2470"/>
+</g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch A: the sun is a vinyl record setting behind a rooftop water tower -->
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241238"/><stop offset=".55" stop-color="#5E2A5C"/><stop offset="1" stop-color="#C8566A"/></linearGradient>
+<linearGradient id="disc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD39A"/><stop offset="1" stop-color="#FF8A6B"/></linearGradient>
+<clipPath id="above"><rect width="512" height="352"/></clipPath>
+</defs>
+<rect width="512" height="512" fill="url(#sky)"/>
+<g clip-path="url(#above)">
+ <circle cx="256" cy="300" r="150" fill="url(#disc)"/>
+ <g fill="none" stroke="#C25A5E" stroke-opacity=".55" stroke-width="5"><circle cx="256" cy="300" r="128"/><circle cx="256" cy="300" r="106"/><circle cx="256" cy="300" r="84"/></g>
+ <circle cx="256" cy="300" r="52" fill="#3A1A45"/><circle cx="256" cy="300" r="9" fill="#FFD39A"/>
+</g>
+<rect y="350" width="512" height="162" fill="#1A0E28"/>
+<!-- water tower -->
+<g fill="#1A0E28">
+ <path d="M318 212 L362 168 L406 212 Z"/><rect x="322" y="210" width="80" height="78" rx="6"/>
+ <rect x="330" y="286" width="9" height="66"/><rect x="385" y="286" width="9" height="66"/><rect x="357" y="286" width="9" height="66"/>
+ <path d="M330 300 L394 340 M394 300 L330 340" stroke="#1A0E28" stroke-width="6"/>
+</g>
+<g stroke="#FFD39A" stroke-opacity=".35" stroke-width="5" stroke-linecap="round"><path d="M110 120 l-14 40"/><path d="M160 70 l-14 40"/><path d="M430 90 l-14 40"/><path d="M90 230 l-14 40"/></g>
+</svg>

@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Morningside · "Low Library after dark"
+   Night Clay's clay, radii, fonts and layout, repainted in Columbia-blue on a deep Morningside navy.
+   Reward (the --amber slot) = Columbia blue light; secondary (--violet slot) = crisp limestone white;
+   the one warm note is the lamplight in the windows. Dark-first, with a real crisp-white light half.
+   ========================================================================== */
+:root{
+  --bg:          light-dark(#F2F7FC, #081A33);
+  --s1:          light-dark(#FFFFFF, #0F2547);
+  --s2:          light-dark(#E2EEF8, #163159);
+  --line:        light-dark(#C6D9EC, #24467A);
+  --line-strong: light-dark(#5B7DA6, #5F87BE);
+  --ink:         light-dark(#0B1F3A, #F2F8FF);
+  --muted:       light-dark(#3D5677, #A9C4E2);
+  --faint:       light-dark(#56708F, #93B1D3);
+
+  /* reward: Columbia blue (light uses a deeper step so the XP bar reads on the pale track) */
+  --amber:       light-dark(#4785C3, #8CC4EE);
+  --amber-edge:  light-dark(#25598F, #3D7AB5);
+  --on-amber:    light-dark(#04142B, #04142B);
+  --amber-ink:   light-dark(#1B5189, #A8D4F5);
+  --amber-soft:  light-dark(#D6E8F7, #14365F);
+
+  /* secondary: limestone white in the dark, Morningside navy in the light */
+  --violet:      light-dark(#17396A, #F3EFE6);
+  --violet-edge: light-dark(#0A1F3D, #B4AA96);
+  --on-violet:   light-dark(#FFFFFF, #0B1F3A);
+  --violet-soft: light-dark(#E2EAF5, #20375C);
+
+  --mint:        light-dark(#08774C, #62DDA8);
+  --mint-edge:   light-dark(#055236, #24A472);
+  --on-mint:     light-dark(#FFFFFF, #03140C);
+  --mint-soft:   light-dark(#D9F3E7, #113A33);
+  --flame:       light-dark(#C2410C, #FF9150);
+  --sky:         light-dark(#0369A1, #8CC4EE);
+  --rest:        light-dark(#5D5FB5, #B9B6FF);
+  --error:       light-dark(#B42318, #FF9A9A);
+  --focus:       light-dark(#1B5189, #D2E9FF);
+
+  --c-python:  light-dark(#1F66C9, #74B8FF);
+  --c-math:    light-dark(#6A4FD6, #B4A6FF);
+  --c-ml:      light-dark(#08774C, #62DDA8);
+  --c-papers:  light-dark(#C8462A, #FF9C7E);
+  --c-writing: light-dark(#B0288F, #F59CE2);
+  --c-drift:   light-dark(#5C7090, #97ABC8);
+
+  --lift:   light-dark(rgb(18 48 96 / .20), rgb(0 4 14 / .60));
+  --gloss:  light-dark(rgb(255 255 255 / .85), rgb(220 238 255 / .11));
+  --scrim:  light-dark(rgb(11 31 58 / .45), rgb(2 8 20 / .74));
+  --glow-a: light-dark(#D3E7F8, #163A6C);
+  --glow-b: light-dark(#F4EEDF, #12345F);
+}
+
+/* Glows move onto body itself (a cold Columbia-blue moon top right, a warm limestone lamp bottom left),
+   so body::before is free for the snowfall. */
+body{background:
+    radial-gradient(900px 560px at 92% -10%, var(--glow-a), transparent 62%),
+    radial-gradient(780px 520px at -6% 108%, var(--glow-b), transparent 60%),
+    radial-gradient(520px 380px at 104% 100%, light-dark(rgb(185 217 235 / .55), rgb(117 170 219 / .14)), transparent 70%),
+    var(--bg);
+  background-attachment:fixed}
+
+/* Snow: tiny flakes between the cards (the icon is a snow globe). Static by default; a slow 70 s drift only when
+   the OS allows motion and Settings has not turned motion off. Transform only. */
+body::before{content:"";position:fixed;inset:-360px 0 0 0;z-index:-1;pointer-events:none;
+  background:light-dark(rgb(42 95 152 / .16), rgb(235 245 255 / .12));
+  -webkit-mask-image:url("bg-snow.svg"); mask-image:url("bg-snow.svg");
+  -webkit-mask-size:360px 360px; mask-size:360px 360px}
+@media (prefers-reduced-motion: no-preference){
+  /* Settings > Motion off is already handled by style.css (:root[data-motion="off"] *::before runs every
+     animation once in 1 ms); the tile is seamless, so the snow simply freezes. */
+  body::before{animation:ms-snow 70s linear infinite}
+}
+@keyframes ms-snow{from{transform:translateY(0)}to{transform:translateY(360px)}}
+
+/* Decoration: the Morningside street map everywhere (faint) + Low Library elevation bottom right.
+   Colour = one token; shape = the SVG alpha masks. Map fades towards the content column. */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:light-dark(rgb(42 95 152 / .13), rgb(169 208 242 / .13));
+  -webkit-mask-image:url("bg-low.svg"), radial-gradient(130% 95% at 50% 42%, rgb(0 0 0 / .45) 30%, #000 85%), url("bg.svg");
+          mask-image:url("bg-low.svg"), radial-gradient(130% 95% at 50% 42%, rgb(0 0 0 / .45) 30%, #000 85%), url("bg.svg");
+  -webkit-mask-size:min(720px, 92vw) auto, 100% 100%, cover;
+          mask-size:min(720px, 92vw) auto, 100% 100%, cover;
+  -webkit-mask-position:right -40px bottom 0, center, center;
+          mask-position:right -40px bottom 0, center, center;
+  -webkit-mask-repeat:no-repeat;
+          mask-repeat:no-repeat;
+  mask-composite:add, intersect;
+  -webkit-mask-composite:source-over, source-in}
+
+/* TWEAK: glass chips over the 3D city use Morningside navy instead of Night Clay's midnight */
+.stage__badge .pill, .stage__tools .icon-btn, .camtag{background:rgb(8 26 51 / .72)}
+/* TWEAK: the focus dial glow follows the blue reward colour */
+.focus{--arc-glow:rgb(140 196 238 / .26)}
+/* TWEAK: the +XP float glows Columbia blue */
+.floaty{text-shadow:0 2px 0 var(--amber-edge), 0 0 14px rgb(140 196 238 / .55)}

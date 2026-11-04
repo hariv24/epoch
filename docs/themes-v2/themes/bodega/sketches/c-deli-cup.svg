@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Sketch C: blue-and-white deli coffee cup; the steam rises into a skyline -->
+<rect width="512" height="512" fill="#1A1410"/>
+<path d="M170 210 H342 L322 430 H190Z" fill="#2E6FD8"/>
+<rect x="160" y="196" width="192" height="24" rx="10" fill="#F4F0E6"/>
+<path d="M176 262 h160 v40 h-160z" fill="#F4F0E6"/>
+<path d="M186 296 v-24 h16 v16 h16 v-16 h16 v24 M246 296 v-24 h16 v16 h16 v-16 h16 v24" fill="none" stroke="#2E6FD8" stroke-width="5"/>
+<g fill="#F4F0E6" fill-opacity=".85"><rect x="206" y="120" width="22" height="60" rx="4"/><rect x="236" y="80" width="26" height="100" rx="4"/><rect x="270" y="130" width="22" height="50" rx="4"/></g>
+</svg>

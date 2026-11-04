@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Passport{% endblock %}
+{% block content %}
+{% set icons = "/static/app/icons.svg" %}
+<div class="view-head"><div><h1>Passport</h1><p>A postcard for every New York moment you have collected.</p></div></div>
+{% include "_money_tabs.html" %}
+{% if quiet %}{% include "_money_quiet.html" %}{% else %}
+{% set owned_ids = eco.passport|map(attribute="item")|list %}
+{% set todo = [] %}
+{% for a in shop.aisles if a.id == "experience" %}{% for it in a["items"] if not it.owned %}{% set _ = todo.append(it) %}{% endfor %}{% endfor %}
+<div class="stack-4" data-js="money-root">
+  {% if eco.passport %}
+  <section class="pcgrid2" aria-label="Collected postcards">
+    {% for p in eco.passport %}
+    <article class="pc" id="{{ p.item }}">
+      <div class="pc__frame">{{ postcard_svg(p.item) }}
+        <span class="pc__stamp" aria-hidden="true"><b>{{ p.bought_at[8:10]|int }}</b><i>{{ ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][(p.bought_at[5:7]|int) - 1] }}</i></span></div>
+      <div class="pc__text">
+        <h2 class="pc__name">{{ p.name }}</h2>
+        <p class="pc__fact">{{ fact_for(p.item) }}</p>
+        <p class="pc__meta xs">Collected {{ collected_when(p.bought_at) }} · {{ p.price|usd }}{% if p.event and p.period %} · Limited time, {{ p.period }}{% endif %}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% else %}
+  <section class="card card--stack" aria-labelledby="peH">
+    <h2 id="peH">No postcards yet</h2>
+    <p>Each experience you buy in the store lands here as a postcard with a fact about the place. The first ones open with Morningside Heights and cost under {{ 60|usd }}.</p>
+    <div class="card__actions"><a class="btn" href="/store#experience">Look at the experiences</a></div>
+  </section>
+  {% endif %}
+
+  {% if todo %}
+  <section class="card card--stack" aria-labelledby="todoH">
+    <div class="card__head"><h2 id="todoH">Still to collect</h2><span class="small muted">{{ todo|length }} in the store</span></div>
+    <ul class="pclist">
+      {% for it in todo %}
+      <li class="{{ 'is-locked' if it.state == 'locked' }}"><span class="pclist__art">{{ postcard_svg(it.id, "pclist__pc") }}</span>
+        <span class="pclist__t"><b>{{ it.name }}</b><span class="xs muted">{% if it.state == "locked" %}{{ gate_text(it) }}{% else %}{{ it.price|usd }}{% if it.district %} · {{ it.district }}{% endif %}{% endif %}</span></span>
+        <a class="btn btn--ghost btn--sm" href="/store#experience">{{ "See" if it.state == "locked" else "In the store" }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

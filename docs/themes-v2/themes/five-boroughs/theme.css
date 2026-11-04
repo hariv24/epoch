@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Five Boroughs: one city, every colour. A summer-night block party where every borough brings a colour:
+   Bronx pink, Manhattan taxi yellow, Queens teal, Brooklyn blue, Staten Island ferry orange.
+   Plum-night surfaces keep it readable; the colour lives in the clay, the quilt and the bunting.
+   Night Clay form language untouched: tokens, two background layers, a few documented tweaks.
+   ========================================================================== */
+:root{
+  --bg:          light-dark(#FFF6EA, #160C1E);
+  --s1:          light-dark(#FFFFFF, #22142C);
+  --s2:          light-dark(#FFEEDB, #2D1B3A);
+  --line:        light-dark(#F0D9C2, #472B57);
+  --line-strong: light-dark(#8A6FA8, #8068B0);
+  --ink:         light-dark(#24132F, #FFF4E6);
+  --muted:       light-dark(#5C4A6A, #C9B9D8);
+  --faint:       light-dark(#6F5D80, #AC9AC2);
+
+  /* Manhattan taxi yellow: the reward */
+  --amber:       light-dark(#B87A00, #FFC93C);
+  --amber-edge:  light-dark(#7A4F00, #C08A00);
+  --on-amber:    #1F1300;
+  --amber-ink:   light-dark(#8A5A00, #FFC93C);
+  --amber-soft:  light-dark(#FFE6B0, #3A2614);
+
+  /* "violet" slot = Bronx pink: secondary buttons, links, checked chips */
+  --violet:      light-dark(#C2186B, #FF6FB1);
+  --violet-edge: light-dark(#8A0E4B, #B8357A);
+  --on-violet:   light-dark(#FFFFFF, #2A0618);
+  --violet-soft: light-dark(#FFE0EE, #3D1840);
+
+  /* Queens teal: done / floor reached / break */
+  --mint:        light-dark(#067A66, #2FE0BE);
+  --mint-edge:   light-dark(#045446, #12A088);
+  --on-mint:     light-dark(#FFFFFF, #03201A);
+  --mint-soft:   light-dark(#D6F5EE, #0E3833);
+
+  --flame:       light-dark(#C2410C, #FF8A2A);    /* Staten Island ferry orange */
+  --sky:         light-dark(#2F5FD0, #6FA0FF);    /* Brooklyn blue */
+  --rest:        light-dark(#6B5FB5, #B9A8FF);
+  --error:       light-dark(#B42318, #FF8F8F);
+  --focus:       light-dark(#C2186B, #8CF0DC);
+
+  --c-python:  light-dark(#2F5FD0, #6FA8FF);
+  --c-math:    light-dark(#6D4FE0, #B49CFF);
+  --c-ml:      light-dark(#067A50, #3EE6A0);
+  --c-papers:  light-dark(#C2410C, #FF9A5C);
+  --c-writing: light-dark(#B8239B, #FF8AD8);
+  --c-drift:   light-dark(#6F5D80, #AC9AC2);
+
+  --lift:   light-dark(rgb(90 30 80 / .20), rgb(0 0 0 / .55));
+  --gloss:  light-dark(rgb(255 255 255 / .8), rgb(255 240 250 / .10));
+  --scrim:  light-dark(rgb(36 19 47 / .45), rgb(10 4 18 / .74));
+  --glow-a: light-dark(#FFD9EA, #3D1446);
+  --glow-b: light-dark(#D9F3EE, #0F2B4A);
+}
+
+/* ---------- background ---------- */
+/* layer 1: pink + blue street-light glows over a patchwork quilt (one colour per borough, one motif per
+   neighbourhood), faded to almost nothing behind the content column and strongest at the edges */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 560px at 92% -10%, var(--glow-a), transparent 64%),
+    radial-gradient(780px 560px at -8% 108%, var(--glow-b), transparent 60%);
+}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:url("bg-quilt.svg") 0 0 / 300px 300px repeat;
+  opacity:.12;
+  /* full strength only in the outer gutters; the content column keeps a fifth of it */
+  -webkit-mask-image:linear-gradient(90deg, #000 0, #000 7%, rgb(0 0 0 / .2) 14%, rgb(0 0 0 / .2) 86%, #000 93%, #000 100%);
+          mask-image:linear-gradient(90deg, #000 0, #000 7%, rgb(0 0 0 / .2) 14%, rgb(0 0 0 / .2) 86%, #000 93%, #000 100%);
+}
+
+/* block-party bunting strung along the top edge; the tips stop at 19 px, above the header text */
+.app::after{content:"";position:fixed;inset-inline:0;inset-block-start:0;block-size:20px;z-index:-1;pointer-events:none;
+  background:url("bg.svg") -30px 0 / 200px 20px repeat-x;opacity:.85}
+
+@media (max-width: 700px){
+  body::after{opacity:.09;-webkit-mask-image:none;mask-image:none}
+  .app::after{block-size:14px;background-size:140px 14px}
+}
+/* ---------- tweaks ---------- */
+/* TWEAK: glass chips over the 3D city take the plum of the new night */
+.stage__badge .pill, .stage__tools .icon-btn, .camtag{background:rgb(22 8 30 / .74)}
+/* TWEAK: focus dial glow follows taxi yellow */
+.focus{--arc-glow:rgb(255 201 60 / .26)}
+/* TWEAK: the +XP float glows taxi yellow */
+.floaty{text-shadow:0 2px 0 var(--amber-edge), 0 0 16px rgb(255 201 60 / .55)}
+/* TWEAK: the multi-colour boombox mark gets a neutral clay ledge, not an amber one */
+.brand svg{filter:drop-shadow(0 3px 0 rgb(0 0 0 / .4))}

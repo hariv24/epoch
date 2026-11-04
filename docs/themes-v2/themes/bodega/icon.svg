@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- Bodega: 2am, the roll-down gate is only half up, the fluorescent light spills onto the sidewalk and someone
+     tagged "24" on the steel. The city is closing; you are still open. No animals (no bodega cat), no faces. -->
+<defs>
+<radialGradient id="neon" cx=".5" cy=".28" r=".62"><stop offset="0" stop-color="#FF3D57" stop-opacity=".42"/><stop offset="1" stop-color="#FF3D57" stop-opacity="0"/></radialGradient>
+<radialGradient id="green" cx=".5" cy="1" r=".6"><stop offset="0" stop-color="#2BE38A" stop-opacity=".25"/><stop offset="1" stop-color="#2BE38A" stop-opacity="0"/></radialGradient>
+<linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9B2AA"/><stop offset="1" stop-color="#8A837C"/></linearGradient>
+<linearGradient id="inside" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFBEA"/><stop offset="1" stop-color="#FFE7A6"/></linearGradient>
+<linearGradient id="spill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".55"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="512" height="512" fill="#1A110F"/>
+<rect width="512" height="512" fill="url(#neon)"/>
+<rect width="512" height="512" fill="url(#green)"/>
+<!-- brick wall -->
+<rect x="100" y="150" width="312" height="290" rx="10" fill="#3E2421"/>
+<g stroke="#2C1817" stroke-width="4"><path d="M100 230 H128 M384 230 H412 M100 270 H128 M384 270 H412 M100 310 H128 M384 310 H412 M100 350 H128 M384 350 H412 M100 390 H128 M384 390 H412"/></g>
+<!-- sidewalk + light spill -->
+<rect y="436" width="512" height="76" fill="#120B0A"/>
+<path d="M128 436 H384 L440 512 H72Z" fill="url(#spill)"/>
+<!-- the store inside: fluorescent cream, shelves of colourful stock -->
+<rect x="128" y="200" width="256" height="236" fill="url(#inside)"/>
+<g fill="#D7A94E"><rect x="128" y="352" width="256" height="7"/><rect x="128" y="408" width="256" height="7"/></g>
+<g>
+<rect x="142" y="318" width="18" height="34" rx="5" fill="#E8394A"/><rect x="164" y="318" width="18" height="34" rx="5" fill="#E8394A"/>
+<rect x="190" y="306" width="30" height="46" rx="4" fill="#FFC531"/><rect x="226" y="322" width="16" height="30" rx="7" fill="#2BBF6E"/><rect x="246" y="322" width="16" height="30" rx="7" fill="#2BBF6E"/>
+<rect x="270" y="312" width="26" height="40" rx="4" fill="#3E7BFA"/><rect x="302" y="318" width="18" height="34" rx="5" fill="#FF8A3D"/><rect x="326" y="306" width="40" height="46" rx="4" fill="#E8394A"/>
+<rect x="142" y="372" width="34" height="36" rx="4" fill="#3E7BFA"/><rect x="182" y="378" width="18" height="30" rx="7" fill="#FFC531"/><rect x="206" y="370" width="28" height="38" rx="4" fill="#2BBF6E"/>
+<rect x="240" y="378" width="18" height="30" rx="5" fill="#E8394A"/><rect x="262" y="378" width="18" height="30" rx="5" fill="#E8394A"/><rect x="288" y="368" width="36" height="40" rx="4" fill="#FFC531"/><rect x="330" y="376" width="38" height="32" rx="4" fill="#B04BD8"/>
+</g>
+<!-- the gate, rolled half down: clay ledge + slats + bottom bar -->
+<rect x="118" y="196" width="276" height="112" rx="6" fill="#4F4A45"/>
+<rect x="118" y="188" width="276" height="112" rx="6" fill="url(#steel)"/>
+<g stroke="#6E6862" stroke-width="5"><path d="M118 206 H394 M118 224 H394 M118 242 H394 M118 260 H394 M118 278 H394"/></g>
+<rect x="112" y="292" width="288" height="18" rx="7" fill="#3A3633"/>
+<rect x="238" y="296" width="36" height="8" rx="4" fill="#C9C2BA"/>
+<!-- the tag: "24" in yellow marker -->
+<path d="M196 222 c10 -14 40 -12 38 6 c-2 14 -26 26 -40 46 h46" fill="none" stroke="#1A110F" stroke-opacity=".35" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 4)"/>
+<path d="M290 214 l-30 42 h46 M292 214 v66" fill="none" stroke="#1A110F" stroke-opacity=".35" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 4)"/>
+<path d="M196 222 c10 -14 40 -12 38 6 c-2 14 -26 26 -40 46 h46" fill="none" stroke="#FFD23F" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M290 214 l-30 42 h46 M292 214 v66" fill="none" stroke="#FFD23F" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- paint drips off the tag -->
+<g stroke="#FFD23F" stroke-width="6" stroke-linecap="round"><path d="M206 276 v16"/><path d="M232 276 v9"/><path d="M292 282 v12"/></g>
+<g fill="#FFD23F"><circle cx="206" cy="294" r="5"/><circle cx="232" cy="287" r="4.5"/><circle cx="292" cy="296" r="5"/></g>
+<!-- awning with scalloped valance -->
+<rect x="80" y="104" width="352" height="12" rx="6" fill="#8E1E2C"/>
+<rect x="88" y="112" width="48" height="62" fill="#E8394A"/><rect x="136" y="112" width="48" height="62" fill="#FFF0CF"/><rect x="184" y="112" width="48" height="62" fill="#E8394A"/><rect x="232" y="112" width="48" height="62" fill="#FFF0CF"/><rect x="280" y="112" width="48" height="62" fill="#E8394A"/><rect x="328" y="112" width="48" height="62" fill="#FFF0CF"/><rect x="376" y="112" width="48" height="62" fill="#E8394A"/>
+<path d="M88 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/><path d="M136 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/><path d="M184 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/><path d="M232 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/><path d="M280 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/><path d="M328 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/><path d="M376 182 a24.0 14.399999999999999 0 0 0 48 0z" fill="#000" fill-opacity=".28" transform="translate(0 10)"/>
+<path d="M88 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#E8394A"/><path d="M136 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#FFF0CF"/><path d="M184 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#E8394A"/><path d="M232 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#FFF0CF"/><path d="M280 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#E8394A"/><path d="M328 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#FFF0CF"/><path d="M376 172 h48 v6 a24.0 14.399999999999999 0 0 1 -48 0z" fill="#E8394A"/>
+<rect x="88" y="112" width="336" height="10" fill="#FFFFFF" fill-opacity=".22"/>
+</svg>
